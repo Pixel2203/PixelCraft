@@ -19,6 +19,11 @@ public class BlockRegistry {
     public static final RegistryObject<BlockItem> ExampleBlockItem =
             ItemRegistry.ITEMS.register("example_block", () -> BlockFactory.ExampleBlock_BLKITM);
 
+    public static final RegistryObject<Block> ZirconBlock =
+            BLOCKS.register("zircon_block",() -> BlockFactory.ZirconBlock_BLK);
+    public static final RegistryObject<BlockItem> ZirconBlockItem =
+            ItemRegistry.ITEMS.register("zircon_block", () -> BlockFactory.ZirconBlock_BLKITM);
+
 
     public static void registerBlocks(IEventBus eventBus){
         BLOCKS.register(eventBus);

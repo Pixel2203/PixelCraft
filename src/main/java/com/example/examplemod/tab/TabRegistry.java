@@ -11,7 +11,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 import static com.example.examplemod.ExampleMod.MODID;
 
-import static com.example.examplemod.tab.TabFactory.ExampleTab_TAB;
 
 public class TabRegistry {
 
@@ -20,7 +19,7 @@ public class TabRegistry {
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
     public static final RegistryObject<CreativeModeTab> ExampleTab =
-            CREATIVE_MODE_TABS.register("example_tab", ExampleTab_TAB);
+            CREATIVE_MODE_TABS.register("example_tab", () -> TabFactory.EXAMPLE_TAB);
 
 
     public static void registerTabs(IEventBus eventBus){
