@@ -1,6 +1,7 @@
 package com.example.examplemod;
 
 import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.blockentity.BlockEntityInit;
 import com.example.examplemod.event.ModEventHandler;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.particle.ParticleFactory;
@@ -57,6 +58,7 @@ public class ExampleMod
         // Register the Deferred Register to the mod event bus so tabs get registered
         TabRegistry.registerTabs(modEventBus);
 
+        BlockEntityInit.BLOCK_ENTITTES.register(modEventBus);
         ParticleFactory.registerParticles(modEventBus);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

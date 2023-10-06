@@ -1,8 +1,11 @@
 package com.example.examplemod.block.custom;
 
+import com.example.examplemod.blockentity.BlockEntityInit;
+import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import com.example.examplemod.particle.ParticleFactory;
 import com.example.examplemod.tag.TagRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -14,13 +17,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
-public class KettleBlock extends Block {
+public class KettleBlock extends Block implements EntityBlock {
     private static int MIN_FLUID_LEVEL = 0;
     private static int MAX_FLUID_LEVEL = 3;
     public static final IntegerProperty fluid_level = IntegerProperty.create("kettle_fluid_level",MIN_FLUID_LEVEL, MAX_FLUID_LEVEL);
@@ -58,16 +65,34 @@ public class KettleBlock extends Block {
 
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult p_60508_) {
-        ItemStack itemStackInHand = player.getItemInHand(hand);
-        if(!itemStackInHand.is(TagRegistry.KETTLE_ALLOWED_FLUID_ITEMS)){
-            return InteractionResult.FAIL;
+        if(!level.isClientSide() && hand == InteractionHand.MAIN_HAND){
+            BlockEntity be = level.getBlockEntity(blockPos);
+            if(be instanceof KettleBlockEntity blockEntity){
+                int counter = blockEntity.incrementCounter();
+                player.sendSystemMessage(Component.literal("Blockentity has been used %d times".formatted(counter)));
+            }
+
+
+
+            ItemStack itemStackInHand = player.getItemInHand(hand);
+            if(!itemStackInHand.is(TagRegistry.KETTLE_ALLOWED_FLUID_ITEMS)){
+                return InteractionResult.FAIL;
+            }
+            level.setBlock(blockPos,blockState.setValue(fluid_level,Math.min(blockState.getValue(fluid_level) + 1, 3)),3);
+            level.addParticle(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+            return InteractionResult.SUCCESS;
         }
-        level.setBlock(blockPos,blockState.setValue(fluid_level,Math.min(blockState.getValue(fluid_level) + 1, 3)),3);
-        level.addParticle(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-        return InteractionResult.SUCCESS;
+        return super.use(blockState,level,blockPos,player,hand,p_60508_);
     }
     private boolean isFireBelow(BlockPos kettle, BlockPos neighborBlockPos, Block neighborBlock){
         return kettle.below() == neighborBlockPos && neighborBlock == Blocks.FIRE;
 
     }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return BlockEntityInit.KETTLE_BLOCK_ENTITY.get().create(p_153215_,p_153216_);
+    }
+
 }
