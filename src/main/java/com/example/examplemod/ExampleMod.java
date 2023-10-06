@@ -1,7 +1,6 @@
 package com.example.examplemod;
 
 import com.example.examplemod.block.BlockRegistry;
-import com.example.examplemod.event.EventHandler;
 import com.example.examplemod.event.ModEventHandler;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.particle.ParticleFactory;
@@ -23,7 +22,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file

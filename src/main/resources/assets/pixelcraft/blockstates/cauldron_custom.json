@@ -1,6 +1,15 @@
 {
   "variants": {
-    "": {
+    "kettle_fluid_level=0": {
+      "model": "pixelcraft:block/cauldron_custom"
+    },
+    "kettle_fluid_level=1": {
+      "model": "pixelcraft:block/cauldron_custom_level1"
+    },
+    "kettle_fluid_level=2": {
+      "model": "pixelcraft:block/cauldron_custom_level2"
+    },
+    "kettle_fluid_level=3": {
       "model": "pixelcraft:block/cauldron_custom_level3"
     }
   }
