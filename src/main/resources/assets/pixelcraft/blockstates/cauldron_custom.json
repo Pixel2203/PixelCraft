@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "pixelcraft:block/cauldron_custom"
+      "model": "pixelcraft:block/cauldron_custom_level3"
     }
   }
 }

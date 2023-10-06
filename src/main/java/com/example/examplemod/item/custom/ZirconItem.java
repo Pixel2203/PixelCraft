@@ -21,8 +21,8 @@ public class ZirconItem extends Item {
         if(!level.isClientSide() && hand==InteractionHand.MAIN_HAND){
             System.out.println("Player Rightclicked with zirocn!");
         }
-        level.addParticle(ParticleTypes.PORTAL , player.position().x() , player.position().y() , player.position().z()
-                , player.position().x() , player.position().y() , player.position().z());
+        level.addParticle(ParticleTypes.BUBBLE , player.position().x() , player.position().y() , player.position().z()
+                , 0,0,0);
         return super.use(level, player, hand);
     }
 }
