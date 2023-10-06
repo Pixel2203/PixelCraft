@@ -57,7 +57,10 @@ public class KettleBlock extends Block implements EntityBlock {
             ItemStack itemStack = itemEntity.getItem();
             Item item = itemStack.getItem();
             itemStack.setCount(0);
-
+            BlockEntity be = level.getBlockEntity(blockPos);
+            if(be instanceof KettleBlockEntity blockEntity){
+                blockEntity.saveNewItem(itemStack);
+            }
 
         }
         super.fallOn(level, state, blockPos, entity, v);
@@ -68,9 +71,11 @@ public class KettleBlock extends Block implements EntityBlock {
         if(!level.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity be = level.getBlockEntity(blockPos);
             if(be instanceof KettleBlockEntity blockEntity){
-                int counter = blockEntity.incrementCounter();
-                player.sendSystemMessage(Component.literal("Blockentity has been used %d times".formatted(counter)));
-            }
+                    ItemStack currentItem = blockEntity.getCurrentSave();
+                    player.sendSystemMessage(Component.literal("Item abgerufen %d".formatted(currentItem.getItem().getMaxStackSize())));
+                }
+
+
 
 
 
