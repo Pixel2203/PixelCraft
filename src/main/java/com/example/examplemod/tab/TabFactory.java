@@ -22,5 +22,7 @@ public class TabFactory {
                         output.accept(ItemFactory.ZirconItem); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                         output.accept(ItemFactory.ExampleItem);
                         output.accept(BlockFactory.ExampleBlock_BLK);
+                        output.accept(BlockFactory.CauldronCustomBlock_BLK);
+                        output.accept(BlockFactory.ZirconBlock_BLK);
                     }).build();
 }
