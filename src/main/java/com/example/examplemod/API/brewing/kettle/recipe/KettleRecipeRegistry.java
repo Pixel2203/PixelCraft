@@ -7,12 +7,14 @@ import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import org.checkerframework.checker.units.qual.K;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class KettleRecipeRegistry {
-    public static List<KettleRecipe> KETTLE_RECIPES = new ArrayList<>();
+    private static HashMap<String,KettleRecipe> KETTLE_RECIPES = new HashMap<>();
 
     private static KettleRecipe TestKettleRecipe = registerRecipe(Items.DIAMOND,
             KettleIngredientFactory.GLOWSTONE_DUST,KettleIngredientFactory.BLAZE_ROD);
@@ -28,7 +30,9 @@ public class KettleRecipeRegistry {
     private static KettleRecipe registerRecipe(Item result, KettleIngredient... ingredients){
         String kettleRecipeString = serializeRecipeIngredientList(ingredients);
         KettleRecipe kettleRecipe = new KettleRecipe(result,ingredients);
-        KETTLE_RECIPES.add(kettleRecipe);
+        KETTLE_RECIPES.put(
+                serializeRecipeIngredientList(kettleRecipe.ingredients()).toUpperCase(),
+                kettleRecipe);
         return kettleRecipe;
     }
     public static String serializeRecipeIngredientList(KettleIngredient... ingredients){
@@ -38,9 +42,9 @@ public class KettleRecipeRegistry {
                 recipe = ingredient.id();
                 continue;
             }
-            recipe += "," + ingredient;
+            recipe += "," + ingredient.id();
         }
-        return recipe;
+        return recipe.toUpperCase();
     }
     public static KettleIngredient[]  deserializeRecipeIngredientList (String recipe){
         if(recipe == null){return null;}
@@ -55,10 +59,13 @@ public class KettleRecipeRegistry {
         }
         return ingredients;
     }
-    public static boolean isPartOfOrCompleteRecipe(KettleIngredient ... ingredients){
-        if(ingredients == null){
+    public static boolean isPartOfOrCompleteRecipe(String serializedIngredientList){
+        if(serializedIngredientList == null){
             return false;
         }
+
+        return  0 < KETTLE_RECIPES.keySet().stream().filter(key -> key.startsWith(serializedIngredientList.toUpperCase()) || key.equalsIgnoreCase(serializedIngredientList)).count();
+/*
         for(KettleRecipe kettleRecipe : KETTLE_RECIPES){
             if(kettleRecipe.ingredients().length >= ingredients.length && ingredients.length > 0){
                 boolean error = false;
@@ -73,6 +80,14 @@ public class KettleRecipeRegistry {
                 }
             }
         }
-        return false;
+
+ */
+       // return false;
+    }
+    public static boolean isValidRecipe(String serializedIngredientList){
+        return KETTLE_RECIPES.get(serializedIngredientList) != null;
+    }
+    public static KettleRecipe getRecipeBySerializedIngredientList(String serializedIngredientList){
+        return KETTLE_RECIPES.get(serializedIngredientList.toUpperCase());
     }
 }

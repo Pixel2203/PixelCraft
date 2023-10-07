@@ -1,5 +1,6 @@
 package com.example.examplemod.blockentity.custom;
 
+import com.example.examplemod.API.brewing.kettle.recipe.KettleRecipeFactory;
 import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.blockentity.BlockEntityInit;
@@ -34,12 +35,12 @@ public class KettleBlockEntity extends BlockEntity {
 
     }
     public void add(KettleIngredient ingredient){
-        if(StringUtil.isNullOrEmpty(this.recipe)){
-            this.recipe = ingredient.id();
-            return;
-        }
-        this.recipe += "," + ingredient.id();
+        this.recipe = KettleRecipeFactory.getNextRecipeString(this.recipe,ingredient);
+
         setChanged();
+    }
+    public void resetContent(){
+        this.recipe = null;
     }
     public String getSerializedKettleRecipe(){
         return this.recipe;

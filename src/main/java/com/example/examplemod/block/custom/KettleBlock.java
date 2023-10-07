@@ -13,6 +13,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -53,8 +54,14 @@ public class KettleBlock extends Block implements EntityBlock {
     @Override
     public void fallOn(Level level, BlockState state, BlockPos blockPos, Entity entity, float v) {
         if(!level.isClientSide() && entity instanceof ItemEntity itemEntity){
-            if(KettleIngredientRegistry.isIngredient(itemEntity.getItem())){
-                BrewingHandler.handleIngredientFallOnKettle(itemEntity.getItem(), level.getBlockEntity(blockPos));
+            if(level.getBlockEntity(blockPos) instanceof KettleBlockEntity kettleBlockEntity) {
+                if (KettleIngredientRegistry.isIngredient(itemEntity.getItem())) {
+                    BrewingHandler.handleIngredientFallOnKettle(itemEntity.getItem(), kettleBlockEntity);
+                    return;
+                }
+                if (itemEntity.getItem().getItem() == Items.REDSTONE) {
+                    BrewingHandler.finishRecipe(itemEntity.getItem(), blockPos,  level, kettleBlockEntity);
+                }
             }
 
         }

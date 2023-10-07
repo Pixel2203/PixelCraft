@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class KettleIngredientRegistry {
     private static final HashMap<Item,String> REGISTERED_INGREDIENTS = new HashMap<>();
-    public static final KettleIngredient BLAZE_ROD = registerIngredient(KettleIngredientFactory.BLAZE_ROD);
+    private static final KettleIngredient BLAZE_ROD = registerIngredient(KettleIngredientFactory.BLAZE_ROD);
     private static final KettleIngredient GLOWSTONE = registerIngredient(KettleIngredientFactory.GLOWSTONE_DUST);
 
 
@@ -23,7 +23,7 @@ public class KettleIngredientRegistry {
     }
 
     public static KettleIngredient getIngredientByName(String name){
-        if(!REGISTERED_INGREDIENTS.containsValue(name)){
+        if(!REGISTERED_INGREDIENTS.containsValue(name.toUpperCase())){
            return null;
         }
         for(Item key : REGISTERED_INGREDIENTS.keySet()){
@@ -33,12 +33,12 @@ public class KettleIngredientRegistry {
         }
         return null;
     }
-    public static Optional<KettleIngredient> getIngredientByItem(Item item){
+    public static KettleIngredient getIngredientByItem(Item item){
         String found = REGISTERED_INGREDIENTS.get(item);
         if(StringUtil.isNullOrEmpty(found)){
-            return Optional.empty();
+            return null;
         }
-        return Optional.of(new KettleIngredient(item,REGISTERED_INGREDIENTS.get(item)));
+        return new KettleIngredient(item,REGISTERED_INGREDIENTS.get(item));
     }
     public static boolean isIngredient(ItemStack itemStack){
         return itemStack.is(TagRegistry.KETTLE_INGREDIENTS);
