@@ -1,8 +1,9 @@
 package com.example.examplemod.block.custom;
 
+import com.example.examplemod.API.brewing.kettle.BrewingHandler;
+import com.example.examplemod.API.brewing.kettle.ingredient.KettleIngredientRegistry;
 import com.example.examplemod.blockentity.BlockEntityInit;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
-import com.example.examplemod.particle.ParticleFactory;
 import com.example.examplemod.tag.TagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -11,14 +12,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -53,13 +52,9 @@ public class KettleBlock extends Block implements EntityBlock {
 
     @Override
     public void fallOn(Level level, BlockState state, BlockPos blockPos, Entity entity, float v) {
-        if(entity instanceof ItemEntity itemEntity){
-            ItemStack itemStack = itemEntity.getItem();
-            Item item = itemStack.getItem();
-            itemStack.setCount(0);
-            BlockEntity be = level.getBlockEntity(blockPos);
-            if(be instanceof KettleBlockEntity blockEntity){
-                blockEntity.saveNewItem(itemStack);
+        if(!level.isClientSide() && entity instanceof ItemEntity itemEntity){
+            if(KettleIngredientRegistry.isIngredient(itemEntity.getItem())){
+                BrewingHandler.handleIngredientFallOnKettle(itemEntity.getItem(), level.getBlockEntity(blockPos));
             }
 
         }
@@ -71,9 +66,9 @@ public class KettleBlock extends Block implements EntityBlock {
         if(!level.isClientSide() && hand == InteractionHand.MAIN_HAND){
             BlockEntity be = level.getBlockEntity(blockPos);
             if(be instanceof KettleBlockEntity blockEntity){
-                    ItemStack currentItem = blockEntity.getCurrentSave();
-                    player.sendSystemMessage(Component.literal("Item abgerufen %d".formatted(currentItem.getItem().getMaxStackSize())));
-                }
+                    String recipe = blockEntity.getSerializedKettleRecipe();
+                    player.sendSystemMessage(Component.literal("Recipe: " + recipe));
+            }
 
 
 
@@ -84,7 +79,7 @@ public class KettleBlock extends Block implements EntityBlock {
                 return InteractionResult.FAIL;
             }
             level.setBlock(blockPos,blockState.setValue(fluid_level,Math.min(blockState.getValue(fluid_level) + 1, 3)),3);
-            level.addParticle(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+            //level.addParticle(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
             return InteractionResult.SUCCESS;
         }
         return super.use(blockState,level,blockPos,player,hand,p_60508_);
