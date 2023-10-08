@@ -4,6 +4,7 @@ import com.example.examplemod.item.custom.ZirconItem;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SplashPotionItem;
 
 import java.util.function.Supplier;
 
@@ -18,6 +19,8 @@ public class ItemFactory {
 
     public static final Item ZirconItem =
             new ZirconItem();
+    public static final SplashPotionItem ExamplePotion =
+            new SplashPotionItem(new Item.Properties());
 
 
 

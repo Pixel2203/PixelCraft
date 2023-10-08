@@ -24,5 +24,6 @@ public class TabFactory {
                         output.accept(BlockFactory.ExampleBlock_BLK);
                         output.accept(BlockFactory.CauldronCustomBlock_BLK);
                         output.accept(BlockFactory.ZirconBlock_BLK);
+                        output.accept(ItemFactory.ExamplePotion);
                     }).build();
 }
