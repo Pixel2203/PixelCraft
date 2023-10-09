@@ -6,9 +6,17 @@ import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
 import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
+import com.example.examplemod.particle.ParticleFactory;
+import com.example.examplemod.particle.custom.CustomBubbleParticle;
+import com.example.examplemod.particle.custom.CustomBubbleProvider;
 import com.example.examplemod.tag.TagRegistry;
+import com.ibm.icu.text.MessagePattern;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -35,22 +43,40 @@ public class KettleBlock extends Block implements EntityBlock {
     private static int MAX_FLUID_LEVEL = 3;
     public static final IntegerProperty fluid_level = IntegerProperty.create("kettle_fluid_level",MIN_FLUID_LEVEL, MAX_FLUID_LEVEL);
     public KettleBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.CAULDRON));
+        super(BlockBehaviour.Properties.copy(Blocks.CAULDRON).randomTicks());
         registerDefaultState(
                 this.stateDefinition.any().setValue(fluid_level,0)
         );
     }
 
+    @Override
+    public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource p_222957_) { //randomness dX dZ -- -- dY
+        serverLevel.sendParticles(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX(),blockPos.getY(),blockPos.getZ(),0,2,1,1,1);
+        super.randomTick(blockState, serverLevel, blockPos, p_222957_);
+    }
+
+    @Override
+    public void tick(BlockState p_222945_, ServerLevel p_222946_, BlockPos p_222947_, RandomSource p_222948_) {
+        System.out.println("HALLo");
+        super.tick(p_222945_, p_222946_, p_222947_, p_222948_);
+    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(fluid_level);
     }
-
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return BlockEntityRegistry.KETTLE_BLOCK_ENTITY.get().create(p_153215_,p_153216_);
+    }
     @Override
     public void fallOn(Level level, BlockState state, BlockPos blockPos, Entity entity, float v) {
-        if(!level.isClientSide() && entity instanceof ItemEntity itemEntity){
+        if(!level.isClientSide() && state.getValue(fluid_level) > MIN_FLUID_LEVEL && entity instanceof ItemEntity itemEntity){
             if(level.getBlockEntity(blockPos) instanceof KettleBlockEntity kettleBlockEntity) {
+                if(!isFireBelow(level,blockPos)){
+                    return;
+                }
                 if (KettleAPI.hasIngredientTag(itemEntity.getItem())) {
                     handleIngredientFallOnKettle(itemEntity.getItem(), kettleBlockEntity);
                     return;
@@ -60,7 +86,6 @@ public class KettleBlock extends Block implements EntityBlock {
         }
         super.fallOn(level, state, blockPos, entity, v);
     }
-
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult p_60508_) {
         if(!level.isClientSide() && hand == InteractionHand.MAIN_HAND && level.getBlockEntity(blockPos) instanceof KettleBlockEntity blockEntity){
@@ -72,7 +97,7 @@ public class KettleBlock extends Block implements EntityBlock {
             ItemStack itemStackInHand = player.getItemInHand(hand);
             if(itemStackInHand.is(TagRegistry.KETTLE_ALLOWED_FLUID_ITEMS) && currentKettleFluidLevel < MAX_FLUID_LEVEL){
                 handleFillKettleWithFluid(itemStackInHand,blockPos,blockState,level);
-                return InteractionResult.FAIL;
+                return InteractionResult.SUCCESS;
             }
             if(itemStackInHand.is(Items.GLASS_BOTTLE) && hasIngredients){
                 String ingredientsInKettle = blockEntity.getSerializedKettleRecipe();
@@ -82,8 +107,9 @@ public class KettleBlock extends Block implements EntityBlock {
             //level.addParticle(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
 
         }
-        return InteractionResult.FAIL;
+        return InteractionResult.SUCCESS;
     }
+
 
     private boolean handleFillFluidInBottle(
             Player player,
@@ -117,6 +143,7 @@ public class KettleBlock extends Block implements EntityBlock {
         return true;
     }
 
+
     private void handleFillKettleWithFluid(ItemStack itemInHand, BlockPos blockPos, BlockState kettleBlockState, Level level){
         int currentKettleWaterLevel = kettleBlockState.getValue(fluid_level);
         if(currentKettleWaterLevel == MAX_FLUID_LEVEL){
@@ -131,13 +158,6 @@ public class KettleBlock extends Block implements EntityBlock {
         level.setBlock(blockPos, kettleBlockState.setValue(fluid_level,
                 Math.min(MAX_FLUID_LEVEL, kettleBlockState.getValue(fluid_level)+additionalFluidLevel)),3);
 
-    }
-
-
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return BlockEntityRegistry.KETTLE_BLOCK_ENTITY.get().create(p_153215_,p_153216_);
     }
     public static void handleIngredientFallOnKettle(ItemStack itemStack, KettleBlockEntity entity) {
 
@@ -155,22 +175,11 @@ public class KettleBlock extends Block implements EntityBlock {
     private static void acceptIngredient(ItemStack itemStack, KettleBlockEntity entity, KettleIngredient ingredient){
         entity.add(ingredient);
         itemStack.shrink(1);
+        entity.getLevel().playSound(null, entity.getBlockPos(), SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS,0.25f,1f);
     }
-    private static void finishRecipe(ItemStack thrown, BlockPos blockPos , Level level , KettleBlockEntity entity){
-        String currentRecipe = entity.getSerializedKettleRecipe().toUpperCase();
-        if(KettleAPI.isValidRecipe(currentRecipe)){
-            KettleRecipe kettleRecipe = KettleAPI.getRecipeBySerializedIngredientList(currentRecipe);
-            if(kettleRecipe == null){
-                return;
-            }
-            Item resultItem = kettleRecipe.result();
-            ItemEntity itemEntity = new ItemEntity(level,blockPos.getX(), blockPos.getY() , blockPos.getZ(), new ItemStack(resultItem));
-            level.addFreshEntity(itemEntity);
-
-
-        }
+    private boolean isFireBelow(Level level, BlockPos blockPos){
+        return level.getBlockState(blockPos.below()).getBlock() == Blocks.FIRE;
     }
-    //private static void spawnItemOnPos(Level level , BlockPos pos, ItemStack item)
 
 
 }

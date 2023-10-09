@@ -15,7 +15,7 @@ public class CustomBubbleParticle extends TextureSheetParticle {
                                    SpriteSet spriteSet, double xd, double yd, double zd) {
         super(level, xCoord, yCoord, zCoord, xd, yd, zd);
 
-        this.friction = 0.8f;
+        this.friction = 0.1f;
         this.xd = xd;
         this.yd = yd;
         this.zd = zd;

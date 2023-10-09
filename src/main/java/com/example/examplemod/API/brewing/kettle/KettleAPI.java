@@ -1,9 +1,8 @@
 package com.example.examplemod.API.brewing.kettle;
 
-import com.example.examplemod.API.brewing.kettle.ingredient.KettleIngredientFactory;
+import com.example.examplemod.API.brewing.kettle.ingredient.KettleIngredients;
 import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
 import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
-import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import com.example.examplemod.tag.TagRegistry;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.Item;
@@ -19,14 +18,12 @@ public class KettleAPI {
     // Registry
     private static KettleRecipe TestKettleRecipe =
             registerRecipe(Items.DIAMOND,
-            KettleIngredientFactory.GLOWSTONE_DUST,KettleIngredientFactory.BLAZE_ROD);
+            KettleIngredients.GLOWSTONE_DUST.ingredient,KettleIngredients.BLAZE_ROD.ingredient);
+
+
     private static KettleRecipe TestKettleRecipe2 =
             registerRecipe(Items.DIRT,
-            KettleIngredientFactory.BLAZE_ROD, KettleIngredientFactory.GLOWSTONE_DUST);
-    private static final KettleIngredient BLAZE_ROD =
-            registerIngredient(KettleIngredientFactory.BLAZE_ROD);
-    private static final KettleIngredient GLOWSTONE =
-            registerIngredient(KettleIngredientFactory.GLOWSTONE_DUST);
+            KettleIngredients.BLAZE_ROD.ingredient, KettleIngredients.GLOWSTONE_DUST.ingredient);
 
 
 
@@ -97,7 +94,7 @@ public class KettleAPI {
     }
 
 
-    private static KettleIngredient registerIngredient(KettleIngredient ingredient1){
+    public static KettleIngredient registerIngredient(KettleIngredient ingredient1){
         KETTLE_INGREDIENTS.put(ingredient1.item(),ingredient1.id());
         return ingredient1;
     }
