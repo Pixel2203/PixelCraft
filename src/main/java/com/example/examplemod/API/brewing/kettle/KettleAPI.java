@@ -1,9 +1,11 @@
 package com.example.examplemod.API.brewing.kettle;
 
 import com.example.examplemod.API.brewing.kettle.ingredient.KettleIngredients;
+import com.example.examplemod.API.brewing.kettle.recipe.KettleRecipes;
 import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
 import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
 import com.example.examplemod.tag.TagRegistry;
+import com.google.common.base.Objects;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -13,40 +15,25 @@ import java.util.HashMap;
 
 public class KettleAPI {
     private static final HashMap<String, KettleRecipe> KETTLE_RECIPES = new HashMap<>();
-    private static final HashMap<Item,String> KETTLE_INGREDIENTS = new HashMap<>();
+    private static final HashMap<String, Item> KETTLE_INGREDIENTS = new HashMap<>();
 
     // Registry
-    private static KettleRecipe TestKettleRecipe =
-            registerRecipe(Items.DIAMOND,
-            KettleIngredients.GLOWSTONE_DUST.ingredient,KettleIngredients.BLAZE_ROD.ingredient);
-
-
-    private static KettleRecipe TestKettleRecipe2 =
-            registerRecipe(Items.DIRT,
-            KettleIngredients.BLAZE_ROD.ingredient, KettleIngredients.GLOWSTONE_DUST.ingredient);
-
+    private static KettleRecipe TestKettleRecipe = registerRecipe(KettleRecipes.TestKettleRecipe);
+    private static KettleRecipe TestKettleRecipe2 = registerRecipe(KettleRecipes.TestKettleRecipe2);
 
 
     // Handler Methods
-    private static KettleRecipe registerRecipe(Item result, KettleIngredient... ingredients){
-        String kettleRecipeString = serializeRecipeIngredientList(ingredients);
-        KettleRecipe kettleRecipe = new KettleRecipe(result,ingredients);
+    private static KettleRecipe registerRecipe(KettleRecipe recipe){
         KETTLE_RECIPES.put(
-                serializeRecipeIngredientList(kettleRecipe.ingredients()).toUpperCase(),
-                kettleRecipe);
-        return kettleRecipe;
+                recipe.serializedRecipe(),
+                recipe);
+        return recipe;
     }
-    private static String serializeRecipeIngredientList(KettleIngredient... ingredients){
-        String recipe = "";
-        for(KettleIngredient ingredient: ingredients){
-            if(StringUtil.isNullOrEmpty(recipe)){
-                recipe = ingredient.id();
-                continue;
-            }
-            recipe += "," + ingredient.id();
-        }
-        return recipe.toUpperCase();
+    public static KettleIngredient registerIngredient(KettleIngredient ingredient){
+        KETTLE_INGREDIENTS.put(ingredient.id(), ingredient.item());
+        return ingredient;
     }
+
 
     private static KettleIngredient[]  deserializeRecipeIngredientList (String recipe){
         if(recipe == null){return null;}
@@ -94,28 +81,20 @@ public class KettleAPI {
     }
 
 
-    public static KettleIngredient registerIngredient(KettleIngredient ingredient1){
-        KETTLE_INGREDIENTS.put(ingredient1.item(),ingredient1.id());
-        return ingredient1;
-    }
 
-    public static KettleIngredient getIngredientByName(String name){
-        if(!KETTLE_INGREDIENTS.containsValue(name.toUpperCase())){
+    public static KettleIngredient getIngredientByName(String id){
+        return new KettleIngredient(KETTLE_INGREDIENTS.get(id),id);
+    }
+    public static KettleIngredient getIngredientByItem(Item item){
+        if(!KETTLE_INGREDIENTS.containsValue(item)){
             return null;
         }
-        for(Item key : KETTLE_INGREDIENTS.keySet()){
-            if(KETTLE_INGREDIENTS.get(key).equalsIgnoreCase(name)){
-                return new KettleIngredient(key,name);
+        for(String key : KETTLE_INGREDIENTS.keySet()){
+            if(Objects.equal(item, KETTLE_INGREDIENTS.get(key))){
+                return new KettleIngredient(item,key);
             }
         }
         return null;
-    }
-    public static KettleIngredient getIngredientByItem(Item item){
-        String found = KETTLE_INGREDIENTS.get(item);
-        if(StringUtil.isNullOrEmpty(found)){
-            return null;
-        }
-        return new KettleIngredient(item, KETTLE_INGREDIENTS.get(item));
     }
     public static boolean hasIngredientTag(ItemStack itemStack){
         return itemStack.is(TagRegistry.KETTLE_INGREDIENTS);

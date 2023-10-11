@@ -4,6 +4,7 @@ import com.example.examplemod.API.brewing.kettle.KettleAPI;
 import com.example.examplemod.API.brewing.kettle.recipe.KettleRecipeFactory;
 import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
 import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
+import com.example.examplemod.API.brewing.kettle.result.ResultTypes;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import com.example.examplemod.particle.ParticleFactory;
@@ -100,8 +101,11 @@ public class KettleBlock extends Block implements EntityBlock {
                 return InteractionResult.SUCCESS;
             }
             if(itemStackInHand.is(Items.GLASS_BOTTLE) && hasIngredients){
-                String ingredientsInKettle = blockEntity.getSerializedKettleRecipe();
-                boolean worked = handleFillFluidInBottle(player,level,blockPos,blockState,hand,itemStackInHand,ingredientsInKettle,blockEntity);
+                KettleRecipe foundRecipe = KettleAPI.getRecipeBySerializedIngredientList(recipe);
+                if(foundRecipe.resultType() != ResultTypes.POTION){
+                    return InteractionResult.FAIL;
+                }
+                boolean worked = handleFillFluidInBottle(player,level,blockPos,blockState,hand,itemStackInHand,foundRecipe,blockEntity);
                 return worked ? InteractionResult.SUCCESS : InteractionResult.FAIL;
             }
             //level.addParticle(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
@@ -118,20 +122,23 @@ public class KettleBlock extends Block implements EntityBlock {
             BlockState blockState,
             InteractionHand hand,
             ItemStack bottleItemStack,
-            String kettleIngredientsSerialized,
+            KettleRecipe foundRecipe,
             KettleBlockEntity blockEntity) {
         // Decrease Bottle ItemStack Count if > 0; IF == 0 Then replace it
-        KettleRecipe foundRecipe = KettleAPI.getRecipeBySerializedIngredientList(kettleIngredientsSerialized);
+        /*
+        This handles to only cook valid recipes
         if(foundRecipe == null){
             return false;
         }
+
+         */
         int bottleCount = bottleItemStack.getCount();
         if(bottleCount == 0){
-            player.setItemInHand(hand, new ItemStack(foundRecipe.result()));
+            player.setItemInHand(hand, foundRecipe.result());
         }
         if(bottleCount > 0){
             bottleItemStack.shrink(1);
-            player.addItem(new ItemStack(foundRecipe.result()));
+            player.addItem(foundRecipe.result());
         }
 
         // IF Fluid level is going to be 0 , remove all ingredients from the kettle entity
