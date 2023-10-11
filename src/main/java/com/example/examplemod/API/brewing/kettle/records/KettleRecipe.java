@@ -1,6 +1,7 @@
 package com.example.examplemod.API.brewing.kettle.records;
 
 import com.example.examplemod.API.brewing.kettle.KettleAPI;
+import com.example.examplemod.API.brewing.kettle.result.ResultTypes;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -9,8 +10,9 @@ public class KettleRecipe {
     private ItemStack _result;
     private KettleIngredient[] _ingredients;
     private String _serializedRecipe;
+    private ResultTypes _resultType;
 
-    public KettleRecipe(ItemStack result, KettleIngredient ... ingredients){
+    public KettleRecipe(ResultTypes resultType,ItemStack result, KettleIngredient ... ingredients){
         this._result = result;
         this._ingredients = ingredients;
         this._serializedRecipe = this.serializeRecipe(ingredients);
@@ -23,6 +25,9 @@ public class KettleRecipe {
     }
     public ItemStack result(){
         return this._result;
+    }
+    public ResultTypes resultType(){
+        return _resultType;
     }
     private String serializeRecipe(KettleIngredient ... ingredients){
         String recipe = "";

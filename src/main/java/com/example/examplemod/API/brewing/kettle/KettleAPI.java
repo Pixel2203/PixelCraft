@@ -24,11 +24,10 @@ public class KettleAPI {
 
     // Handler Methods
     private static KettleRecipe registerRecipe(KettleRecipe recipe){
-        KettleRecipe kettleRecipe = new KettleRecipe(recipe.result(),recipe.ingredients());
         KETTLE_RECIPES.put(
-                kettleRecipe.serializedRecipe(),
-                kettleRecipe);
-        return kettleRecipe;
+                recipe.serializedRecipe(),
+                recipe);
+        return recipe;
     }
     public static KettleIngredient registerIngredient(KettleIngredient ingredient){
         KETTLE_INGREDIENTS.put(ingredient.id(), ingredient.item());

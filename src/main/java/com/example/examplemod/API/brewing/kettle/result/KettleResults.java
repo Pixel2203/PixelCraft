@@ -1,7 +1,6 @@
-package com.example.examplemod.API.brewing.kettle.items;
+package com.example.examplemod.API.brewing.kettle.result;
 
 import com.example.examplemod.item.ItemFactory;
-import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
