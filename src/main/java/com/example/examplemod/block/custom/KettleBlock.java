@@ -121,10 +121,15 @@ public class KettleBlock extends Block implements EntityBlock {
             String kettleIngredientsSerialized,
             KettleBlockEntity blockEntity) {
         // Decrease Bottle ItemStack Count if > 0; IF == 0 Then replace it
+
         KettleRecipe foundRecipe = KettleAPI.getRecipeBySerializedIngredientList(kettleIngredientsSerialized);
+        /*
+        This handles to only cook valid recipes
         if(foundRecipe == null){
             return false;
         }
+
+         */
         int bottleCount = bottleItemStack.getCount();
         if(bottleCount == 0){
             player.setItemInHand(hand, new ItemStack(foundRecipe.result()));
