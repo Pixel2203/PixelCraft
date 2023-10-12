@@ -25,7 +25,7 @@ public class KettleAPI {
     // Handler Methods
     private static KettleRecipe registerRecipe(KettleRecipe recipe){
         KETTLE_RECIPES.put(
-                recipe.serializedRecipe(),
+                recipe.serializedRecipe().toUpperCase(),
                 recipe);
         return recipe;
     }
@@ -74,7 +74,7 @@ public class KettleAPI {
         // return false;
     }
     public static boolean isValidRecipe(String serializedIngredientList){
-        return KETTLE_RECIPES.get(serializedIngredientList) != null;
+        return KETTLE_RECIPES.get(serializedIngredientList.toUpperCase()) != null;
     }
     public static KettleRecipe getRecipeBySerializedIngredientList(String serializedIngredientList){
         return KETTLE_RECIPES.get(serializedIngredientList.toUpperCase());

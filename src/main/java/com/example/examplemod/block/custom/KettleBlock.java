@@ -8,10 +8,7 @@ import com.example.examplemod.API.brewing.kettle.result.ResultTypes;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import com.example.examplemod.particle.ParticleFactory;
-import com.example.examplemod.particle.custom.CustomBubbleParticle;
-import com.example.examplemod.particle.custom.CustomBubbleProvider;
 import com.example.examplemod.tag.TagRegistry;
-import com.ibm.icu.text.MessagePattern;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -24,7 +21,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -56,11 +52,6 @@ public class KettleBlock extends Block implements EntityBlock {
         super.randomTick(blockState, serverLevel, blockPos, p_222957_);
     }
 
-    @Override
-    public void tick(BlockState p_222945_, ServerLevel p_222946_, BlockPos p_222947_, RandomSource p_222948_) {
-        System.out.println("HALLo");
-        super.tick(p_222945_, p_222946_, p_222947_, p_222948_);
-    }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
@@ -108,10 +99,32 @@ public class KettleBlock extends Block implements EntityBlock {
                 boolean worked = handleFillFluidInBottle(player,level,blockPos,blockState,hand,itemStackInHand,foundRecipe,blockEntity);
                 return worked ? InteractionResult.SUCCESS : InteractionResult.FAIL;
             }
+            if(itemStackInHand.is(Items.AIR) && hasIngredients){
+                handleRightClickWithHandOnKettle(level , blockPos, blockState, KettleAPI.getRecipeBySerializedIngredientList(recipe));
+            }
             //level.addParticle(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
 
         }
         return InteractionResult.SUCCESS;
+    }
+    private InteractionResult handleRightClickWithHandOnKettle(
+            Level level,
+            BlockPos blockPos,
+            BlockState blockState,
+            KettleRecipe recipe
+
+
+    ){
+        if(!KettleAPI.isValidRecipe(recipe.serializedRecipe())){
+            return InteractionResult.FAIL;
+        }
+        if(blockState.getValue(fluid_level) == MAX_FLUID_LEVEL){
+            ItemEntity itemEntity = new ItemEntity(level,blockPos.getX(),blockPos.getY()+1,blockPos.getZ(),recipe.result());
+            level.addFreshEntity(itemEntity);
+            level.setBlock(blockPos,blockState.setValue(fluid_level,0),3);
+            return InteractionResult.SUCCESS;
+        }
+        return InteractionResult.FAIL;
     }
 
 
@@ -125,13 +138,12 @@ public class KettleBlock extends Block implements EntityBlock {
             KettleRecipe foundRecipe,
             KettleBlockEntity blockEntity) {
         // Decrease Bottle ItemStack Count if > 0; IF == 0 Then replace it
-        /*
-        This handles to only cook valid recipes
+
         if(foundRecipe == null){
             return false;
         }
 
-         */
+
         int bottleCount = bottleItemStack.getCount();
         if(bottleCount == 0){
             player.setItemInHand(hand, foundRecipe.result());
@@ -174,9 +186,9 @@ public class KettleBlock extends Block implements EntityBlock {
         }
         String serializedRecipe = entity.getSerializedKettleRecipe();
         String nextRecipeString = KettleRecipeFactory.getNextRecipeString(serializedRecipe, foundMatchingIngredient);
-        if(KettleAPI.isPartOfOrCompleteRecipe(nextRecipeString)){
+        //if(KettleAPI.isPartOfOrCompleteRecipe(nextRecipeString)){
             acceptIngredient(itemStack, entity, foundMatchingIngredient);
-        }
+        //}
 
     }
     private static void acceptIngredient(ItemStack itemStack, KettleBlockEntity entity, KettleIngredient ingredient){

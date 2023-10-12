@@ -16,6 +16,7 @@ public class KettleRecipe {
         this._result = result;
         this._ingredients = ingredients;
         this._serializedRecipe = this.serializeRecipe(ingredients);
+        this._resultType = resultType;
     }
     public String serializedRecipe(){
         return _serializedRecipe;
