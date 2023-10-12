@@ -4,12 +4,13 @@ import com.example.examplemod.API.brewing.kettle.recipe.KettleRecipeFactory;
 import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
+import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class KettleBlockEntity extends BlockEntity {
+public class KettleBlockEntity extends BlockEntity implements ITickableBlockEntity {
     private String kettleIngredientsSerialized;
 
     public KettleBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -43,5 +44,10 @@ public class KettleBlockEntity extends BlockEntity {
     }
     public String getSerializedKettleRecipe(){
         return this.kettleIngredientsSerialized;
+    }
+
+    @Override
+    public void tick() {
+        System.out.println("TICK");
     }
 }
