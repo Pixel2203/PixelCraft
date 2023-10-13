@@ -42,9 +42,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
+@SuppressWarnings("deprecation")
 public class KettleBlock extends Block implements EntityBlock {
-    private static int MIN_FLUID_LEVEL = 0;
-    private static int MAX_FLUID_LEVEL = 3;
+    public static int MIN_FLUID_LEVEL = 0;
+    public static int MAX_FLUID_LEVEL = 3;
     public static final IntegerProperty fluid_level = IntegerProperty.create("kettle_fluid_level",MIN_FLUID_LEVEL, MAX_FLUID_LEVEL);
     public KettleBlock() {
         super(BlockBehaviour.Properties.copy(Blocks.CAULDRON).randomTicks());
@@ -71,13 +72,13 @@ public class KettleBlock extends Block implements EntityBlock {
     }
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return BlockEntityRegistry.KETTLE_BLOCK_ENTITY.get().create(p_153215_,p_153216_);
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return BlockEntityRegistry.KETTLE_BLOCK_ENTITY.get().create(blockPos,blockState);
     }
     @Override
     public void fallOn(Level level, BlockState state, BlockPos blockPos, Entity entity, float v) {
         if(!level.isClientSide() && state.getValue(fluid_level) > MIN_FLUID_LEVEL && entity instanceof ItemEntity itemEntity){
-            if(level.getBlockEntity(blockPos) instanceof KettleBlockEntity kettleBlockEntity) {
+            if(level.getBlockEntity(blockPos) instanceof KettleBlockEntity kettleBlockEntity && !kettleBlockEntity.isProgressing()) {
                 if(!isFireBelow(level,blockPos)){
                     return;
                 }
@@ -93,11 +94,9 @@ public class KettleBlock extends Block implements EntityBlock {
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult p_60508_) {
         if(!level.isClientSide() && hand == InteractionHand.MAIN_HAND && level.getBlockEntity(blockPos) instanceof KettleBlockEntity blockEntity){
-            boolean hasIngredients = !StringUtil.isNullOrEmpty(blockEntity.getSerializedKettleRecipe());
+
             int currentKettleFluidLevel = blockState.getValue(fluid_level);
-            KettleRecipe foundRecipe = KettleAPI.getRecipeBySerializedIngredientList(blockEntity.getSerializedKettleRecipe());
             player.sendSystemMessage(Component.literal("Recipe: " + blockEntity.getSerializedKettleRecipe()));
-            if(Objects.isNull(foundRecipe)){return InteractionResult.FAIL;}
 
             ItemStack itemStackInHand = player.getItemInHand(hand);
 
@@ -105,36 +104,21 @@ public class KettleBlock extends Block implements EntityBlock {
                 handleFillKettleWithFluid(itemStackInHand,blockPos,blockState,level);
                 return InteractionResult.SUCCESS;
             }
+
+            boolean hasIngredients = !StringUtil.isNullOrEmpty(blockEntity.getSerializedKettleRecipe());
             if(itemStackInHand.is(Items.GLASS_BOTTLE) && hasIngredients){
+                KettleRecipe foundRecipe = KettleAPI.getRecipeBySerializedIngredientList(blockEntity.getSerializedKettleRecipe());
+                if(Objects.isNull(foundRecipe)){return InteractionResult.FAIL;}
                 if(foundRecipe.resultType() != ResultTypes.POTION){
                     return InteractionResult.FAIL;
                 }
                 boolean worked = handleFillFluidInBottle(player,level,blockPos,blockState,hand,itemStackInHand,foundRecipe,blockEntity);
                 return worked ? InteractionResult.SUCCESS : InteractionResult.FAIL;
             }
-            if(itemStackInHand.is(Items.AIR) && hasIngredients){
-                spawnResultOfRecipeOnKettle(level , blockPos, blockState, blockEntity, foundRecipe);
-            }
             //level.addParticle(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
 
         }
         return InteractionResult.SUCCESS;
-    }
-    private void spawnResultOfRecipeOnKettle(
-            Level level,
-            BlockPos blockPos,
-            BlockState blockState,
-            KettleBlockEntity blockEntity,
-            @NotNull KettleRecipe recipe
-
-
-    ){
-        if(blockState.getValue(fluid_level) == MAX_FLUID_LEVEL){
-            ItemEntity itemEntity = new ItemEntity(level,blockPos.getX(),blockPos.getY()+1,blockPos.getZ(),recipe.result());
-            level.addFreshEntity(itemEntity);
-            level.setBlock(blockPos,blockState.setValue(fluid_level,0),3);
-            blockEntity.resetContent();
-        }
     }
 
 
@@ -199,7 +183,13 @@ public class KettleBlock extends Block implements EntityBlock {
         //if(KettleAPI.isPartOfOrCompleteRecipe(nextRecipeString)){
             acceptIngredient(itemStack, entity, foundMatchingIngredient);
         //}
+        if(KettleAPI.isValidRecipe(nextRecipeString)){
+            KettleRecipe recipe = KettleAPI.getRecipeBySerializedIngredientList(nextRecipeString);
+            if(recipe.resultType() == ResultTypes.ITEM){
+                entity.startBrewing();
+            }
 
+        }
     }
     private static void acceptIngredient(ItemStack itemStack, KettleBlockEntity entity, KettleIngredient ingredient){
         entity.add(ingredient);
