@@ -5,9 +5,5 @@
   "block.pixelcraft.example_block": "§9§n§oExample Block",
   "block.pixelcraft.zircon_block": "§oBlock of Zircon",
   "item.pixelcraft.potion_diarrhea": "§t§lDiarrhea Potion",
-  "tooltip.pixelcraft.itemdecs1.tooltip": "Test 1",
-  "tooltip.pixelcraft.itemdecs2.tooltip": "Test 2",
-  "tooltip.pixelcraft.itemdecs3.tooltip": "Test 3",
-  "tooltip.pixelcraft.itemdecs4.tooltip": "Test 4",
-  "tooltip.pixelcraft.itemdecs5.tooltip": "Test 5"
+  "tooltip.pixelcraft.itemdecs1.tooltip": "Test 1"
 }
