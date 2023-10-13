@@ -1,5 +1,6 @@
 package com.example.examplemod.item.custom;
 
+
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
@@ -8,8 +9,11 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.client.event.ScreenEvent;
+
+import java.util.List;
 
 public class ZirconItem extends Item {
     public ZirconItem() {
@@ -25,4 +29,7 @@ public class ZirconItem extends Item {
                 , 0,0,0);
         return super.use(level, player, hand);
     }
+
+
+
 }
