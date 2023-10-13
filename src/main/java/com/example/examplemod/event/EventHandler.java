@@ -11,5 +11,6 @@ public class EventHandler {
     @SubscribeEvent
     public static void pickupItem(EntityItemPickupEvent event) {
         System.out.println("Item picked up!");
+
     }
 }
