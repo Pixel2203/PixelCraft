@@ -14,11 +14,6 @@ public class FloraPotion extends SplashPotionItem {
         super(properties);
     }
 
-    public Rarity getRarity(ItemStack itemStack)
-    {
-        return Rarity.RARE;
-    }
-
     @Override
     public InteractionResultHolder<ItemStack> use(Level p_43243_, Player p_43244_, InteractionHand p_43245_) {
         return super.use(p_43243_, p_43244_, p_43245_);
