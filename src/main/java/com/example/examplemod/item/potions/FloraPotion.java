@@ -5,12 +5,18 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.level.Level;
 
 public class FloraPotion extends SplashPotionItem {
     public FloraPotion(Properties properties) {
         super(properties);
+    }
+
+    public Rarity getRarity(ItemStack itemStack)
+    {
+        return Rarity.RARE;
     }
 
     @Override

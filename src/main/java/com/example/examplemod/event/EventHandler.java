@@ -2,6 +2,7 @@ package com.example.examplemod.event;
 
 import com.example.examplemod.ExampleMod;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -12,4 +13,5 @@ public class EventHandler {
     public static void pickupItem(EntityItemPickupEvent event) {
         System.out.println("Item picked up!");
     }
+
 }

@@ -1,7 +1,13 @@
 {
   "item.pixelcraft.example": "Example Item",
-  "item.pixelcraft.zircon": "Zircon",
-  "creativetab.example_tab": "Example Tab",
-  "block.pixelcraft.example_block": "Example Block",
-  "block.pixelcraft.zircon_block": "Block of Zircon"
+  "item.pixelcraft.zircon": "§6Zircon",
+  "creativetab.example_tab": "§9§n§oExample Tab",
+  "block.pixelcraft.example_block": "§9§n§oExample Block",
+  "block.pixelcraft.zircon_block": "§oBlock of Zircon",
+  "item.pixelcraft.potion_diarrhea": "§t§lDiarrhea Potion",
+  "tooltip.pixelcraft.itemdecs1.tooltip": "Test 1",
+  "tooltip.pixelcraft.itemdecs2.tooltip": "Test 2",
+  "tooltip.pixelcraft.itemdecs3.tooltip": "Test 3",
+  "tooltip.pixelcraft.itemdecs4.tooltip": "Test 4",
+  "tooltip.pixelcraft.itemdecs5.tooltip": "Test 5"
 }
