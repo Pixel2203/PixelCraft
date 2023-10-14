@@ -196,9 +196,7 @@ public class KettleBlock extends Block implements EntityBlock {
         itemStack.shrink(1);
         entity.getLevel().playSound(null, entity.getBlockPos(), SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS,0.25f,1f);
     }
-    private boolean isFireBelow(Level level, BlockPos blockPos){
+    public boolean isFireBelow(Level level, BlockPos blockPos){
         return level.getBlockState(blockPos.below()).getBlock() == Blocks.FIRE;
     }
-
-
 }

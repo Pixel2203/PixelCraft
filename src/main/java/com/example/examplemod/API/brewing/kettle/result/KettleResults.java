@@ -1,9 +1,11 @@
 package com.example.examplemod.API.brewing.kettle.result;
 
 import com.example.examplemod.item.ItemFactory;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import org.checkerframework.checker.units.qual.C;
 
 
 public enum KettleResults {

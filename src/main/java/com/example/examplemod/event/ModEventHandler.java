@@ -24,6 +24,6 @@ public class ModEventHandler {
                     CustomBubbleProvider::new
                 );
 
-        LogUtils.getLogger().warn("RegisterParticleProvider has been registered!!");
+        LogUtils.getLogger().info("RegisterParticleProvider has been registered!!");
     }
 }
