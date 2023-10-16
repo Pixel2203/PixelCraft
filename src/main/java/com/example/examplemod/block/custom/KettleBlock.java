@@ -1,6 +1,7 @@
 package com.example.examplemod.block.custom;
 
 import com.example.examplemod.API.brewing.kettle.KettleAPI;
+import com.example.examplemod.API.brewing.kettle.fluid.KettleColors;
 import com.example.examplemod.API.brewing.kettle.recipe.KettleRecipeFactory;
 import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
 import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
@@ -15,6 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.CommonColors;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
@@ -41,16 +43,21 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class KettleBlock extends Block implements EntityBlock {
-    public static int MIN_FLUID_LEVEL = 0;
-    public static int MAX_FLUID_LEVEL = 3;
+    public static final int MIN_FLUID_LEVEL = 0;
+    public static final int MAX_FLUID_LEVEL = 3;
+
+    private static final int COLOR_AMOUNT = 4;
+    public static final KettleColors DEFAULT_FLUID_COLOR = KettleColors.BLUE;
     public static final IntegerProperty fluid_level = IntegerProperty.create("kettle_fluid_level",MIN_FLUID_LEVEL, MAX_FLUID_LEVEL);
+    public static final IntegerProperty fluid_color = IntegerProperty.create("fluidcolor",0, COLOR_AMOUNT);
     public KettleBlock() {
         super(BlockBehaviour.Properties.copy(Blocks.CAULDRON).randomTicks());
         registerDefaultState(
-                this.stateDefinition.any().setValue(fluid_level,0)
+                this.stateDefinition.any().setValue(fluid_level,0).setValue(fluid_color,0)
         );
     }
 
@@ -69,6 +76,7 @@ public class KettleBlock extends Block implements EntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(fluid_level);
+        builder.add(fluid_color);
     }
     @Nullable
     @Override
@@ -195,6 +203,9 @@ public class KettleBlock extends Block implements EntityBlock {
         entity.add(ingredient);
         itemStack.shrink(1);
         entity.getLevel().playSound(null, entity.getBlockPos(), SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS,0.25f,1f);
+        Random random = new Random();
+
+        entity.getLevel().setBlock(entity.getBlockPos(),entity.getBlockState().setValue(fluid_color,random.nextInt(COLOR_AMOUNT)),3);
     }
     public boolean isFireBelow(Level level, BlockPos blockPos){
         return level.getBlockState(blockPos.below()).getBlock() == Blocks.FIRE;

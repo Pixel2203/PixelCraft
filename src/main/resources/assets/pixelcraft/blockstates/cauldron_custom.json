@@ -3,14 +3,41 @@
     "kettle_fluid_level=0": {
       "model": "pixelcraft:block/cauldron_custom"
     },
-    "kettle_fluid_level=1": {
-      "model": "pixelcraft:block/cauldron_custom_level1"
+    "kettle_fluid_level=1,fluidcolor=0": {
+      "model": "pixelcraft:block/cauldron_custom_level1_default"
     },
-    "kettle_fluid_level=2": {
-      "model": "pixelcraft:block/cauldron_custom_level2"
+    "kettle_fluid_level=2,fluidcolor=0": {
+      "model": "pixelcraft:block/cauldron_custom_level2_default"
     },
-    "kettle_fluid_level=3": {
-      "model": "pixelcraft:block/cauldron_custom_level3"
+    "kettle_fluid_level=3,fluidcolor=0": {
+      "model": "pixelcraft:block/cauldron_custom_level3_default"
+    },
+    "kettle_fluid_level=1,fluidcolor=1": {
+      "model": "pixelcraft:block/cauldron_custom_level1_orange"
+    },
+    "kettle_fluid_level=2,fluidcolor=1": {
+      "model": "pixelcraft:block/cauldron_custom_level2_orange"
+    },
+    "kettle_fluid_level=3,fluidcolor=1": {
+      "model": "pixelcraft:block/cauldron_custom_level3_orange"
+    },
+    "kettle_fluid_level=1,fluidcolor=2": {
+      "model": "pixelcraft:block/cauldron_custom_level1_purple"
+    },
+    "kettle_fluid_level=2,fluidcolor=2": {
+      "model": "pixelcraft:block/cauldron_custom_level2_purple"
+    },
+    "kettle_fluid_level=3,fluidcolor=2": {
+      "model": "pixelcraft:block/cauldron_custom_level3_purple"
+    },
+    "kettle_fluid_level=1,fluidcolor=3": {
+      "model": "pixelcraft:block/cauldron_custom_level1_lightpurple"
+    },
+    "kettle_fluid_level=2,fluidcolor=3": {
+      "model": "pixelcraft:block/cauldron_custom_level2_lightpurple"
+    },
+    "kettle_fluid_level=3,fluidcolor=3": {
+      "model": "pixelcraft:block/cauldron_custom_level3_lightpurple"
     }
   }
 }
