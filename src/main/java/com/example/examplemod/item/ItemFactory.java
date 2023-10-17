@@ -1,7 +1,7 @@
 package com.example.examplemod.item;
 
 import com.example.examplemod.item.custom.ZirconItem;
-import com.example.examplemod.potion.FloraPotion;
+import com.example.examplemod.potion.flora.FloraPotion;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SplashPotionItem;

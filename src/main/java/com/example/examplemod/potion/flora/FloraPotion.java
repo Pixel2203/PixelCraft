@@ -1,10 +1,11 @@
-package com.example.examplemod.potion;
+package com.example.examplemod.potion.flora;
 
-import com.example.examplemod.potion.thrown.ThrownFloraPotion;
+import com.example.examplemod.potion.CustomPotion;
+import com.example.examplemod.potion.flora.ThrownFloraPotion;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-public class FloraPotion extends CustomPotion<ThrownFloraPotion>{
+public class FloraPotion extends CustomPotion<ThrownFloraPotion> {
     public FloraPotion(Properties p_43241_) {
         super(p_43241_);
     }

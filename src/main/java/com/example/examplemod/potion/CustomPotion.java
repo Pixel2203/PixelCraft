@@ -1,7 +1,6 @@
 package com.example.examplemod.potion;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.potion.thrown.ThrownFloraPotion;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
