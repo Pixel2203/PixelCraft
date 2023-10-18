@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "pixelcraft:block/golden_chalk_block"
+      "model": "pixelcraft:block/golden_chalk"
     }
   }
 }

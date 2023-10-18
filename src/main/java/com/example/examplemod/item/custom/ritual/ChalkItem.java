@@ -9,22 +9,23 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
-public class WhiteChalkItem extends Item {
-    public WhiteChalkItem(Properties properties) {
-        super(properties);
+public class ChalkItem extends Item {
+    protected ChalkBlock blockToPlace;
+    public ChalkItem(Properties p_41383_, ChalkBlock blockToPlace) {
+        super(p_41383_);
+        this.blockToPlace = blockToPlace;
     }
-
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        BlockPos clickedPos = context.getClickedPos();
+        BlockPos clickedPos = context.getClickedPos().above();
         if(level.isClientSide()){
             return InteractionResult.FAIL;
         }
-        if (level.getBlockState(clickedPos).getBlock() == Blocks.AIR) {
+        if (level.getBlockState(clickedPos).getBlock() != Blocks.AIR) {
             return InteractionResult.FAIL;
         }
-        level.setBlockAndUpdate(clickedPos, BlockFactory.WhiteChalkBlock_BLK.defaultBlockState());
+        level.setBlockAndUpdate(clickedPos, this.blockToPlace.defaultBlockState());
         return InteractionResult.SUCCESS;
     }
 }

@@ -1,3 +1,6 @@
 {
-  "parent": "pixelcraft:block/golden_chalk_block"
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "pixelcraft:item/golden_chalk"
+  }
 }

@@ -1,6 +1,77 @@
 {
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "pixelcraft:block/zircon_block"
-  }
+	"textures": {
+		"particle": "pixelcraft:block/golden_chalk",
+		"pirmary": "pixelcraft:block/golden_chalk"
+	},
+	"elements": [
+		{
+			"from": [4, 0, 3],
+			"to": [12, 0.25, 5],
+			"faces": {
+				"north": {"uv": [3, 4, 7, 4.5], "texture": "#pirmary"},
+				"east": {"uv": [5, 3, 6, 3.5], "texture": "#pirmary"},
+				"south": {"uv": [4, 3.5, 8, 4], "texture": "#pirmary"},
+				"west": {"uv": [3.5, 5.5, 4.5, 6], "texture": "#pirmary"},
+				"up": {"uv": [4, 1, 0, 0], "texture": "#pirmary"},
+				"down": {"uv": [4, 1, 0, 2], "texture": "#pirmary"}
+			}
+		},
+		{
+			"from": [4, 0, 12],
+			"to": [12, 0.25, 14],
+			"faces": {
+				"north": {"uv": [3, 4.5, 7, 5], "texture": "#pirmary"},
+				"east": {"uv": [5.5, 5, 6.5, 5.5], "texture": "#pirmary"},
+				"south": {"uv": [5, 0, 9, 0.5], "texture": "#pirmary"},
+				"west": {"uv": [5.5, 5.5, 6.5, 6], "texture": "#pirmary"},
+				"up": {"uv": [4, 3, 0, 2], "texture": "#pirmary"},
+				"down": {"uv": [4, 3, 0, 4], "texture": "#pirmary"}
+			}
+		},
+		{
+			"from": [7.5, 0, 8],
+			"to": [8.5, 0.25, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0.125, 9.5]},
+			"faces": {
+				"north": {"uv": [4.5, 5.5, 5, 6], "texture": "#pirmary"},
+				"east": {"uv": [5, 2.5, 7, 3], "texture": "#pirmary"},
+				"south": {"uv": [4.5, 6, 5, 6.5], "texture": "#pirmary"},
+				"west": {"uv": [3, 5, 5, 5.5], "texture": "#pirmary"},
+				"up": {"uv": [5.5, 7, 5, 5], "texture": "#pirmary"},
+				"down": {"uv": [3.5, 5.5, 3, 7.5], "texture": "#pirmary"}
+			}
+		},
+		{
+			"from": [12, 0, 5],
+			"to": [14, 0.25, 12],
+			"faces": {
+				"north": {"uv": [6, 3, 7, 3.5], "texture": "#pirmary"},
+				"east": {"uv": [5, 0.5, 8.5, 1], "texture": "#pirmary"},
+				"south": {"uv": [3.5, 6, 4.5, 6.5], "texture": "#pirmary"},
+				"west": {"uv": [5, 1, 8.5, 1.5], "texture": "#pirmary"},
+				"up": {"uv": [1, 7.5, 0, 4], "texture": "#pirmary"},
+				"down": {"uv": [5, 0, 4, 3.5], "texture": "#pirmary"}
+			}
+		},
+		{
+			"from": [2, 0, 5],
+			"to": [4, 0.25, 12],
+			"faces": {
+				"north": {"uv": [5.5, 6, 6.5, 6.5], "texture": "#pirmary"},
+				"east": {"uv": [5, 1.5, 8.5, 2], "texture": "#pirmary"},
+				"south": {"uv": [3.5, 6.5, 4.5, 7], "texture": "#pirmary"},
+				"west": {"uv": [5, 2, 8.5, 2.5], "texture": "#pirmary"},
+				"up": {"uv": [2, 7.5, 1, 4], "texture": "#pirmary"},
+				"down": {"uv": [3, 4, 2, 7.5], "texture": "#pirmary"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "chalk",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4]
+		}
+	]
 }
