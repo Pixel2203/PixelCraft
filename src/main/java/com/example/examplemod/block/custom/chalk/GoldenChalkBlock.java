@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class GoldenChalkBlock extends ChalkBlock{
+public class GoldenChalkBlock extends Block{
     public GoldenChalkBlock(Properties props) {
         super(props);
     }

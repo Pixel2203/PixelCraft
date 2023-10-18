@@ -20,10 +20,10 @@ public class BlockRegistry {
             BLOCKS.register("zircon_block",() -> BlockFactory.ZirconBlock_BLK);
     public static final RegistryObject<Block> CauldronCustomBlock =
             BLOCKS.register("cauldron_custom",() -> BlockFactory.CauldronCustomBlock_BLK);
-    public static final RegistryObject<Block> GoldenChalkBlock =
-            BLOCKS.register("golden_chalk_block",() -> BlockFactory.GoldenChalkBlock_BLK);
-    public static final RegistryObject<Block> WhiteChalkBlock =
-            BLOCKS.register("white_chalk_block",() -> BlockFactory.WhiteChalkBlock_BLK);
+    //public static final RegistryObject<Block> GoldenChalkBlock =
+    //        BLOCKS.register("golden_chalk",() -> BlockFactory.GoldenChalkBlock_BLK);
+    //public static final RegistryObject<Block> WhiteChalkBlock =
+    //        BLOCKS.register("white_chalk",() -> BlockFactory.WhiteChalkBlock_BLK);
 
     public static final RegistryObject<BlockItem> ExampleBlockItem =
             ItemRegistry.ITEMS.register("example_block", () -> BlockFactory.ExampleBlock_BLKITM);
@@ -32,11 +32,8 @@ public class BlockRegistry {
     public static final RegistryObject<BlockItem> CauldronCustomBlockItem =
             ItemRegistry.ITEMS.register("cauldron_custom", () -> BlockFactory.CauldronCustomBlock_BLKITM);
 
-    public static final RegistryObject<BlockItem> GoldenChalkBlockItem =
-            ItemRegistry.ITEMS.register("golden_chalk", () -> BlockFactory.GoldenChalkBlock_BLKITM);
-    public static final RegistryObject<BlockItem> WhiteChalkBlockItem =
-            ItemRegistry.ITEMS.register("white_chalk", () -> BlockFactory.WhiteChalkBlock_BLKITM);
-
+    //public static final RegistryObject<BlockItem> GoldenChalkBlockItem =
+    //        ItemRegistry.ITEMS.register("golden_chalk", () -> BlockFactory.GoldenChalkBlock_BLKITM);
 
     public static void registerBlocks(IEventBus eventBus){
         BLOCKS.register(eventBus);
