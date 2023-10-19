@@ -1,0 +1,9 @@
+{
+  "parent":"pixelcraft:block/cauldron_custom_template_level2",
+  "textures": {
+    "outside": "pixelcraft:block/cauldron_custom",
+    "inside": "pixelcraft:block/cauldron_custom_inner",
+    "content": "pixelcraft:block/water_orange",
+    "particle": "pixelcraft:block/cauldron_custom"
+  }
+}

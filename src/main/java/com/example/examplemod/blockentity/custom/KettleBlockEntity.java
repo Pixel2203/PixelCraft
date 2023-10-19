@@ -1,30 +1,31 @@
 package com.example.examplemod.blockentity.custom;
 
-import com.example.examplemod.API.brewing.kettle.KettleAPI;
-import com.example.examplemod.API.brewing.kettle.recipe.KettleRecipeFactory;
-import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
-import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
+import com.example.examplemod.API.kettle.KettleAPI;
+import com.example.examplemod.API.kettle.recipe.KettleRecipeFactory;
+import com.example.examplemod.API.kettle.records.KettleIngredient;
+import com.example.examplemod.API.kettle.records.KettleRecipe;
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.block.custom.KettleBlock;
+import com.example.examplemod.block.custom.kettle.KettleBlock;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
-import com.example.examplemod.particle.ParticleFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+import java.util.Random;
 
 public class KettleBlockEntity extends BlockEntity implements ITickableBlockEntity {
     private String kettleIngredientsSerialized;
     private boolean isProgressing;
     private int progress;
-
     public KettleBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BlockEntityRegistry.KETTLE_BLOCK_ENTITY.get(), blockPos, blockState);
     }
@@ -75,30 +76,45 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
         if(isProgressing && progress >= 40){
             progress = 0;
             isProgressing = false;
-            spawnResultOfRecipeOnKettle(level, this.getBlockPos(),this.getBlockState(), this, KettleAPI.getRecipeBySerializedIngredientList(this.kettleIngredientsSerialized));
+            spawnResultOfRecipeOnKettle(KettleAPI.getRecipeBySerializedIngredientList(this.kettleIngredientsSerialized));
             setChanged();
         }
 
         if(isProgressing){
             this.progress++;
             setChanged();
+        }else {
+            if(Objects.isNull(this.level) || this.level.isClientSide() ){
+                return;
+            }
+            boolean isFireBelow = ((KettleBlock)this.getBlockState().getBlock()).isFireBelow(this.level,this.getBlockPos());
+            boolean isMaxFluidLevel = this.getBlockState().getValue(KettleBlock.fluid_level) == KettleBlock.MAX_FLUID_LEVEL;
+            if(!isFireBelow || !isMaxFluidLevel){
+                return;
+            }
+            BlockPos aboveBlock = this.getBlockPos().above();
+            Random random = new Random();
+            int bubbleChange = random.nextInt(30);
+            if(bubbleChange <= 25){
+                return;
+            }
+            ((ServerLevel)level).sendParticles(ParticleTypes.BUBBLE_POP,aboveBlock.getX() + 0.5f, aboveBlock.getY(), aboveBlock.getZ()+0.5f,1,0.2,0,0.2,0);
+
         }
     }
     private void spawnResultOfRecipeOnKettle(
-            Level level,
-            BlockPos blockPos,
-            BlockState blockState,
-            KettleBlockEntity blockEntity,
             @NotNull KettleRecipe recipe
 
 
     ){
-        if(blockState.getValue(KettleBlock.fluid_level) == KettleBlock.MAX_FLUID_LEVEL && !level.isClientSide()){
-            ItemEntity itemEntity = new ItemEntity(level,blockPos.getX(),blockPos.above().getY(),blockPos.getZ(),recipe.result());
+        if(this.getBlockState().getValue(KettleBlock.fluid_level) == KettleBlock.MAX_FLUID_LEVEL && !level.isClientSide()){
+            BlockPos aboveBlock = this.getBlockPos().above();
+            ItemEntity itemEntity = new ItemEntity(level,aboveBlock.getX() +0.5f,aboveBlock.getY()+0.5f,aboveBlock.getZ()+0.5f,recipe.result());
+            itemEntity.setDeltaMovement(Vec3.ZERO);
             level.addFreshEntity(itemEntity);
-            level.setBlock(blockPos,blockState.setValue(KettleBlock.fluid_level,KettleBlock.MIN_FLUID_LEVEL),3);
-            ((ServerLevel) level).sendParticles(ParticleTypes.EXPLOSION, blockPos.getX(),blockPos.getY(),blockPos.getZ(),0,2,1,1,1);
-            blockEntity.resetContent();
+            level.setBlock(this.getBlockPos(),this.getBlockState().setValue(KettleBlock.fluid_level,KettleBlock.MIN_FLUID_LEVEL),3);
+            ((ServerLevel) level).sendParticles(ParticleTypes.EXPLOSION, aboveBlock.getX() + 0.5f,aboveBlock.getY()+0.5f,aboveBlock.getZ() +0.5f,0,1,1,1,1);
+            this.resetContent();
         }
     }
     public boolean isProgressing() {

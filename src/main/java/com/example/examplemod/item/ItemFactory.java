@@ -1,14 +1,12 @@
 package com.example.examplemod.item;
 
+import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.custom.ZirconItem;
+import com.example.examplemod.item.custom.ritual.ChalkItem;
+import com.example.examplemod.potion.flora.FloraPotion;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SplashPotionItem;
-
-import java.util.function.Supplier;
-
-import static com.example.examplemod.block.BlockRegistry.ExampleBlock;
 
 public class ItemFactory {
 
@@ -22,6 +20,10 @@ public class ItemFactory {
     public static final SplashPotionItem ExamplePotion =
             new SplashPotionItem(new Item.Properties());
 
-
-
+    public static final SplashPotionItem FloraPotion =
+            new FloraPotion(new Item.Properties());
+    public static final Item WhiteChalkItem =
+            new ChalkItem(new Item.Properties(), BlockFactory.WhiteChalkBlock_BLK);
+    public static final Item GoldenChalkItem =
+            new ChalkItem(new Item.Properties(), BlockFactory.GoldenChalkBlock_BLK);
 }

@@ -18,7 +18,12 @@ public class ItemRegistry {
             ITEMS.register("zircon", () -> ZirconItem);
     public static final RegistryObject<Item> EXAMPLE_POTION =
             ITEMS.register("potion_diarrhea", () -> ExamplePotion);
-
+    public static final RegistryObject<Item> FLORAPOTION =
+            ITEMS.register("potion_flora" , () -> FloraPotion);
+    public static final RegistryObject<Item> WHITECHALK =
+            ITEMS.register("white_chalk", () -> WhiteChalkItem);
+    public static final RegistryObject<Item> GOLDENCHALK =
+            ITEMS.register("golden_chalk", () -> GoldenChalkItem);
     // BlockItems
 
 
