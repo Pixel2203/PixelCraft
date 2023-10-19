@@ -1,4 +1,4 @@
-package com.example.examplemod.API.brewing.kettle.result;
+package com.example.examplemod.API.kettle.result;
 
 public enum ResultTypes {
     POTION("type_potion"),

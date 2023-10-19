@@ -1,17 +1,11 @@
 package com.example.examplemod.tab;
 
-import com.example.examplemod.API.brewing.kettle.result.ItemStackHelper;
+import com.example.examplemod.API.kettle.result.ItemStackHelper;
 import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.ItemFactory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-
-import java.util.Comparator;
-import java.util.function.Supplier;
-
-import static com.example.examplemod.item.ItemRegistry.EXAMPLE;
 
 public class TabFactory {
 

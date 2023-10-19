@@ -1,15 +1,12 @@
-package com.example.examplemod.API.brewing.kettle;
+package com.example.examplemod.API.kettle;
 
-import com.example.examplemod.API.brewing.kettle.ingredient.KettleIngredients;
-import com.example.examplemod.API.brewing.kettle.recipe.KettleRecipes;
-import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
-import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
+import com.example.examplemod.API.kettle.recipe.KettleRecipes;
+import com.example.examplemod.API.kettle.records.KettleIngredient;
+import com.example.examplemod.API.kettle.records.KettleRecipe;
 import com.example.examplemod.tag.TagRegistry;
 import com.google.common.base.Objects;
-import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 import java.util.HashMap;
 

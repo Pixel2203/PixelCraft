@@ -1,9 +1,9 @@
-package com.example.examplemod.API.brewing.kettle.recipe;
+package com.example.examplemod.API.kettle.recipe;
 
-import com.example.examplemod.API.brewing.kettle.ingredient.KettleIngredients;
-import com.example.examplemod.API.brewing.kettle.result.KettleResults;
-import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
-import com.example.examplemod.API.brewing.kettle.result.ResultTypes;
+import com.example.examplemod.API.kettle.ingredient.KettleIngredients;
+import com.example.examplemod.API.kettle.result.KettleResults;
+import com.example.examplemod.API.kettle.records.KettleRecipe;
+import com.example.examplemod.API.kettle.result.ResultTypes;
 
 public class KettleRecipes {
 

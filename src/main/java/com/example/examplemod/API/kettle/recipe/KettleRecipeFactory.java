@@ -1,6 +1,6 @@
-package com.example.examplemod.API.brewing.kettle.recipe;
+package com.example.examplemod.API.kettle.recipe;
 
-import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
+import com.example.examplemod.API.kettle.records.KettleIngredient;
 import net.minecraft.util.StringUtil;
 
 public class KettleRecipeFactory {

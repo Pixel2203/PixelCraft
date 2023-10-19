@@ -1,4 +1,4 @@
-package com.example.examplemod.API.brewing.kettle.records;
+package com.example.examplemod.API.kettle.records;
 
 import net.minecraft.world.item.Item;
 

@@ -1,26 +1,22 @@
 package com.example.examplemod.blockentity.custom;
 
-import com.example.examplemod.API.brewing.kettle.KettleAPI;
-import com.example.examplemod.API.brewing.kettle.recipe.KettleRecipeFactory;
-import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
-import com.example.examplemod.API.brewing.kettle.records.KettleRecipe;
+import com.example.examplemod.API.kettle.KettleAPI;
+import com.example.examplemod.API.kettle.recipe.KettleRecipeFactory;
+import com.example.examplemod.API.kettle.records.KettleIngredient;
+import com.example.examplemod.API.kettle.records.KettleRecipe;
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.block.custom.KettleBlock;
+import com.example.examplemod.block.custom.kettle.KettleBlock;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
-import com.example.examplemod.particle.ParticleFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.CommonColors;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.model.DynamicFluidContainerModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;

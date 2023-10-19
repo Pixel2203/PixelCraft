@@ -1,4 +1,4 @@
-package com.example.examplemod.API.brewing.kettle.fluid;
+package com.example.examplemod.API.kettle.fluid;
 
 public enum KettleColors {
     BLUE(0),

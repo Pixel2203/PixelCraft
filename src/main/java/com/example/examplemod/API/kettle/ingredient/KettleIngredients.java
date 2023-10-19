@@ -1,7 +1,7 @@
-package com.example.examplemod.API.brewing.kettle.ingredient;
+package com.example.examplemod.API.kettle.ingredient;
 
-import com.example.examplemod.API.brewing.kettle.KettleAPI;
-import com.example.examplemod.API.brewing.kettle.records.KettleIngredient;
+import com.example.examplemod.API.kettle.KettleAPI;
+import com.example.examplemod.API.kettle.records.KettleIngredient;
 import net.minecraft.world.item.Items;
 
 public enum KettleIngredients {

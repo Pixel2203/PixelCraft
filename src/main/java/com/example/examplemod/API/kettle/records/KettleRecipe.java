@@ -1,9 +1,7 @@
-package com.example.examplemod.API.brewing.kettle.records;
+package com.example.examplemod.API.kettle.records;
 
-import com.example.examplemod.API.brewing.kettle.KettleAPI;
-import com.example.examplemod.API.brewing.kettle.result.ResultTypes;
+import com.example.examplemod.API.kettle.result.ResultTypes;
 import net.minecraft.util.StringUtil;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 public class KettleRecipe {
