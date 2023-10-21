@@ -12,11 +12,11 @@ import static com.example.examplemod.ExampleMod.MODID;
 
 public class TabRegistry {
 
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
+    private static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
-    public static final RegistryObject<CreativeModeTab> ExampleTab =
+    private static final RegistryObject<CreativeModeTab> ExampleTab =
             CREATIVE_MODE_TABS.register("example_tab", () -> TabFactory.EXAMPLE_TAB);
 
 

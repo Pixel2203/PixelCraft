@@ -12,19 +12,19 @@ import static com.example.examplemod.item.ItemFactory.*;
 public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
-    public static final RegistryObject<Item> EXAMPLE =
+    private static final RegistryObject<Item> EXAMPLE =
             ITEMS.register("example_item", () -> ExampleItem);
-    public static final RegistryObject<Item> ZIRCON =
+    private static final RegistryObject<Item> ZIRCON =
             ITEMS.register("zircon", () -> ZirconItem);
-    public static final RegistryObject<Item> EXAMPLE_POTION =
+    private static final RegistryObject<Item> EXAMPLE_POTION =
             ITEMS.register("potion_diarrhea", () -> ExamplePotion);
-    public static final RegistryObject<Item> FLORAPOTION =
+    private static final RegistryObject<Item> FLORAPOTION =
             ITEMS.register("potion_flora" , () -> FloraPotion);
-    public static final RegistryObject<Item> FREEZEPOTION =
+    private static final RegistryObject<Item> FREEZEPOTION =
             ITEMS.register("potion_freeze" , () -> FreezePotion);
-    public static final RegistryObject<Item> WHITECHALK =
+    private static final RegistryObject<Item> WHITECHALK =
             ITEMS.register("white_chalk", () -> WhiteChalkItem);
-    public static final RegistryObject<Item> GOLDENCHALK =
+    private static final RegistryObject<Item> GOLDENCHALK =
             ITEMS.register("golden_chalk", () -> GoldenChalkItem);
     // BlockItems
 

@@ -6,6 +6,7 @@ import com.example.examplemod.API.kettle.recipe.KettleRecipeFactory;
 import com.example.examplemod.API.kettle.records.KettleIngredient;
 import com.example.examplemod.API.kettle.records.KettleRecipe;
 import com.example.examplemod.API.kettle.result.ResultTypes;
+import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.registry.BlockEntityRegistry;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
@@ -78,7 +79,7 @@ public class KettleBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return BlockEntityRegistry.KETTLE_BLOCK_ENTITY.get().create(blockPos,blockState);
+        return BlockEntityFactory.KettleBlockEntity.create(blockPos,blockState);
     }
     @Override
     public void fallOn(Level level, BlockState state, BlockPos blockPos, Entity entity, float v) {

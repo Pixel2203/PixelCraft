@@ -1,5 +1,6 @@
 package com.example.examplemod;
 
+import com.example.examplemod.item.ItemFactory;
 import com.example.examplemod.registry.*;
 import com.example.examplemod.event.ModEventHandler;
 import com.example.examplemod.particle.ParticleFactory;
@@ -69,7 +70,7 @@ public class ExampleMod
     public void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-            event.accept(ItemRegistry.ZIRCON);
+            event.accept(ItemFactory.ZirconItem);
     }
     private void commonSetup(final FMLCommonSetupEvent event)
     {

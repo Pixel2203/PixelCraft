@@ -6,6 +6,7 @@ import com.example.examplemod.API.kettle.records.KettleIngredient;
 import com.example.examplemod.API.kettle.records.KettleRecipe;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.custom.kettle.KettleBlock;
+import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.registry.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -27,7 +28,7 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
     private boolean isProgressing;
     private int progress;
     public KettleBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(BlockEntityRegistry.KETTLE_BLOCK_ENTITY.get(), blockPos, blockState);
+        super(BlockEntityFactory.KettleBlockEntity, blockPos, blockState);
     }
 
     @Override
