@@ -32,6 +32,7 @@ public class GoldenChalkBlock extends ChalkBlock{
     }
 
     private ItemEntity[] getItemEntitesInRangeFromBlockPos(Level level, BlockPos blockPos, int range){
+        return null;
     }
 
 

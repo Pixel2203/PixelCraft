@@ -5,6 +5,7 @@ import com.example.examplemod.item.ItemFactory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import org.checkerframework.checker.units.qual.C;
 
 public class ItemStackHelper {
 
@@ -29,6 +30,11 @@ public class ItemStackHelper {
         nbt.putIntArray(ExampleMod.MODID + "_potionbounds",bounds);
         potion.setTag(nbt);
         potion.setHoverName(Component.translatable(ExampleMod.MODID+".potion_flora.level" +level));
+        return potion;
+    }
+    public static ItemStack createFreezePotion(int level, int amount){
+        ItemStack potion = new ItemStack(ItemFactory.FreezePotion,amount);
+        CompoundTag nbt = new CompoundTag();
         return potion;
     }
 }

@@ -17,9 +17,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class CustomPotion<T extends ThrownPotion> extends SplashPotionItem {
+public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashPotionItem {
 
-    public CustomPotion(Properties p_43241_) {
+    public CustomSplashPotion(Properties p_43241_) {
         super(p_43241_);
     }
 

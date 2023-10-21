@@ -1,6 +1,7 @@
 package com.example.examplemod.potion.flora;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.potion.CustomThrownSplashPotion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Random;
 
-public class ThrownFloraPotion extends ThrownPotion implements ItemSupplier {
+public class ThrownFloraPotion extends CustomThrownSplashPotion {
     public ThrownFloraPotion(Level p_37535_, LivingEntity p_37536_) {
         super(p_37535_, p_37536_);
     }
