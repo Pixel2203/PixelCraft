@@ -1,12 +1,11 @@
 package com.example.examplemod;
 
-import com.example.examplemod.block.BlockRegistry;
-import com.example.examplemod.blockentity.BlockEntityRegistry;
+import com.example.examplemod.registry.BlockRegistry;
+import com.example.examplemod.registry.BlockEntityRegistry;
 import com.example.examplemod.event.ModEventHandler;
-import com.example.examplemod.item.ItemRegistry;
+import com.example.examplemod.registry.ItemRegistry;
 import com.example.examplemod.particle.ParticleFactory;
-import com.example.examplemod.potion.PotionRegistry;
-import com.example.examplemod.tab.TabRegistry;
+import com.example.examplemod.registry.TabRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -58,7 +57,6 @@ public class ExampleMod
         ItemRegistry.registerItems(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         TabRegistry.registerTabs(modEventBus);
-        PotionRegistry.register(modEventBus);
         BlockEntityRegistry.registerBlockEntityTypes(modEventBus);
         ParticleFactory.registerParticles(modEventBus);
         // Register ourselves for server and other game events we are interested in

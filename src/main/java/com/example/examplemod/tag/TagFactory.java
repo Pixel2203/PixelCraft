@@ -6,7 +6,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
-public class TagRegistry {
+public class TagFactory {
     public static final TagKey<Item> KETTLE_ALLOWED_FLUID_ITEMS = tag("kettle_allowed_fluid_items");
     public static final TagKey<Item> KETTLE_INGREDIENTS = tag("kettle_ingredients");
 

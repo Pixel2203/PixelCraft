@@ -3,7 +3,7 @@ package com.example.examplemod.API.kettle;
 import com.example.examplemod.API.kettle.recipe.KettleRecipes;
 import com.example.examplemod.API.kettle.records.KettleIngredient;
 import com.example.examplemod.API.kettle.records.KettleRecipe;
-import com.example.examplemod.tag.TagRegistry;
+import com.example.examplemod.tag.TagFactory;
 import com.google.common.base.Objects;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -61,7 +61,7 @@ public class KettleAPI {
         return null;
     }
     public static boolean hasIngredientTag(ItemStack itemStack){
-        return itemStack.is(TagRegistry.KETTLE_INGREDIENTS);
+        return itemStack.is(TagFactory.KETTLE_INGREDIENTS);
     }
 
 }

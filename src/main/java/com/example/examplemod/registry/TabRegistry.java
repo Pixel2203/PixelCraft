@@ -1,10 +1,8 @@
-package com.example.examplemod.tab;
+package com.example.examplemod.registry;
 
-import com.example.examplemod.item.ItemRegistry;
+import com.example.examplemod.tab.TabFactory;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;

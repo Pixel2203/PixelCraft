@@ -1,6 +1,6 @@
-package com.example.examplemod.block;
+package com.example.examplemod.registry;
 
-import com.example.examplemod.item.ItemRegistry;
+import com.example.examplemod.block.BlockFactory;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;

@@ -6,7 +6,7 @@ import com.example.examplemod.API.kettle.records.KettleIngredient;
 import com.example.examplemod.API.kettle.records.KettleRecipe;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.custom.kettle.KettleBlock;
-import com.example.examplemod.blockentity.BlockEntityRegistry;
+import com.example.examplemod.registry.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;

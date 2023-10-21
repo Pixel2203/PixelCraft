@@ -1,4 +1,4 @@
-package com.example.examplemod.item;
+package com.example.examplemod.registry;
 
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;

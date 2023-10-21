@@ -1,7 +1,7 @@
-package com.example.examplemod.blockentity;
+package com.example.examplemod.registry;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;

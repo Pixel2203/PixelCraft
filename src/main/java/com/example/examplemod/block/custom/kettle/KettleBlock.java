@@ -6,11 +6,11 @@ import com.example.examplemod.API.kettle.recipe.KettleRecipeFactory;
 import com.example.examplemod.API.kettle.records.KettleIngredient;
 import com.example.examplemod.API.kettle.records.KettleRecipe;
 import com.example.examplemod.API.kettle.result.ResultTypes;
-import com.example.examplemod.blockentity.BlockEntityRegistry;
+import com.example.examplemod.registry.BlockEntityRegistry;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.particle.ParticleFactory;
-import com.example.examplemod.tag.TagRegistry;
+import com.example.examplemod.tag.TagFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -105,7 +105,7 @@ public class KettleBlock extends Block implements EntityBlock {
 
             ItemStack itemStackInHand = player.getItemInHand(hand);
 
-            if(itemStackInHand.is(TagRegistry.KETTLE_ALLOWED_FLUID_ITEMS) && currentKettleFluidLevel < MAX_FLUID_LEVEL){
+            if(itemStackInHand.is(TagFactory.KETTLE_ALLOWED_FLUID_ITEMS) && currentKettleFluidLevel < MAX_FLUID_LEVEL){
                 handleFillKettleWithFluid(itemStackInHand,blockPos,blockState,level);
                 return InteractionResult.SUCCESS;
             }
