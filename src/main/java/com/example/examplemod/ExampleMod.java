@@ -1,11 +1,8 @@
 package com.example.examplemod;
 
-import com.example.examplemod.registry.BlockRegistry;
-import com.example.examplemod.registry.BlockEntityRegistry;
+import com.example.examplemod.registry.*;
 import com.example.examplemod.event.ModEventHandler;
-import com.example.examplemod.registry.ItemRegistry;
 import com.example.examplemod.particle.ParticleFactory;
-import com.example.examplemod.registry.TabRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -59,6 +56,7 @@ public class ExampleMod
         TabRegistry.registerTabs(modEventBus);
         BlockEntityRegistry.registerBlockEntityTypes(modEventBus);
         ParticleFactory.registerParticles(modEventBus);
+        MobEffectRegistry.register(modEventBus);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().register(ModEventHandler.class);

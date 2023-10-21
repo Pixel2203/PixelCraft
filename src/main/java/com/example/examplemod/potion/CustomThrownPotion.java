@@ -2,9 +2,7 @@ package com.example.examplemod.potion;
 
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -19,9 +17,9 @@ import net.minecraft.world.phys.HitResult;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class CustomThrownSplashPotion extends ThrownPotion implements ItemSupplier {
+public abstract class CustomThrownPotion extends ThrownPotion implements ItemSupplier {
 
-    public CustomThrownSplashPotion(Level p_37535_, LivingEntity p_37536_) {
+    public CustomThrownPotion(Level p_37535_, LivingEntity p_37536_) {
         super(p_37535_, p_37536_);
     }
     protected List<MobEffectInstance> getPotionEffects(){
