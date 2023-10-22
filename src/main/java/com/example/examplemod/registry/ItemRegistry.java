@@ -22,6 +22,8 @@ public class ItemRegistry {
             ITEMS.register("potion_flora" , () -> FloraPotion);
     private static final RegistryObject<Item> FREEZEPOTION =
             ITEMS.register("potion_freeze" , () -> FreezePotion);
+    private static final RegistryObject<Item> HUNGERREGENERATIONPOTION =
+            ITEMS.register("potion_hunger_regeneration" , () -> HungerRegenerationPotion);
     private static final RegistryObject<Item> WHITECHALK =
             ITEMS.register("white_chalk", () -> WhiteChalkItem);
     private static final RegistryObject<Item> GOLDENCHALK =

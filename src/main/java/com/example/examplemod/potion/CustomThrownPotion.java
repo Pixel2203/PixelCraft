@@ -1,5 +1,7 @@
 package com.example.examplemod.potion;
 
+import com.example.examplemod.API.nbt.CustomNBTTags;
+import com.example.examplemod.ExampleMod;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,10 +23,9 @@ import java.util.Objects;
 
 public abstract class CustomThrownPotion extends ThrownPotion implements ItemSupplier {
 
-    private final CustomSplashPotion correspondingPotion;
-    public CustomThrownPotion(Level p_37535_, LivingEntity p_37536_, CustomSplashPotion potion) {
+    public CustomThrownPotion(Level p_37535_, LivingEntity p_37536_) {
         super(p_37535_, p_37536_);
-        this.correspondingPotion = potion;
+
     }
     protected abstract List<MobEffectInstance> getPotionEffects();
     @Override
@@ -77,8 +78,19 @@ public abstract class CustomThrownPotion extends ThrownPotion implements ItemSup
         }
 
     }
-    protected CustomSplashPotion getCorrespondingPotion(){
-        return this.correspondingPotion;
+    protected int getEffectDuration() {
+        ItemStack itemStack = getItem();
+        if(itemStack.hasTag()){
+            return itemStack.getTag().getInt(CustomNBTTags.POTION_DURATION);
+        }
+        return 0;
+    }
+    protected int getEffectAmplifier(){
+        ItemStack itemStack = getItem();
+        if(itemStack.hasTag()){
+            return itemStack.getTag().getInt(CustomNBTTags.POTION_AMPLIFIER);
+        }
+        return 0;
     }
 
 }

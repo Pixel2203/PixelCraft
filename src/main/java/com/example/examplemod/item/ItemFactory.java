@@ -6,6 +6,7 @@ import com.example.examplemod.item.custom.ZirconItem;
 import com.example.examplemod.item.custom.ritual.ChalkItem;
 import com.example.examplemod.potion.flora.FloraSplashPotion;
 import com.example.examplemod.potion.freezing.FreezingSplashPotion;
+import com.example.examplemod.potion.hungerregeneration.HungerRegenerationSplashPotion;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SplashPotionItem;
@@ -24,9 +25,11 @@ public class ItemFactory {
             new SplashPotionItem(new Item.Properties());
 
     public static final SplashPotionItem FloraPotion =
-            new FloraSplashPotion(new Item.Properties(), 200, 0);
+            new FloraSplashPotion(new Item.Properties());
     public static final SplashPotionItem FreezePotion =
-            new FreezingSplashPotion(new Item.Properties(), 200 ,0);
+            new FreezingSplashPotion(new Item.Properties());
+    public static final SplashPotionItem HungerRegenerationPotion =
+            new HungerRegenerationSplashPotion(new Item.Properties());
     public static final Item WhiteChalkItem =
             new ChalkItem(new Item.Properties(), BlockFactory.WhiteChalkBlock_BLK);
     public static final Item GoldenChalkItem =

@@ -6,13 +6,13 @@ import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.level.Level;
 
 public class HungerRegenerationSplashPotion extends CustomSplashPotion {
-    public HungerRegenerationSplashPotion(Properties properties, int duration, int amplifier) {
-        super(properties,duration,amplifier);
+    public HungerRegenerationSplashPotion(Properties properties) {
+        super(properties);
     }
 
     @Override
-    protected ThrownPotion getThrownPotion(Level level, Player player, CustomSplashPotion potion) {
-        return new ThrownHungerRegenerationPotion(level,player,potion);
+    protected ThrownPotion getThrownPotion(Level level, Player player) {
+        return new ThrownHungerRegenerationPotion(level,player);
     }
 
 }

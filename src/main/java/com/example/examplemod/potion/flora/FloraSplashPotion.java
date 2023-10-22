@@ -7,13 +7,13 @@ import net.minecraft.world.level.Level;
 public class FloraSplashPotion extends CustomSplashPotion<ThrownFloraPotion> {
 
 
-    public FloraSplashPotion(Properties p_43241_, int duration, int amplifier) {
-        super(p_43241_, duration, amplifier);
+    public FloraSplashPotion(Properties p_43241_) {
+        super(p_43241_);
     }
 
 
     @Override
-    protected ThrownFloraPotion getThrownPotion(Level level, Player player, CustomSplashPotion potion) {
-        return new ThrownFloraPotion(level, player,potion);
+    protected ThrownFloraPotion getThrownPotion(Level level, Player player) {
+        return new ThrownFloraPotion(level, player);
     }
 }

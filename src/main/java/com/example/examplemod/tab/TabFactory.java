@@ -23,5 +23,6 @@ public class TabFactory {
                         output.accept(ItemStackHelper.createFloraPotion(1,1));
                         output.accept(ItemStackHelper.createFloraPotion(2,1));
                         output.accept(ItemStackHelper.createFloraPotion(3,1));
+                        output.accept(ItemStackHelper.createHungerRegenerationPotion(1,100,0));
                     }).build();
 }

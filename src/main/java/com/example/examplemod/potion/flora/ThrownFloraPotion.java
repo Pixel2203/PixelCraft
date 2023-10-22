@@ -19,8 +19,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class ThrownFloraPotion extends CustomThrownPotion {
-    public ThrownFloraPotion(Level p_37535_, LivingEntity p_37536_, CustomSplashPotion potion) {
-        super(p_37535_, p_37536_, potion);
+    public ThrownFloraPotion(Level p_37535_, LivingEntity p_37536_) {
+        super(p_37535_, p_37536_);
     }
 
     @Override
@@ -30,16 +30,10 @@ public class ThrownFloraPotion extends CustomThrownPotion {
 
     @Override
     protected void onHitBlock(@NotNull BlockHitResult hitResult) {
-        ItemStack potion = this.getItem();
-        if(!potion.hasTag()){
+        int[] potionBounds = getPotionBounds();
+        if(Objects.isNull(potionBounds)){
             return;
         }
-        CompoundTag nbt = potion.getTag();
-        if(Objects.isNull(nbt)){
-            return;
-        }
-        int potionLevel = nbt.getInt(ExampleMod.MODID+ "_potionLevel");
-        int[] potionBounds = nbt.getIntArray(ExampleMod.MODID + "_potionbounds");
         int boundRow = potionBounds[0];
         int boundColumn = potionBounds[1];
         BlockPos blockHitPos = hitResult.getBlockPos();
@@ -62,5 +56,15 @@ public class ThrownFloraPotion extends CustomThrownPotion {
                }
            }
         super.onHitBlock(hitResult);
+    }
+    private int[] getPotionBounds(){
+        if(!getItem().hasTag()){
+            return null;
+        }
+        CompoundTag nbt = getItem().getTag();
+        if(Objects.isNull(nbt)){
+            return null;
+        }
+        return nbt.getIntArray(ExampleMod.MODID + "_potion_bounds");
     }
 }

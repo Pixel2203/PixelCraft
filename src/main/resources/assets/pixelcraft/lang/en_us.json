@@ -1,7 +1,6 @@
 {
   "item.pixelcraft.example": "Example Item",
   "item.pixelcraft.zircon": "Zircon",
-  "item.pixelcraft.potion_flora.effect.empty": "Flora Potion",
   "item.pixelcraft.blizzard_sword": "Blizzard Sword",
 
   "creativetab.example_tab": "Example Tab",
@@ -9,13 +8,16 @@
   "block.pixelcraft.example_block": "Example Block",
   "block.pixelcraft.zircon_block": "Block of Zircon",
 
-  "pixelcraft.potionLevel1": "Level §aI",
-  "pixelcraft.potionLevel2": "Level §6II",
-  "pixelcraft.potionLevel3": "Level §dIII",
+  "pixelcraft.potion.default.description": "§8Not Everything needs a uniqe background Story!",
+  "pixelcraft.potion.level.1": "Level I",
+  "pixelcraft.potion.level.2": "Level II",
+  "pixelcraft.potion.level.3": "Level III",
 
-  "pixelcraft.potion_flora.level1": "§aFlora Potion",
-  "pixelcraft.potion_flora.level2": "§6Flora Potion",
-  "pixelcraft.potion_flora.level3": "§dFlora Potion",
+  "pixelcraft.potion_flora.name": "Flora Potion",
+  "pixelcraft.potion_flora.description": "§8Creates a nice Field of flowers!",
+  "pixelcraft.potion_flora.level.1": "§aFlora Potion",
+  "pixelcraft.potion_flora.level.2": "§6Flora Potion",
+  "pixelcraft.potion_flora.level.3": "§dFlora Potion",
 
   "effect.pixelcraft.freeze": "Freeze",
   "effect.pixelcraft.blizzard_poisoning": "Blizzard Poisoning"
