@@ -26,6 +26,8 @@ public class ItemRegistry {
             ITEMS.register("white_chalk", () -> WhiteChalkItem);
     private static final RegistryObject<Item> GOLDENCHALK =
             ITEMS.register("golden_chalk", () -> GoldenChalkItem);
+    private static final RegistryObject<Item> BLIZZARDSWORD =
+            ITEMS.register("blizzard_sword", () -> BlizzardSwordItem);
     // BlockItems
 
 

@@ -2,6 +2,7 @@
   "item.pixelcraft.example": "Example Item",
   "item.pixelcraft.zircon": "Zircon",
   "item.pixelcraft.potion_flora.effect.empty": "Flora Potion",
+  "item.pixelcraft.blizzard_sword": "Blizzard Sword",
 
   "creativetab.example_tab": "Example Tab",
 
@@ -16,5 +17,6 @@
   "pixelcraft.potion_flora.level2": "§6Flora Potion",
   "pixelcraft.potion_flora.level3": "§dFlora Potion",
 
-  "effect.pixelcraft.freeze": "Freeze"
+  "effect.pixelcraft.freeze": "Freeze",
+  "effect.pixelcraft.blizzard_poisoning": "Blizzard Poisoning"
 }
