@@ -24,9 +24,9 @@ public class ItemFactory {
             new SplashPotionItem(new Item.Properties());
 
     public static final SplashPotionItem FloraPotion =
-            new FloraSplashPotion(new Item.Properties());
+            new FloraSplashPotion(new Item.Properties(), 200, 0);
     public static final SplashPotionItem FreezePotion =
-            new FreezingSplashPotion(new Item.Properties());
+            new FreezingSplashPotion(new Item.Properties(), 200 ,0);
     public static final Item WhiteChalkItem =
             new ChalkItem(new Item.Properties(), BlockFactory.WhiteChalkBlock_BLK);
     public static final Item GoldenChalkItem =

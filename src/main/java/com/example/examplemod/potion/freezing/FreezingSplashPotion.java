@@ -6,13 +6,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class FreezingSplashPotion extends CustomSplashPotion<ThrownFreezePotion> {
-    public FreezingSplashPotion(Properties p_43241_) {
-        super(p_43241_);
+    public FreezingSplashPotion(Properties p_43241_, int duration, int amplifier) {
+        super(p_43241_, duration, amplifier);
     }
 
-
     @Override
-    protected ThrownFreezePotion getThrownPotion(Level level, Player player) {
-        return new ThrownFreezePotion(level,player);
+    protected ThrownFreezePotion getThrownPotion(Level level, Player player, CustomSplashPotion potion) {
+        return null;
     }
 }

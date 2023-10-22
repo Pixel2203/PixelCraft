@@ -1,5 +1,6 @@
 package com.example.examplemod.potion;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -16,24 +17,24 @@ import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class CustomThrownPotion extends ThrownPotion implements ItemSupplier {
 
-    public CustomThrownPotion(Level p_37535_, LivingEntity p_37536_) {
+    private final CustomSplashPotion correspondingPotion;
+    public CustomThrownPotion(Level p_37535_, LivingEntity p_37536_, CustomSplashPotion potion) {
         super(p_37535_, p_37536_);
+        this.correspondingPotion = potion;
     }
-    protected List<MobEffectInstance> getPotionEffects(){
-        return List.of();
-    }
+    protected abstract List<MobEffectInstance> getPotionEffects();
     @Override
     protected void onHit(HitResult p_37543_) {
         super.onHit(p_37543_);
         if (!this.level().isClientSide) {
             ItemStack itemstack = this.getItem();
             Potion potion = PotionUtils.getPotion(itemstack);
-            List<MobEffectInstance> list = getPotionEffects();
+            List<MobEffectInstance> list = Objects.isNull(getPotionEffects()) ? List.of() : getPotionEffects();
             this.applySplash(list, p_37543_.getType() == HitResult.Type.ENTITY ? ((EntityHitResult)p_37543_).getEntity() : null);
-
             int i = potion.hasInstantEffects() ? 2007 : 2002;
             this.level().levelEvent(i, this.blockPosition(), PotionUtils.getColor(itemstack));
             this.discard();
@@ -76,4 +77,8 @@ public abstract class CustomThrownPotion extends ThrownPotion implements ItemSup
         }
 
     }
+    protected CustomSplashPotion getCorrespondingPotion(){
+        return this.correspondingPotion;
+    }
+
 }

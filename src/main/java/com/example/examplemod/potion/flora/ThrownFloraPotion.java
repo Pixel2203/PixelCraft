@@ -1,9 +1,11 @@
 package com.example.examplemod.potion.flora;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.potion.CustomSplashPotion;
 import com.example.examplemod.potion.CustomThrownPotion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -12,13 +14,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
 public class ThrownFloraPotion extends CustomThrownPotion {
-    public ThrownFloraPotion(Level p_37535_, LivingEntity p_37536_) {
-        super(p_37535_, p_37536_);
+    public ThrownFloraPotion(Level p_37535_, LivingEntity p_37536_, CustomSplashPotion potion) {
+        super(p_37535_, p_37536_, potion);
     }
+
+    @Override
+    protected List<MobEffectInstance> getPotionEffects() {
+        return null;
+    }
+
     @Override
     protected void onHitBlock(@NotNull BlockHitResult hitResult) {
         ItemStack potion = this.getItem();

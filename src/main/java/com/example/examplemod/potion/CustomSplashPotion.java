@@ -18,16 +18,19 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashPotionItem {
+    private final int duration;
+    private final int amplifier;
 
-    public CustomSplashPotion(Properties p_43241_) {
+    public CustomSplashPotion(Properties p_43241_, int duration, int amplifier) {
         super(p_43241_);
+        this.duration = duration;
+        this.amplifier = amplifier;
     }
-
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if (!level.isClientSide) {
-            T thrownpotion = getThrownPotion(level,player);
+            T thrownpotion = getThrownPotion(level,player, null);
             thrownpotion.setItem(itemstack);
             thrownpotion.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
             level.addFreshEntity(thrownpotion);
@@ -36,9 +39,7 @@ public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashP
         }
         return InteractionResultHolder.pass(itemstack);
     }
-     protected T getThrownPotion(Level level, Player player){
-         return null;
-     }
+    protected abstract T getThrownPotion(Level level, Player player, CustomSplashPotion potion );
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag flag) {
         CompoundTag nbt = itemStack.getTag();
@@ -47,5 +48,12 @@ public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashP
         }
         int potionLevel = nbt.getInt(ExampleMod.MODID + "_potionLevel");
         components.add(Component.translatable(ExampleMod.MODID+".potionLevel" + potionLevel));
+    }
+
+    public int getDuration(){
+        return this.duration;
+    }
+    public int getAmplifier(){
+        return this.amplifier;
     }
 }
