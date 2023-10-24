@@ -1,13 +1,13 @@
 package com.example.examplemod.potion.custom.freezing;
 
 import com.example.examplemod.API.translation.CustomTranslatable;
-import com.example.examplemod.potion.CustomSplashPotion;
+import com.example.examplemod.potion.CustomSplashPotionItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-public class FreezingSplashPotion extends CustomSplashPotion<ThrownFreezePotion> {
-    public FreezingSplashPotion(Properties p_43241_) {
+public class FreezingSplashPotionItem extends CustomSplashPotionItem<ThrownFreezePotion> {
+    public FreezingSplashPotionItem(Properties p_43241_) {
         super(p_43241_);
     }
 

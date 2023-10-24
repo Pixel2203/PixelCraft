@@ -1,10 +1,6 @@
 package com.example.examplemod.potion.custom.hungerregeneration;
 
-import com.example.examplemod.ExampleMod;
-import com.example.examplemod.potion.CustomSplashPotion;
 import com.example.examplemod.potion.CustomThrownPotion;
-import com.example.examplemod.registry.MobEffectRegistry;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -17,7 +13,8 @@ public class ThrownHungerRegenerationPotion extends CustomThrownPotion {
     }
 
     @Override
-    protected List<MobEffectInstance> getPotionEffects() {
-        return List.of(new MobEffectInstance(MobEffectRegistry.HUNGER_REGENERATION.get(), getEffectDuration(), getEffectAmplifier()));
+    protected List<MobEffectInstance> getPotionEffects(int duration, int amplifier) {
+        return null;
     }
+
 }

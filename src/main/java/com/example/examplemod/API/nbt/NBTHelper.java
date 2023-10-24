@@ -1,6 +1,5 @@
 package com.example.examplemod.API.nbt;
 
-import com.example.examplemod.potion.CustomSplashPotion;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 

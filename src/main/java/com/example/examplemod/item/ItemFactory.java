@@ -4,9 +4,9 @@ import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.custom.BlizzardSword;
 import com.example.examplemod.item.custom.ZirconItem;
 import com.example.examplemod.item.custom.ritual.ChalkItem;
-import com.example.examplemod.potion.custom.flora.FloraSplashPotion;
-import com.example.examplemod.potion.custom.freezing.FreezingSplashPotion;
-import com.example.examplemod.potion.custom.hungerregeneration.HungerRegenerationSplashPotion;
+import com.example.examplemod.potion.custom.flora.FloraSplashPotionItem;
+import com.example.examplemod.potion.custom.freezing.FreezingSplashPotionItem;
+import com.example.examplemod.potion.custom.hungerregeneration.HungerRegenerationSplashPotionItem;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SplashPotionItem;
@@ -25,11 +25,11 @@ public class ItemFactory {
             new SplashPotionItem(new Item.Properties());
 
     public static final SplashPotionItem FloraPotion =
-            new FloraSplashPotion(new Item.Properties());
+            new FloraSplashPotionItem(new Item.Properties());
     public static final SplashPotionItem FreezePotion =
-            new FreezingSplashPotion(new Item.Properties());
+            new FreezingSplashPotionItem(new Item.Properties());
     public static final SplashPotionItem HungerRegenerationPotion =
-            new HungerRegenerationSplashPotion(new Item.Properties());
+            new HungerRegenerationSplashPotionItem(new Item.Properties());
     public static final Item WhiteChalkItem =
             new ChalkItem(new Item.Properties(), BlockFactory.WhiteChalkBlock_BLK);
     public static final Item GoldenChalkItem =

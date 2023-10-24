@@ -2,7 +2,7 @@ package com.example.examplemod.potion.custom.flora;
 
 import com.example.examplemod.API.nbt.NBTHelper;
 import com.example.examplemod.API.translation.CustomTranslatable;
-import com.example.examplemod.potion.CustomSplashPotion;
+import com.example.examplemod.potion.CustomSplashPotionItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -13,10 +13,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class FloraSplashPotion extends CustomSplashPotion<ThrownFloraPotion> {
+public class FloraSplashPotionItem extends CustomSplashPotionItem {
 
 
-    public FloraSplashPotion(Properties p_43241_) {
+    public FloraSplashPotionItem(Properties p_43241_) {
         super(p_43241_);
     }
 

@@ -1,6 +1,5 @@
 package com.example.examplemod.potion.custom.freezing;
 
-import com.example.examplemod.potion.CustomSplashPotion;
 import com.example.examplemod.potion.CustomThrownPotion;
 import com.example.examplemod.registry.MobEffectRegistry;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -17,8 +16,8 @@ public class ThrownFreezePotion extends CustomThrownPotion {
     }
 
     @Override
-    protected List<MobEffectInstance> getPotionEffects() {
-        return List.of(new MobEffectInstance(MobEffectRegistry.FREEZE.get(),getEffectDuration(),getEffectAmplifier()));
+    protected List<MobEffectInstance> getPotionEffects(int duration, int amplifier) {
+        return List.of(new MobEffectInstance(MobEffectRegistry.FREEZE.get(),duration,amplifier));
     }
 }
 

@@ -2,7 +2,7 @@ package com.example.examplemod.potion.custom.hungerregeneration;
 
 import com.example.examplemod.API.nbt.NBTHelper;
 import com.example.examplemod.API.translation.CustomTranslatable;
-import com.example.examplemod.potion.CustomSplashPotion;
+import com.example.examplemod.potion.CustomSplashPotionItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -13,8 +13,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class HungerRegenerationSplashPotion extends CustomSplashPotion<ThrownHungerRegenerationPotion> {
-    public HungerRegenerationSplashPotion(Properties properties) {
+public class HungerRegenerationSplashPotionItem extends CustomSplashPotionItem {
+    public HungerRegenerationSplashPotionItem(Properties properties) {
         super(properties);
     }
 

@@ -16,10 +16,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashPotionItem {
+public abstract class CustomSplashPotionItem extends SplashPotionItem {
 
 
-    public CustomSplashPotion(Properties p_43241_) {
+    public CustomSplashPotionItem(Properties p_43241_) {
         super(p_43241_);
     }
     @Override
@@ -31,7 +31,7 @@ public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashP
         if(Objects.isNull(getThrownPotion(level,player))){
             return InteractionResultHolder.fail(itemstack);
         }
-        T thrownPotion = getThrownPotion(level,player);
+        ThrownPotion thrownPotion = getThrownPotion(level,player);
         thrownPotion.setItem(itemstack);
         thrownPotion.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
         level.addFreshEntity(thrownPotion);
@@ -40,7 +40,7 @@ public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashP
 
 
     }
-    protected abstract T getThrownPotion(Level level, Player player);
+    protected abstract ThrownPotion getThrownPotion(Level level, Player player);
     protected Component getTranslatedDescription(){
         return Component.translatable(CustomTranslatable.POTION_DESCRIPTION_DEFAULT);
     };

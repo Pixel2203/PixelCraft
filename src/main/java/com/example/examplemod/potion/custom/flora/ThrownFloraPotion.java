@@ -1,13 +1,11 @@
 package com.example.examplemod.potion.custom.flora;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.potion.CustomSplashPotion;
 import com.example.examplemod.potion.CustomThrownPotion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
