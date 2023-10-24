@@ -1,4 +1,4 @@
-package com.example.examplemod.potion.flora;
+package com.example.examplemod.potion.custom.flora;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.potion.CustomSplashPotion;
@@ -24,7 +24,7 @@ public class ThrownFloraPotion extends CustomThrownPotion {
     }
 
     @Override
-    protected List<MobEffectInstance> getPotionEffects() {
+    protected List<MobEffectInstance> getPotionEffects(int duration, int amplifier) {
         return null;
     }
 

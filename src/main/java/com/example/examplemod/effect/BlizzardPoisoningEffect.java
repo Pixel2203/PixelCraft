@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class BlizzardPoisoningEffect extends MobEffect {
     private byte effectTicker = 0;
+    private final byte effectInterval = 10;
     public BlizzardPoisoningEffect(MobEffectCategory p_19451_, int p_19452_) {
         super(p_19451_, p_19452_);
     }
@@ -20,7 +21,7 @@ public class BlizzardPoisoningEffect extends MobEffect {
     public void applyEffectTick(LivingEntity entity, int i) {
         if(!entity.level().isClientSide()){
             effectTicker++;
-            if(effectTicker <= 50){
+            if(effectTicker <= effectInterval){
                 return;
             }
             effectTicker = 0;

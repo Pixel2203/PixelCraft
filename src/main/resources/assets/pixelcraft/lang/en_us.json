@@ -8,19 +8,24 @@
   "block.pixelcraft.example_block": "Example Block",
   "block.pixelcraft.zircon_block": "Block of Zircon",
 
+
+
+
+
+
   "pixelcraft.potion.default.description": "§8Not everything needs a uniqe background Story!",
-  "pixelcraft.potion.level.1": "Level §sI-i",
+  "pixelcraft.potion.level.1": "Level I",
   "pixelcraft.potion.level.2": "Level II",
   "pixelcraft.potion.level.3": "Level III",
 
-  "pixelcraft.potion_flora.name": "Flora Potion",
+  "pixelcraft.potion_flora.name": "§fFlora Potion",
   "pixelcraft.potion_flora.description": "§8Creates a nice field of flowers!",
 
-  "pixelcraft.potion_hunger_regeneration.name": "§r§pPotion of Hunger Regeneration",
+  "pixelcraft.potion_hunger_regeneration.name": "§fPotion of Hunger Regeneration",
   "pixelcraft.potion_hunger_regeneration.description": "§8Fills your stomach with warm food!",
 
-  "pixelcraft.potion_freeze.name": "§pFreeze Potion",
-  "pixelcraft.potion_freeze.description": "§sFreezes the Target to its current position!",
+  "pixelcraft.potion_freeze.name": "§fFreeze Potion",
+  "pixelcraft.potion_freeze.description": "§8Freezes the Target to its current position!",
 
   "effect.pixelcraft.freeze": "Freeze",
   "effect.pixelcraft.blizzard_poisoning": "Blizzard Poisoning"

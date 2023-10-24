@@ -1,4 +1,4 @@
-package com.example.examplemod.potion.hungerregeneration;
+package com.example.examplemod.potion.custom.hungerregeneration;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.potion.CustomSplashPotion;

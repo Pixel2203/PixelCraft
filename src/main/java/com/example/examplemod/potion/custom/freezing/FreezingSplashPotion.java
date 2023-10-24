@@ -1,7 +1,8 @@
-package com.example.examplemod.potion.freezing;
+package com.example.examplemod.potion.custom.freezing;
 
+import com.example.examplemod.API.translation.CustomTranslatable;
 import com.example.examplemod.potion.CustomSplashPotion;
-import com.example.examplemod.potion.flora.ThrownFloraPotion;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -12,6 +13,11 @@ public class FreezingSplashPotion extends CustomSplashPotion<ThrownFreezePotion>
 
     @Override
     protected ThrownFreezePotion getThrownPotion(Level level, Player player) {
-        return null;
+        return new ThrownFreezePotion(level,player);
+    }
+
+    @Override
+    protected Component getTranslatedDescription() {
+        return Component.translatable(CustomTranslatable.POTION_FREEZE_DESCRIPTION);
     }
 }

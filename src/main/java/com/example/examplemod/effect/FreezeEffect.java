@@ -14,12 +14,8 @@ public class FreezeEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity livingEntity, int i) {
         if(!livingEntity.level().isClientSide()) {
-            livingEntity.teleportTo(
-                    livingEntity.getX(),
-                    livingEntity.getY(),
-                    livingEntity.getZ()
-            );
             livingEntity.setDeltaMovement(Vec3.ZERO);
+            livingEntity.teleportTo(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ());
         }
         super.applyEffectTick(livingEntity, i);
     }

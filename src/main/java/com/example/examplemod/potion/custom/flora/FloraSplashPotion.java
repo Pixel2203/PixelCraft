@@ -1,5 +1,7 @@
-package com.example.examplemod.potion.flora;
+package com.example.examplemod.potion.custom.flora;
 
+import com.example.examplemod.API.nbt.NBTHelper;
+import com.example.examplemod.API.translation.CustomTranslatable;
 import com.example.examplemod.potion.CustomSplashPotion;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +27,14 @@ public class FloraSplashPotion extends CustomSplashPotion<ThrownFloraPotion> {
     }
 
     @Override
+    protected Component getTranslatedDescription() {
+        return Component.translatable(CustomTranslatable.POTION_FLORA_DESCRIPTION);
+    }
+
+    @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag flag) {
+        String langKey = CustomTranslatable.POTION_LEVEL + NBTHelper.getPotionLevel(itemStack);
+        components.add(Component.translatable(langKey));
         super.appendHoverText(itemStack, level, components, flag);
     }
 }

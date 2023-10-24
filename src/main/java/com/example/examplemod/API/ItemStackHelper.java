@@ -8,6 +8,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import org.checkerframework.checker.units.qual.C;
 
+import java.util.Objects;
+
 public class ItemStackHelper {
 
     public static ItemStack createFloraPotion(int level, int amount){
@@ -44,12 +46,14 @@ public class ItemStackHelper {
     public static ItemStack createFreezePotion(int amount, int duration, int amplifier){
         ItemStack potion = new ItemStack(ItemFactory.FreezePotion,amount);
         addCommonNbtData(potion,duration,amplifier);
+        setHoverName(potion, CustomTranslatable.POTION_FREEZE_NAME);
         return potion;
     }
-    public static ItemStack createHungerRegenerationPotion(int amount, int duration, int amplifier){
+    public static ItemStack createHungerRegenerationPotion(int level,int amount, int duration, int amplifier){
         ItemStack potion = new ItemStack(ItemFactory.HungerRegenerationPotion,amount);
         setHoverName(potion,CustomTranslatable.POTION_HUNGERREGENERATION_NAME);
         addCommonNbtData(potion,duration,amplifier);
+        addLevelNbtData(potion,level);
         return potion;
     }
     private static void addCommonNbtData(ItemStack stack, int duration, int amplifier){
@@ -64,6 +68,9 @@ public class ItemStackHelper {
             nbt = stack.getTag();
         }else {
             nbt = new CompoundTag();
+        }
+        if(Objects.isNull(nbt)){
+            return;
         }
         nbt.putInt(CustomNBTTags.POTION_LEVEL, level);
         stack.setTag(nbt);

@@ -27,14 +27,14 @@ public abstract class CustomThrownPotion extends ThrownPotion implements ItemSup
         super(p_37535_, p_37536_);
 
     }
-    protected abstract List<MobEffectInstance> getPotionEffects();
+    protected abstract List<MobEffectInstance> getPotionEffects(int duration, int amplifier);
     @Override
     protected void onHit(HitResult p_37543_) {
         super.onHit(p_37543_);
         if (!this.level().isClientSide) {
             ItemStack itemstack = this.getItem();
             Potion potion = PotionUtils.getPotion(itemstack);
-            List<MobEffectInstance> list = Objects.isNull(getPotionEffects()) ? List.of() : getPotionEffects();
+            List<MobEffectInstance> list = Objects.isNull(getPotionEffects(getEffectDuration(),getEffectAmplifier())) ? List.of() : getPotionEffects(getEffectDuration(),getEffectAmplifier());
             this.applySplash(list, p_37543_.getType() == HitResult.Type.ENTITY ? ((EntityHitResult)p_37543_).getEntity() : null);
             int i = potion.hasInstantEffects() ? 2007 : 2002;
             this.level().levelEvent(i, this.blockPosition(), PotionUtils.getColor(itemstack));

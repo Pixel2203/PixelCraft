@@ -25,21 +25,30 @@ public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashP
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        if (!level.isClientSide) {
-            T thrownPotion = getThrownPotion(level,player);
-            thrownPotion.setItem(itemstack);
-            thrownPotion.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
-            level.addFreshEntity(thrownPotion);
-            itemstack.shrink(1);
-            return InteractionResultHolder.success(itemstack);
+        if(level.isClientSide()){
+            return InteractionResultHolder.pass(itemstack);
         }
-        return InteractionResultHolder.pass(itemstack);
+        if(Objects.isNull(getThrownPotion(level,player))){
+            return InteractionResultHolder.fail(itemstack);
+        }
+        T thrownPotion = getThrownPotion(level,player);
+        thrownPotion.setItem(itemstack);
+        thrownPotion.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
+        level.addFreshEntity(thrownPotion);
+        itemstack.shrink(1);
+        return InteractionResultHolder.success(itemstack);
+
+
     }
     protected abstract T getThrownPotion(Level level, Player player);
+    protected Component getTranslatedDescription(){
+        return Component.translatable(CustomTranslatable.POTION_DESCRIPTION_DEFAULT);
+    };
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag flag) {
-        components.add(Component.translatable(CustomTranslatable.POTION_LEVEL + 1));
-        components.add(Component.translatable(CustomTranslatable.POTION_DESCRIPTION_DEFAULT));
+        if(Objects.nonNull(getTranslatedDescription())){
+            components.add(getTranslatedDescription());
+        }
     }
 
 }

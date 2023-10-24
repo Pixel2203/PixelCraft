@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraftforge.event.level.NoteBlockEvent;
 
 public class HungerRegenerationEffect extends MobEffect {
@@ -15,6 +16,7 @@ public class HungerRegenerationEffect extends MobEffect {
     public HungerRegenerationEffect(MobEffectCategory p_19451_, int p_19452_) {
         super(p_19451_, p_19452_);
     }
+
 
     @Override
     public boolean isDurationEffectTick(int p_19455_, int p_19456_) {
