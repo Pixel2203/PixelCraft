@@ -27,6 +27,14 @@ public abstract class CustomThrownPotion extends ThrownPotion implements ItemSup
         super(p_37535_, p_37536_);
 
     }
+
+    /**
+     * If wanted, the returned effects will be applied to the entities in Splash area!
+     * If not needed, just return null or List.of()
+     * @param duration Time in seconds how long the effect will be applied to living entities
+     * @param amplifier Makes the effect stronger if wanted
+     * @return List of MobEffectInstances / Effects that will be applied to the player
+     */
     protected abstract List<MobEffectInstance> getPotionEffects(int duration, int amplifier);
     @Override
     protected void onHit(HitResult p_37543_) {
@@ -78,14 +86,14 @@ public abstract class CustomThrownPotion extends ThrownPotion implements ItemSup
         }
 
     }
-    protected int getEffectDuration() {
+    private int getEffectDuration() {
         ItemStack itemStack = getItem();
         if(itemStack.hasTag()){
             return itemStack.getTag().getInt(CustomNBTTags.POTION_DURATION);
         }
         return 0;
     }
-    protected int getEffectAmplifier(){
+    private int getEffectAmplifier(){
         ItemStack itemStack = getItem();
         if(itemStack.hasTag()){
             return itemStack.getTag().getInt(CustomNBTTags.POTION_AMPLIFIER);
