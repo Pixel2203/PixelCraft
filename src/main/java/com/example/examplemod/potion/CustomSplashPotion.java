@@ -1,8 +1,6 @@
 package com.example.examplemod.potion;
 
-import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.translation.CustomTranslatable;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -20,11 +18,9 @@ import java.util.Objects;
 
 public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashPotionItem {
 
-    private String langTag = "";
 
     public CustomSplashPotion(Properties p_43241_) {
         super(p_43241_);
-
     }
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
@@ -42,13 +38,7 @@ public abstract class CustomSplashPotion<T extends ThrownPotion> extends SplashP
     protected abstract T getThrownPotion(Level level, Player player);
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag flag) {
-
-        CompoundTag nbt = itemStack.getTag();
-        if(Objects.isNull(nbt)){
-            return;
-        }
-        int potionLevel = nbt.getInt(CustomNBTTags.POTION_LEVEL);
-        components.add(Component.translatable(CustomTranslatable.POTION_LEVEL + potionLevel));
+        components.add(Component.translatable(CustomTranslatable.POTION_LEVEL + 1));
         components.add(Component.translatable(CustomTranslatable.POTION_DESCRIPTION_DEFAULT));
     }
 

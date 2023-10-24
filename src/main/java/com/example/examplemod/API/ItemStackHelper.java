@@ -1,4 +1,4 @@
-package com.example.examplemod.API.kettle.result;
+package com.example.examplemod.API;
 
 import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.translation.CustomTranslatable;
@@ -41,13 +41,14 @@ public class ItemStackHelper {
         nbt.putIntArray(CustomNBTTags.POTION_BOUNDS,bounds);
         itemStack.setTag(nbt);
     }
-    public static ItemStack createFreezePotion(int level, int amount){
+    public static ItemStack createFreezePotion(int amount, int duration, int amplifier){
         ItemStack potion = new ItemStack(ItemFactory.FreezePotion,amount);
-        addLevelNbtData();
+        addCommonNbtData(potion,duration,amplifier);
         return potion;
     }
     public static ItemStack createHungerRegenerationPotion(int amount, int duration, int amplifier){
         ItemStack potion = new ItemStack(ItemFactory.HungerRegenerationPotion,amount);
+        setHoverName(potion,CustomTranslatable.POTION_HUNGERREGENERATION_NAME);
         addCommonNbtData(potion,duration,amplifier);
         return potion;
     }

@@ -1,6 +1,6 @@
 package com.example.examplemod.tab;
 
-import com.example.examplemod.API.kettle.result.ItemStackHelper;
+import com.example.examplemod.API.ItemStackHelper;
 import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.ItemFactory;
 import net.minecraft.network.chat.Component;
@@ -24,5 +24,6 @@ public class TabFactory {
                         output.accept(ItemStackHelper.createFloraPotion(2,1));
                         output.accept(ItemStackHelper.createFloraPotion(3,1));
                         output.accept(ItemStackHelper.createHungerRegenerationPotion(1,100,0));
+                        output.accept(ItemStackHelper.createFreezePotion(1,200,0));
                     }).build();
 }

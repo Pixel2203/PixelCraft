@@ -1,5 +1,6 @@
 package com.example.examplemod.API.kettle.result;
 
+import com.example.examplemod.API.ItemStackHelper;
 import com.example.examplemod.item.ItemFactory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
