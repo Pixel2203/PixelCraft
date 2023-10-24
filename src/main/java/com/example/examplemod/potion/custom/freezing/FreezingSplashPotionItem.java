@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-public class FreezingSplashPotionItem extends CustomSplashPotionItem<ThrownFreezePotion> {
+public class FreezingSplashPotionItem extends CustomSplashPotionItem {
     public FreezingSplashPotionItem(Properties p_43241_) {
         super(p_43241_);
     }

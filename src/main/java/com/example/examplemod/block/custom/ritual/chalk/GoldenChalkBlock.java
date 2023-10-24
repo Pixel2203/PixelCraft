@@ -1,18 +1,31 @@
 package com.example.examplemod.block.custom.ritual.chalk;
 
 import com.example.examplemod.block.BlockFactory;
+import com.example.examplemod.blockentity.BlockEntityFactory;
+import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEventListener;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
-public class GoldenChalkBlock extends ChalkBlock{
+import java.util.List;
+
+public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
     public GoldenChalkBlock() {
         super();
     }
@@ -28,11 +41,14 @@ public class GoldenChalkBlock extends ChalkBlock{
         if(!checkForSmallCircle(level,blockPos)){
             return InteractionResult.FAIL;
         }
+        List<ItemEntity> found = getItemEntitesInRangeFromBlockPos(level,blockPos,5);
         return super.use(blockState, level, blockPos, player, interactionHand, hitResult);
     }
 
-    private ItemEntity[] getItemEntitesInRangeFromBlockPos(Level level, BlockPos blockPos, int range){
-        return null;
+    private List<ItemEntity> getItemEntitesInRangeFromBlockPos(Level level, BlockPos blockPos, int range){
+        AABB box = new AABB(blockPos).inflate(3,3,3);
+        List<ItemEntity> foundEntities = level.getEntitiesOfClass(ItemEntity.class,box);
+        return foundEntities;
     }
 
 
@@ -107,4 +123,17 @@ public class GoldenChalkBlock extends ChalkBlock{
         return map;
 
     }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+        return BlockEntityFactory.GoldenChalkBlockEntity.create(p_153215_,p_153216_);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+        return ITickableBlockEntity.getTickerHelper(p_153212_);
+    }
+
 }
