@@ -1,10 +1,10 @@
-package com.example.examplemod.API.kettle.recipe;
+package com.example.examplemod.API;
 
-import com.example.examplemod.API.kettle.records.KettleIngredient;
+import com.example.examplemod.API.ingredient.ModIngredient;
 import net.minecraft.util.StringUtil;
 
-public class KettleRecipeFactory {
-    public static String getNextRecipeString(String currentRecipe, KettleIngredient ingredient){
+public class APIHelper {
+    public static String getNextRecipeString(String currentRecipe, ModIngredient ingredient){
         if(StringUtil.isNullOrEmpty(currentRecipe)){
             currentRecipe = ingredient.id();
         }else {

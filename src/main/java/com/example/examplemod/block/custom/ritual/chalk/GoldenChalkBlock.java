@@ -2,6 +2,7 @@ package com.example.examplemod.block.custom.ritual.chalk;
 
 import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.blockentity.BlockEntityFactory;
+import com.example.examplemod.blockentity.custom.GoldenChalkBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -42,13 +43,15 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
             return InteractionResult.FAIL;
         }
         List<ItemEntity> found = getItemEntitesInRangeFromBlockPos(level,blockPos,5);
+        BlockEntity blockEntity = level.getBlockEntity(blockPos);
+        GoldenChalkBlockEntity entity = (GoldenChalkBlockEntity) blockEntity;
+        entity.startRitual();
         return super.use(blockState, level, blockPos, player, interactionHand, hitResult);
     }
 
     private List<ItemEntity> getItemEntitesInRangeFromBlockPos(Level level, BlockPos blockPos, int range){
         AABB box = new AABB(blockPos).inflate(3,3,3);
-        List<ItemEntity> foundEntities = level.getEntitiesOfClass(ItemEntity.class,box);
-        return foundEntities;
+        return level.getEntitiesOfClass(ItemEntity.class,box);
     }
 
 
@@ -66,7 +69,7 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
      * U W W W U
      * @param level
      * @param blockPos
-     * @return
+     * @return true or false
      */
     private boolean checkForSmallCircle(Level level, BlockPos blockPos){
         char [][] map = getBlockMap(level,blockPos,2);
@@ -135,5 +138,4 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
         return ITickableBlockEntity.getTickerHelper(p_153212_);
     }
-
 }

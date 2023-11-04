@@ -1,16 +1,17 @@
-package com.example.examplemod.API.kettle.records;
+package com.example.examplemod.API.kettle.recipe;
 
-import com.example.examplemod.API.kettle.result.ResultTypes;
+import com.example.examplemod.API.ingredient.ModIngredient;
+import com.example.examplemod.API.result.ResultTypes;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.ItemStack;
 
-public class KettleRecipe {
+public class ModRecipe {
     private ItemStack _result;
-    private KettleIngredient[] _ingredients;
+    private ModIngredient[] _ingredients;
     private String _serializedRecipe;
     private ResultTypes _resultType;
 
-    public KettleRecipe(ResultTypes resultType,ItemStack result, KettleIngredient ... ingredients){
+    public ModRecipe(ResultTypes resultType, ItemStack result, ModIngredient... ingredients){
         this._result = result;
         this._ingredients = ingredients;
         this._serializedRecipe = this.serializeRecipe(ingredients);
@@ -19,7 +20,7 @@ public class KettleRecipe {
     public String serializedRecipe(){
         return _serializedRecipe;
     }
-    public KettleIngredient[] ingredients(){
+    public ModIngredient[] ingredients(){
         return _ingredients;
     }
     public ItemStack result(){
@@ -28,9 +29,9 @@ public class KettleRecipe {
     public ResultTypes resultType(){
         return _resultType;
     }
-    private String serializeRecipe(KettleIngredient ... ingredients){
+    private String serializeRecipe(ModIngredient... ingredients){
         String recipe = "";
-        for(KettleIngredient ingredient: ingredients){
+        for(ModIngredient ingredient: ingredients){
             if(StringUtil.isNullOrEmpty(recipe)){
                 recipe = ingredient.id();
                 continue;

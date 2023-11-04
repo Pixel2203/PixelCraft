@@ -1,13 +1,12 @@
 package com.example.examplemod.blockentity.custom;
 
+import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.kettle.KettleAPI;
-import com.example.examplemod.API.kettle.recipe.KettleRecipeFactory;
-import com.example.examplemod.API.kettle.records.KettleIngredient;
-import com.example.examplemod.API.kettle.records.KettleRecipe;
+import com.example.examplemod.API.ingredient.ModIngredient;
+import com.example.examplemod.API.kettle.recipe.ModRecipe;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.custom.kettle.KettleBlock;
 import com.example.examplemod.blockentity.BlockEntityFactory;
-import com.example.examplemod.registry.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -52,8 +51,8 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
         }
 
     }
-    public void add(KettleIngredient ingredient){
-        this.kettleIngredientsSerialized = KettleRecipeFactory.getNextRecipeString(this.kettleIngredientsSerialized,ingredient);
+    public void add(ModIngredient ingredient){
+        this.kettleIngredientsSerialized = APIHelper.getNextRecipeString(this.kettleIngredientsSerialized,ingredient);
 
         setChanged();
     }
@@ -104,7 +103,7 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
         }
     }
     private void spawnResultOfRecipeOnKettle(
-            @NotNull KettleRecipe recipe
+            @NotNull ModRecipe recipe
 
 
     ){

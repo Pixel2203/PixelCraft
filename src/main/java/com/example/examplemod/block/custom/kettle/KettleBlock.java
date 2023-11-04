@@ -1,13 +1,13 @@
 package com.example.examplemod.block.custom.kettle;
 
+import com.example.examplemod.API.APIHelper;
+import com.example.examplemod.API.ingredient.IngredientAPI;
 import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.kettle.fluid.KettleColors;
-import com.example.examplemod.API.kettle.recipe.KettleRecipeFactory;
-import com.example.examplemod.API.kettle.records.KettleIngredient;
-import com.example.examplemod.API.kettle.records.KettleRecipe;
-import com.example.examplemod.API.kettle.result.ResultTypes;
+import com.example.examplemod.API.ingredient.ModIngredient;
+import com.example.examplemod.API.kettle.recipe.ModRecipe;
+import com.example.examplemod.API.result.ResultTypes;
 import com.example.examplemod.blockentity.BlockEntityFactory;
-import com.example.examplemod.registry.BlockEntityRegistry;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.particle.ParticleFactory;
@@ -113,7 +113,7 @@ public class KettleBlock extends Block implements EntityBlock {
 
             boolean hasIngredients = !StringUtil.isNullOrEmpty(blockEntity.getSerializedKettleRecipe());
             if(itemStackInHand.is(Items.GLASS_BOTTLE) && hasIngredients){
-                KettleRecipe foundRecipe = KettleAPI.getRecipeBySerializedIngredientList(blockEntity.getSerializedKettleRecipe());
+                ModRecipe foundRecipe = KettleAPI.getRecipeBySerializedIngredientList(blockEntity.getSerializedKettleRecipe());
                 if(Objects.isNull(foundRecipe)){return InteractionResult.FAIL;}
                 if(foundRecipe.resultType() != ResultTypes.POTION){
                     return InteractionResult.FAIL;
@@ -135,7 +135,7 @@ public class KettleBlock extends Block implements EntityBlock {
             BlockState blockState,
             InteractionHand hand,
             ItemStack bottleItemStack,
-            KettleRecipe foundRecipe,
+            ModRecipe foundRecipe,
             KettleBlockEntity blockEntity) {
         // Decrease Bottle ItemStack Count if > 0; IF == 0 Then replace it
 
@@ -180,24 +180,24 @@ public class KettleBlock extends Block implements EntityBlock {
     }
     public static void handleIngredientFallOnKettle(ItemStack itemStack, KettleBlockEntity entity) {
 
-        KettleIngredient foundMatchingIngredient = KettleAPI.getIngredientByItem(itemStack.getItem());
+        ModIngredient foundMatchingIngredient = IngredientAPI.getIngredientByItem(itemStack.getItem());
         if(foundMatchingIngredient == null){
             return;
         }
         String serializedRecipe = entity.getSerializedKettleRecipe();
-        String nextRecipeString = KettleRecipeFactory.getNextRecipeString(serializedRecipe, foundMatchingIngredient);
+        String nextRecipeString = APIHelper.getNextRecipeString(serializedRecipe, foundMatchingIngredient);
         //if(KettleAPI.isPartOfOrCompleteRecipe(nextRecipeString)){
             acceptIngredient(itemStack, entity, foundMatchingIngredient);
         //}
         if(KettleAPI.isValidRecipe(nextRecipeString)){
-            KettleRecipe recipe = KettleAPI.getRecipeBySerializedIngredientList(nextRecipeString);
+            ModRecipe recipe = KettleAPI.getRecipeBySerializedIngredientList(nextRecipeString);
             if(recipe.resultType() == ResultTypes.ITEM){
                 entity.startBrewing();
             }
 
         }
     }
-    private static void acceptIngredient(ItemStack itemStack, KettleBlockEntity entity, KettleIngredient ingredient){
+    private static void acceptIngredient(ItemStack itemStack, KettleBlockEntity entity, ModIngredient ingredient){
         entity.add(ingredient);
         itemStack.shrink(1);
         entity.getLevel().playSound(null, entity.getBlockPos(), SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS,0.25f,1f);
