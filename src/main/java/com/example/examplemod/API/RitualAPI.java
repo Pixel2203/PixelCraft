@@ -1,8 +1,7 @@
-package com.example.examplemod.API.ritual;
+package com.example.examplemod.API;
 
 import com.example.examplemod.API.ingredient.ModIngredient;
-import com.example.examplemod.API.kettle.recipe.ModRecipe;
-import net.minecraft.world.level.Level;
+import com.example.examplemod.API.recipe.ModRecipe;
 
 import java.util.ArrayList;
 import java.util.List;

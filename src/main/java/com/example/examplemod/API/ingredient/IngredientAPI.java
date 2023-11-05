@@ -1,5 +1,6 @@
 package com.example.examplemod.API.ingredient;
 
+import com.example.examplemod.API.ingredient.ModIngredient;
 import net.minecraft.world.item.Item;
 
 import java.util.*;

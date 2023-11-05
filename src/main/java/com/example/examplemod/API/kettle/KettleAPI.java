@@ -1,6 +1,7 @@
 package com.example.examplemod.API.kettle;
 
-import com.example.examplemod.API.kettle.recipe.ModRecipe;
+import com.example.examplemod.API.kettle.KettleRecipes;
+import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.tag.TagFactory;
 import net.minecraft.world.item.ItemStack;
 

@@ -3,7 +3,7 @@ package com.example.examplemod.blockentity.custom;
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.ingredient.ModIngredient;
-import com.example.examplemod.API.kettle.recipe.ModRecipe;
+import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.custom.kettle.KettleBlock;
 import com.example.examplemod.blockentity.BlockEntityFactory;
