@@ -25,6 +25,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
     public GoldenChalkBlock() {
@@ -45,12 +46,17 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
         List<ItemEntity> found = getItemEntitesInRangeFromBlockPos(level,blockPos,5);
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
         GoldenChalkBlockEntity entity = (GoldenChalkBlockEntity) blockEntity;
+
+        if(Objects.isNull(entity)){
+            return InteractionResult.FAIL;
+        }
+
         entity.startRitual();
         return super.use(blockState, level, blockPos, player, interactionHand, hitResult);
     }
 
-    private List<ItemEntity> getItemEntitesInRangeFromBlockPos(Level level, BlockPos blockPos, int range){
-        AABB box = new AABB(blockPos).inflate(3,3,3);
+    public List<ItemEntity> getItemEntitesInRangeFromBlockPos(Level level, BlockPos blockPos, int range){
+        AABB box = new AABB(blockPos).inflate(range,range,range);
         return level.getEntitiesOfClass(ItemEntity.class,box);
     }
 
