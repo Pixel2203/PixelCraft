@@ -33,7 +33,7 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
 
     @Override
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult hitResult) {
-        if(!level.isClientSide()){
+        if(level.isClientSide()){
             return super.use(blockState, level, blockPos, player, interactionHand, hitResult);
         }
         if(interactionHand != InteractionHand.MAIN_HAND){
@@ -129,8 +129,8 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
-        return BlockEntityFactory.GoldenChalkBlockEntity.create(p_153215_,p_153216_);
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return BlockEntityFactory.GoldenChalkBlockEntity.create(blockPos,blockState);
     }
 
     @Nullable

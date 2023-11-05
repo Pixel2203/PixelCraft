@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -26,6 +27,8 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
     private String kettleIngredientsSerialized;
     private boolean isProgressing;
     private int progress;
+
+
     public KettleBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BlockEntityFactory.KettleBlockEntity, blockPos, blockState);
     }
@@ -103,7 +106,7 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
         }
     }
     private void spawnResultOfRecipeOnKettle(
-            @NotNull ModRecipe recipe
+            @NotNull ModRecipe<ItemStack> recipe
 
 
     ){

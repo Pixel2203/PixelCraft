@@ -135,14 +135,16 @@ public class KettleBlock extends Block implements EntityBlock {
             BlockState blockState,
             InteractionHand hand,
             ItemStack bottleItemStack,
-            ModRecipe foundRecipe,
+            ModRecipe<ItemStack> foundRecipe,
             KettleBlockEntity blockEntity) {
         // Decrease Bottle ItemStack Count if > 0; IF == 0 Then replace it
 
         if(foundRecipe == null){
             return false;
         }
-
+        if(foundRecipe.resultType() != ResultTypes.POTION){
+            return false;
+        }
 
         int bottleCount = bottleItemStack.getCount();
         if(bottleCount == 0){

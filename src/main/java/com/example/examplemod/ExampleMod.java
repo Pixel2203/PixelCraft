@@ -4,6 +4,7 @@ import com.example.examplemod.item.ItemFactory;
 import com.example.examplemod.registry.*;
 import com.example.examplemod.event.ModEventHandler;
 import com.example.examplemod.particle.ParticleFactory;
+import com.example.examplemod.registry.api.RitualRecipeRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -58,6 +59,8 @@ public class ExampleMod
         BlockEntityRegistry.registerBlockEntityTypes(modEventBus);
         ParticleFactory.registerParticles(modEventBus);
         MobEffectRegistry.register(modEventBus);
+        // Register Ritual Recipes
+        RitualRecipeRegistry.register();
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().register(ModEventHandler.class);

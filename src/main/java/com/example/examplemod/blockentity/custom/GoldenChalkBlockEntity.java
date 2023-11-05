@@ -5,7 +5,10 @@ import com.example.examplemod.API.ingredient.IngredientAPI;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.kettle.recipe.ModRecipe;
+import com.example.examplemod.API.result.ResultTypes;
 import com.example.examplemod.API.ritual.RitualAPI;
+import com.example.examplemod.API.ritual.ModRituals;
+import com.example.examplemod.API.ritual.rituals.ExtractLiveRitual;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
@@ -25,62 +28,107 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         int FREE = 0;
         int COLLECTING = 1;
         int COLLECTED = 2;
+        int ACTIVE = 3;
     }
     private String ingredientsSerialized;
     private int currentRitualState;
     private int ticker;
+    private boolean isProgressing;
+    private String activeRitual;
+    private byte activeRitualProgress;
     private final int tickerInterval = 20;
+
+
+
 
     public GoldenChalkBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BlockEntityFactory.GoldenChalkBlockEntity, blockPos, blockState);
+        setChanged();
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
         CompoundTag nbtCompound = nbt.getCompound(ExampleMod.MODID);
-        this.ingredientsSerialized = nbtCompound.getString("recipe");
-        this.currentRitualState = nbtCompound.getInt("state");
+        this.ingredientsSerialized = nbtCompound.getString("ritual_recipe");
+        this.currentRitualState = nbtCompound.getInt("ritual_state");
+        this.isProgressing = nbtCompound.getBoolean("isProgressing");
+        this.activeRitual =  nbtCompound.getString("ritual_name");
+        this.activeRitualProgress = nbtCompound.getByte("ritual_progress");
     }
 
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
-        if(this.ingredientsSerialized != null){
-            CompoundTag nbtCompound = new CompoundTag();
-            nbtCompound.putString("recipe", this.ingredientsSerialized);
-            nbtCompound.putInt("state",this.currentRitualState);
-            nbt.put(ExampleMod.MODID,nbtCompound);
+        if(this.ingredientsSerialized == null){
+            return;
         }
+        CompoundTag nbtCompound = new CompoundTag();
+        nbtCompound.putString("ritual_recipe", this.ingredientsSerialized);
+        nbtCompound.putInt("ritual_state",this.currentRitualState);
+        nbtCompound.putBoolean("isProgressing",this.isProgressing);
+        nbtCompound.putString("ritual_name",this.activeRitual);
+        nbtCompound.putByte("ritual_progress",this.activeRitualProgress);
+        nbt.put(ExampleMod.MODID,nbtCompound);
+
     }
     @Override
     public void tick() {
+        if(!isProgressing){
+            return;
+        }
         ticker++;
         setChanged();
+
         if(ticker < tickerInterval){
             return;
         }
+
+        switch (this.currentRitualState){
+            case RitualStates.COLLECTING -> collectNextItem();
+            case RitualStates.COLLECTED -> handleCollectedBehaviour();
+            case RitualStates.ACTIVE -> activeRitualTick();
+        }
         ticker = 0;
         setChanged();
-        switch (this.currentRitualState){
-            case RitualStates.COLLECTING -> {
-                collectNextItem();
-            }
-            case RitualStates.COLLECTED -> {
-                ModRecipe recipe = RitualAPI.getRecipeBySerializedIngredients(
-                        IngredientAPI.deserializeIngredientList(this.ingredientsSerialized));
-                if(Objects.isNull(recipe)){
-                    cancelRitual();
-                    break;
-                }
-                System.out.println("GEKLAPPT!");
-            }
-            default -> {
-                return;
-            }
+    }
+
+    private void activeRitualTick() {
+        switch (this.activeRitual){
+            case ModRituals.EXTRACT_LIVE -> ExtractLiveRitual.tick();
         }
+    }
+
+    private void handleCollectedBehaviour(){
+        ModRecipe recipe = RitualAPI.getRecipeBySerializedIngredients(
+                IngredientAPI.deserializeIngredientList(this.ingredientsSerialized));
+        if(Objects.isNull(recipe)){
+            cancelRitual();
+            return;
+        }
+        if(recipe.resultType() == ResultTypes.ITEM){
+            spawnRitualResultItem(recipe);
+            return;
+        }
+        if(recipe.resultType() == ResultTypes.RITUAL){
+           performRitual((String)recipe.result());
+            return;
+        }
+        if(recipe.resultType() == ResultTypes.ITEM){
+            spawnRitualResultItem(recipe);
+        }
+    }
+    private void performRitual(String ritualID){
+        this.activeRitual = ritualID;
+        this.activeRitualProgress = 0;
+        this.currentRitualState = RitualStates.ACTIVE;
         setChanged();
     }
+
+
+    private void spawnRitualResultItem(ModRecipe recipe) {
+    }
+
     public void addIngredient(ModIngredient ingredient){
         this.ingredientsSerialized = APIHelper.getNextRecipeString(this.ingredientsSerialized,ingredient);
         setChanged();
@@ -95,12 +143,12 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             this.currentRitualState = RitualStates.COLLECTED;
             return;
         }
-        ItemEntity choosenEntity = foundEntities.get(0);
-        if(!KettleAPI.hasIngredientTag(choosenEntity.getItem())){
+        ItemEntity chosenEntity = foundEntities.get(0);
+        if(!KettleAPI.hasIngredientTag(chosenEntity.getItem())){
             cancelRitual();
             return;
         }
-        ModIngredient ingredient = IngredientAPI.getIngredientByItem(choosenEntity.getItem().getItem());
+        ModIngredient ingredient = IngredientAPI.getIngredientByItem(chosenEntity.getItem().getItem());
         if(Objects.isNull(ingredient)){
             cancelRitual();
             return;
@@ -109,7 +157,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             cancelRitual();
             return;
         }
-        choosenEntity.getItem().shrink(1);
+        chosenEntity.getItem().shrink(1);
         addIngredient(ingredient);
     }
 
@@ -117,16 +165,17 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         //TODO Give collected Items back
         //TODO Play sound after cancel
         this.currentRitualState = RitualStates.FREE;
+        this.isProgressing = false;
         setChanged();
     }
 
     public void startRitual() {
-        if(!(currentRitualState == RitualStates.FREE)){
-          return ;
+        if(this.currentRitualState != RitualStates.FREE){
+            return;
         }
-        currentRitualState = RitualStates.COLLECTING;
-        this.ingredientsSerialized ="mein test";
-        ticker = 0;
+        this.currentRitualState = RitualStates.COLLECTING;
+        this.ingredientsSerialized = "";
+        this.isProgressing = true;
         setChanged();
     }
     private List<ItemEntity> getItemEntitesInRangeFromBlockPos(Level level, BlockPos blockPos, int range){

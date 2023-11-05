@@ -5,13 +5,13 @@ import com.example.examplemod.API.result.ResultTypes;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.ItemStack;
 
-public class ModRecipe {
-    private ItemStack _result;
+public class ModRecipe<T> {
+    private T _result;
     private ModIngredient[] _ingredients;
     private String _serializedRecipe;
     private ResultTypes _resultType;
 
-    public ModRecipe(ResultTypes resultType, ItemStack result, ModIngredient... ingredients){
+    public ModRecipe(ResultTypes resultType, T result, ModIngredient... ingredients){
         this._result = result;
         this._ingredients = ingredients;
         this._serializedRecipe = this.serializeRecipe(ingredients);
@@ -23,7 +23,7 @@ public class ModRecipe {
     public ModIngredient[] ingredients(){
         return _ingredients;
     }
-    public ItemStack result(){
+    public T result(){
         return this._result;
     }
     public ResultTypes resultType(){
