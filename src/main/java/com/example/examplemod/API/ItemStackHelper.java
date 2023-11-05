@@ -77,6 +77,9 @@ public class ItemStackHelper {
     }
     private static void setHoverName(ItemStack itemStack, String translatable){
         itemStack.setHoverName(Component.translatable(translatable));
+    }
+
+    public static void spawnItemStack(){
 
     }
 }

@@ -5,10 +5,8 @@ import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.custom.GoldenChalkBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -19,7 +17,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +48,7 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
             return InteractionResult.FAIL;
         }
 
-        entity.startRitual();
+        entity.initRitual();
         return super.use(blockState, level, blockPos, player, interactionHand, hitResult);
     }
 

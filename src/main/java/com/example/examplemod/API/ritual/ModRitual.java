@@ -1,16 +1,16 @@
-package com.example.examplemod.API.ritual.rituals;
+package com.example.examplemod.API.ritual;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-public abstract class Ritual {
+public abstract class ModRitual {
     protected Level level;
     protected BlockState blockState;
     protected BlockPos blockPos;
     protected int ritualProgress;
     protected boolean isFinished;
-    public Ritual(Level level, BlockPos blockPos, BlockState blockState, int ritualProgress){
+    public ModRitual(Level level, BlockPos blockPos, BlockState blockState, int ritualProgress){
         this.level = level;
         this.blockPos = blockPos;
         this.blockState = blockState;

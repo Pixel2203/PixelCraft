@@ -36,16 +36,4 @@ public class RitualAPI {
         }
         RITUAL_RECIPES.add(recipe);
     }
-
-
-    // Rituals
-    public static void performExtractLiveRitual(Level level){
-        System.out.println("starte Ritual...");
-    }
-
-    public static void performRitual(String ritualID, Level level) {
-        switch (ritualID){
-            case ModRituals.EXTRACT_LIVE -> RitualAPI.performExtractLiveRitual(level);
-        }
-    }
 }

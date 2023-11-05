@@ -1,16 +1,16 @@
 package com.example.examplemod.API.ritual.rituals;
 
+import com.example.examplemod.API.ritual.ModRitual;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 
 import java.util.Objects;
 import java.util.Random;
 
-public class ExtractLiveRitual extends Ritual {
+public class ExtractLiveRitual extends ModRitual {
 
     private final int rangeX = 10;
     private final int rangeY = 2;
