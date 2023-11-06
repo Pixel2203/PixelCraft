@@ -6,7 +6,6 @@ import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.recipe.ModRecipe;
-import com.example.examplemod.API.RitualAPI;
 import com.example.examplemod.API.ritual.rituals.ModRituals;
 import com.example.examplemod.API.ritual.rituals.ExtractLiveRitual;
 import com.example.examplemod.API.ritual.ModRitual;
@@ -15,6 +14,7 @@ import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.custom.ritual.chalk.GoldenChalkBlock;
 import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
+import com.example.examplemod.registry.api.RitualRecipeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -157,7 +157,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     }
 
     private void handleCollectedBehaviour(){
-        ModRecipe recipe = RitualAPI.getRecipeBySerializedIngredients(
+        ModRecipe recipe = RitualRecipeRegistry.getRitualRecipeBySerializedIngredients(
                 IngredientAPI.deserializeIngredientList(this.ingredientsSerialized));
         if(Objects.isNull(recipe)){
             cancelRitual();
