@@ -86,7 +86,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         nbtCompound.putString("ritual_recipe", this.ingredientsSerialized);
         nbtCompound.putInt("ritual_state",this.currentRitualState);
         nbtCompound.putBoolean("isProgressing",this.isProgressing);
-        nbtCompound.putString("ritual_name",this.ritualID);
+        nbtCompound.putString("ritual_name",this.ritualID == null ? "" : this.ritualID);
         nbtCompound.putInt("ritual_progress",this.ritualProgress);
         nbt.put(ExampleMod.MODID,nbtCompound);
 
@@ -123,7 +123,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             return;
         }
 
-        switch (this.currentRitualState){
+:        switch (this.currentRitualState){
             case RitualStates.COLLECTING -> collectNextItem();
             case RitualStates.COLLECTED -> handleCollectedBehaviour();
             case RitualStates.ACTIVE -> activeRitualTick();
