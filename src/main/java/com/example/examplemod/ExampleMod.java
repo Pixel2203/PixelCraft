@@ -1,5 +1,7 @@
 package com.example.examplemod;
 
+import com.example.examplemod.API.ingredient.IngredientAPI;
+import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.item.ItemFactory;
 import com.example.examplemod.registry.*;
 import com.example.examplemod.event.ModEventHandler;
@@ -61,6 +63,7 @@ public class ExampleMod
         MobEffectRegistry.register(modEventBus);
         // Register Ritual Recipes
         RitualRecipeRegistry.register();
+        IngredientAPI.register();
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().register(ModEventHandler.class);
