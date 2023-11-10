@@ -9,17 +9,16 @@ import java.util.HashMap;
 public class KettleAPI {
     private static final HashMap<String, ModRecipe> KETTLE_RECIPES = new HashMap<>();
 
+    private static final ModRecipe<?> TestKettleRecipe = registerRecipe(KettleRecipes.TestKettleRecipe);
+    private static final ModRecipe<?> TestKettleRecipe2 = registerRecipe(KettleRecipes.TestKettleRecipe2);
+    private static final ModRecipe<?> FloraPotionRecipe = registerRecipe(KettleRecipes.FloraPotionRecipe);
     // Registry
-    public static void registerRecipes(){
-        registerRecipe(KettleRecipes.TestKettleRecipe);
-        registerRecipe(KettleRecipes.TestKettleRecipe2);
-        registerRecipe(KettleRecipes.FloraPotionRecipe);
-    }
     // Handler Methods
-    private static void registerRecipe(ModRecipe<?> recipe){
+    private static ModRecipe<?> registerRecipe(ModRecipe<?> recipe){
         KETTLE_RECIPES.put(
                 recipe.serializedRecipe().toUpperCase(),
                 recipe);
+        return recipe;
     }
 
     public static boolean isPartOfOrCompleteRecipe(String serializedIngredientList){

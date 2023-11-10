@@ -11,10 +11,12 @@ public interface CustomNBTTags {
 
 
     // BlockEntites
-    String RITUAL_RECIPE = "ritual_recipe";
+    String RECIPE = "recipe";
+    String PROGRESS = "progress";
+    String TICKER  = "ticker";
+    String IS_PROGRESSING = "isProgressing";
     String RITUAL_STATE = "ritual_state";
     String RITUAL_NAME = "ritual_name";
-    String RITUAL_PROGRESS = "ritual_progress";
-    String IS_PROGRESSING = "isProgressing";
+
 
 }

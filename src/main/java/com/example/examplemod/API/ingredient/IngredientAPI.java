@@ -1,25 +1,28 @@
 package com.example.examplemod.API.ingredient;
 
-import com.example.examplemod.API.ingredient.ModIngredient;
 import net.minecraft.world.item.Item;
 
 import java.util.*;
 
 public class IngredientAPI {
-    private static final HashMap<String, Item> KETTLE_INGREDIENTS = new HashMap<>();
-    public static ModIngredient registerIngredient(ModIngredient ingredient){
-        KETTLE_INGREDIENTS.put(ingredient.id(), ingredient.item());
+    private static final HashMap<String, Item> INGREDIENTS = new HashMap<>();
+    public static void register(){
+        registerIngredient(ModIngredients.BLAZE_ROD);
+        registerIngredient(ModIngredients.GLOWSTONE_DUST);
+    }
+    private static ModIngredient registerIngredient(ModIngredient ingredient){
+        INGREDIENTS.put(ingredient.id(), ingredient.item());
         return ingredient;
     }
     public static ModIngredient getIngredientByName(String id){
-        return new ModIngredient(KETTLE_INGREDIENTS.get(id),id);
+        return new ModIngredient(INGREDIENTS.get(id),id);
     }
     public static ModIngredient getIngredientByItem(Item item){
-        if(!KETTLE_INGREDIENTS.containsValue(item)){
+        if(!INGREDIENTS.containsValue(item)){
             return null;
         }
-        for(String key : KETTLE_INGREDIENTS.keySet()){
-            if(Objects.equals(item, KETTLE_INGREDIENTS.get(key))){
+        for(String key : INGREDIENTS.keySet()){
+            if(Objects.equals(item, INGREDIENTS.get(key))){
                 return new ModIngredient(item,key);
             }
         }
