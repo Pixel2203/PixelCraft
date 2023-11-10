@@ -3,9 +3,9 @@ package com.example.examplemod.block.custom.kettle;
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.ingredient.IngredientAPI;
 import com.example.examplemod.API.kettle.KettleAPI;
-import com.example.examplemod.API.kettle.fluid.KettleColors;
+import com.example.examplemod.API.kettle.KettleFluidColors;
 import com.example.examplemod.API.ingredient.ModIngredient;
-import com.example.examplemod.API.kettle.recipe.ModRecipe;
+import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.API.result.ResultTypes;
 import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
@@ -49,7 +49,7 @@ public class KettleBlock extends Block implements EntityBlock {
     public static final int MAX_FLUID_LEVEL = 3;
 
     private static final int COLOR_AMOUNT = 4;
-    public static final KettleColors DEFAULT_FLUID_COLOR = KettleColors.BLUE;
+    public static final int DEFAULT_FLUID_COLOR = KettleFluidColors.BLUE;
     public static final IntegerProperty fluid_level = IntegerProperty.create("kettle_fluid_level",MIN_FLUID_LEVEL, MAX_FLUID_LEVEL);
     public static final IntegerProperty fluid_color = IntegerProperty.create("fluidcolor",0, COLOR_AMOUNT);
     public KettleBlock() {

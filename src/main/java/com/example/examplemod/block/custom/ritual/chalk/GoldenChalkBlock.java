@@ -48,7 +48,7 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
             return InteractionResult.FAIL;
         }
 
-        entity.initRitual();
+        entity.clickRitualBlock();
         return super.use(blockState, level, blockPos, player, interactionHand, hitResult);
     }
 

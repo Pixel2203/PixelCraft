@@ -3,7 +3,8 @@ package com.example.examplemod.blockentity.custom;
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.ingredient.ModIngredient;
-import com.example.examplemod.API.kettle.recipe.ModRecipe;
+import com.example.examplemod.API.nbt.CustomNBTTags;
+import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.custom.kettle.KettleBlock;
 import com.example.examplemod.blockentity.BlockEntityFactory;
@@ -26,7 +27,7 @@ import java.util.Random;
 public class KettleBlockEntity extends BlockEntity implements ITickableBlockEntity {
     private String kettleIngredientsSerialized;
     private boolean isProgressing;
-    private int progress;
+    private int ticker;
 
 
     public KettleBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -37,9 +38,9 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
     public void load(CompoundTag nbt) {
         super.load(nbt);
         CompoundTag nbtCompound = nbt.getCompound(ExampleMod.MODID);
-        this.kettleIngredientsSerialized = nbtCompound.getString("recipe");
-        this.isProgressing = nbtCompound.getBoolean("isProgressing");
-        this.progress = nbtCompound.getInt("progress");
+        this.kettleIngredientsSerialized = nbtCompound.getString(CustomNBTTags.RECIPE);
+        this.isProgressing = nbtCompound.getBoolean(CustomNBTTags.IS_PROGRESSING);
+        this.ticker = nbtCompound.getInt(CustomNBTTags.TICKER);
     }
 
     @Override
@@ -47,16 +48,15 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
         super.saveAdditional(nbt);
         if(this.kettleIngredientsSerialized != null){
             CompoundTag nbtCompound = new CompoundTag();
-            nbtCompound.putString("recipe", this.kettleIngredientsSerialized);
-            nbtCompound.putBoolean("isProgressing", this.isProgressing);
-            nbtCompound.putInt("progress", this.progress);
+            nbtCompound.putString(CustomNBTTags.RECIPE, this.kettleIngredientsSerialized);
+            nbtCompound.putBoolean(CustomNBTTags.IS_PROGRESSING, this.isProgressing);
+            nbtCompound.putInt(CustomNBTTags.TICKER, this.ticker);
             nbt.put(ExampleMod.MODID,nbtCompound);
         }
 
     }
     public void add(ModIngredient ingredient){
         this.kettleIngredientsSerialized = APIHelper.getNextRecipeString(this.kettleIngredientsSerialized,ingredient);
-
         setChanged();
     }
     public void resetContent(){
@@ -70,21 +70,21 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
             return;
         }
         this.isProgressing = true;
-        this.progress = 0;
+        this.ticker = 0;
         setChanged();
     }
 
     @Override
     public void tick() {
-        if(isProgressing && progress >= 40){
-            progress = 0;
+        if(isProgressing && ticker >= 40){
+            ticker = 0;
             isProgressing = false;
             spawnResultOfRecipeOnKettle(KettleAPI.getRecipeBySerializedIngredientList(this.kettleIngredientsSerialized));
             setChanged();
         }
 
         if(isProgressing){
-            this.progress++;
+            this.ticker++;
             setChanged();
         }else {
             if(Objects.isNull(this.level) || this.level.isClientSide() ){

@@ -1,9 +1,8 @@
-package com.example.examplemod.API.kettle.recipe;
+package com.example.examplemod.API.recipe;
 
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.result.ResultTypes;
 import net.minecraft.util.StringUtil;
-import net.minecraft.world.item.ItemStack;
 
 public class ModRecipe<T> {
     private T _result;

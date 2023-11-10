@@ -1,14 +1,10 @@
 package com.example.examplemod.particle.custom;
 
-import com.mojang.serialization.Codec;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 public class CustomBubbleParticle extends TextureSheetParticle {
     protected CustomBubbleParticle(ClientLevel level, double xCoord, double yCoord, double zCoord,
