@@ -2,6 +2,8 @@ package com.example.examplemod.API.ritual.rituals;
 
 import com.example.examplemod.API.ritual.ModRitual;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -37,6 +39,7 @@ public class ExtractLiveRitual extends ModRitual {
 
     @Override
     public int tick() {
+        int changedBlocks = 0;
         if(Objects.isNull(level) || Objects.isNull(blockPos) || Objects.isNull(blockState)){
             return 0;
         }
@@ -50,6 +53,7 @@ public class ExtractLiveRitual extends ModRitual {
             this.currentY++;
         }
 
+
         for(int xOffset = -currentX; xOffset <= currentX; xOffset++){
             int x = blockPos.getX() + xOffset;
 
@@ -62,9 +66,13 @@ public class ExtractLiveRitual extends ModRitual {
                     BlockPos pos = new BlockPos(x,y,z);
                     if(level.getBlockState(pos).is(Blocks.GRASS_BLOCK)){
                         level.setBlockAndUpdate(pos,getRandomGrassBlockReplaceable().defaultBlockState());
+                        changedBlocks++;
                     }
                 }
             }
+        }
+        if(changedBlocks > 0){
+            level.playSound(null, blockPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,0.25f,1f);
         }
         if(this.currentX >= this.rangeX && this.currentZ >= this.rangeZ && this.currentY >= rangeY){
             this.isFinished = true;

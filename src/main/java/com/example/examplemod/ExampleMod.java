@@ -2,6 +2,7 @@ package com.example.examplemod;
 
 import com.example.examplemod.API.ingredient.IngredientAPI;
 import com.example.examplemod.API.kettle.KettleAPI;
+import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.ItemFactory;
 import com.example.examplemod.registry.*;
 import com.example.examplemod.event.ModEventHandler;
@@ -9,6 +10,8 @@ import com.example.examplemod.particle.ParticleFactory;
 import com.example.examplemod.registry.api.RitualRecipeRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
@@ -109,6 +112,7 @@ public class ExampleMod
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
+            ItemBlockRenderTypes.setRenderLayer(BlockFactory.WhiteChalkBlock_BLK, RenderType.translucent());
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());

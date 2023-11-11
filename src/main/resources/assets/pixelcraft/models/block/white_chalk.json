@@ -1,6 +1,0 @@
-{
-  "parent": "pixelcraft:block/white_chalk_variant1",
-  "textures": {
-    "1": "pixelcraft:block/white_chalk_variant1"
-  }
-}

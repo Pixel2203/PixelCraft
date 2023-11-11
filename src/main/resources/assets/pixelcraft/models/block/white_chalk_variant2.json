@@ -1,6 +1,6 @@
 {
 	"parent": "pixelcraft:block/white_chalk_template",
 	"textures": {
-	"1": "pixelcraft:block/rune_1"
+	"1": "pixelcraft:block/rune_2"
 	}
 }

@@ -7,6 +7,7 @@ import com.example.examplemod.API.kettle.KettleFluidColors;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.API.result.ResultTypes;
+import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
@@ -49,13 +50,13 @@ public class KettleBlock extends Block implements EntityBlock {
     public static final int MAX_FLUID_LEVEL = 3;
 
     private static final int COLOR_AMOUNT = 4;
-    public static final int DEFAULT_FLUID_COLOR = KettleFluidColors.BLUE;
+    private final int DEFAULT_FLUID_COLOR = KettleFluidColors.BLUE;
     public static final IntegerProperty fluid_level = IntegerProperty.create("kettle_fluid_level",MIN_FLUID_LEVEL, MAX_FLUID_LEVEL);
     public static final IntegerProperty fluid_color = IntegerProperty.create("fluidcolor",0, COLOR_AMOUNT);
     public KettleBlock() {
         super(BlockBehaviour.Properties.copy(Blocks.CAULDRON).randomTicks());
         registerDefaultState(
-                this.stateDefinition.any().setValue(fluid_level,0).setValue(fluid_color,0)
+                this.stateDefinition.any().setValue(fluid_level,0).setValue(fluid_color,DEFAULT_FLUID_COLOR)
         );
     }
 
@@ -121,7 +122,7 @@ public class KettleBlock extends Block implements EntityBlock {
                 boolean worked = handleFillFluidInBottle(player,level,blockPos,blockState,hand,itemStackInHand,foundRecipe,blockEntity);
                 return worked ? InteractionResult.SUCCESS : InteractionResult.FAIL;
             }
-            //level.addParticle(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX() + 0.5D, blockPos.getY() + 1, blockPos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+
 
         }
         return InteractionResult.SUCCESS;
@@ -159,9 +160,16 @@ public class KettleBlock extends Block implements EntityBlock {
         int newKettleFluidLevel = blockState.getValue(fluid_level)-1;
         if(newKettleFluidLevel == 0){
             blockEntity.resetContent();
+            this.resetToDefault(level, blockPos);
+
+        }else{
+            level.setBlock(blockPos, blockState.setValue(fluid_level,newKettleFluidLevel),3);
         }
-        level.setBlock(blockPos, blockState.setValue(fluid_level,newKettleFluidLevel),3);
         return true;
+    }
+    private void resetToDefault(Level level, BlockPos blockPos){
+        // Resets the water color
+        level.setBlock(blockPos, this.defaultBlockState(),3);
     }
 
 

@@ -109,7 +109,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         if(Objects.isNull(level)){
             return;
         }
-        level.playSound(null, getBlockPos(), SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS,0.25f,1f);
+        level.playSound(null, getBlockPos(), SoundEvents.ITEM_BREAK, SoundSource.BLOCKS,0.25f,1f);
         dropInventoryItems();
         resetToDefault();
 
@@ -182,8 +182,6 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         setChanged();
     }
 
-
-
     // Helper Methods
     private ModRitual getRitualHandler(String ritualID) {
         ModRitual ritual;
@@ -210,7 +208,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         if(Objects.isNull(items)){
             return;
         }
-        items.parallelStream()
+        items.stream()
                 .map(item -> new ItemStack(item.item()))
                 .forEach(itemStack -> APIHelper.spawnItemEntity(level,spawnPos,itemStack,Vec3.ZERO));
         this.ingredientsSerialized = "";
@@ -266,6 +264,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             return;
         }
         addIngredientFromGround(chosenEntity.getItem(), ingredient);
+        level.playSound(null, getBlockPos(), SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS,0.25f,1f);
     }
 
 
