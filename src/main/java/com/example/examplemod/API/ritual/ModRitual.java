@@ -23,5 +23,4 @@ public abstract class ModRitual {
     }
     public abstract void finishRitual();
 
-    public abstract ModRecipe<?> getRecipe();
 }

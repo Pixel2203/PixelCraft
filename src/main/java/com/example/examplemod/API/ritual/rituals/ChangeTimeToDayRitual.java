@@ -27,8 +27,4 @@ public class ChangeTimeToDayRitual extends ModRitual {
 
     }
 
-    @Override
-    public ModRecipe<?> getRecipe() {
-        return ;
-    }
 }
