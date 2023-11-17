@@ -21,8 +21,13 @@ public class APIHelper {
         }
         return currentRecipe;
     }
-    public static void spawnItemEntity(Level level, BlockPos spawnPos, ItemStack itemStack, Vec3 deltaMovement){
-        ItemEntity itemEntity = new ItemEntity(level,spawnPos.getX() ,spawnPos.getY(),spawnPos.getZ(),itemStack);
+    public static void spawnItemEntity(Level level, double x, double y , double z, ItemStack itemStack, Vec3 deltaMovement){
+        ItemEntity itemEntity = new ItemEntity(level,x ,y,z,itemStack);
+        itemEntity.setDeltaMovement(deltaMovement);
+        level.addFreshEntity(itemEntity);
+    }
+    public static void spawnItemEntity(Level level, Vec3 spawnPos, ItemStack itemStack, Vec3 deltaMovement){
+        ItemEntity itemEntity = new ItemEntity(level,spawnPos.x ,spawnPos.y,spawnPos.z,itemStack);
         itemEntity.setDeltaMovement(deltaMovement);
         level.addFreshEntity(itemEntity);
     }

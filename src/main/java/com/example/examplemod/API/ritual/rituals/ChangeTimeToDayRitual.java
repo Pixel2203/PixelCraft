@@ -1,5 +1,6 @@
 package com.example.examplemod.API.ritual.rituals;
 
+import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.API.ritual.ModRitual;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -24,5 +25,10 @@ public class ChangeTimeToDayRitual extends ModRitual {
     @Override
     public void finishRitual() {
 
+    }
+
+    @Override
+    public ModRecipe<?> getRecipe() {
+        return ;
     }
 }

@@ -113,6 +113,7 @@ public class ExampleMod
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             ItemBlockRenderTypes.setRenderLayer(BlockFactory.WhiteChalkBlock_BLK, RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(BlockFactory.GoldenChalkBlock_BLK, RenderType.translucent());
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());

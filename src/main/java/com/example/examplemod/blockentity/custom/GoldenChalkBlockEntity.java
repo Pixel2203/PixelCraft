@@ -1,6 +1,7 @@
 package com.example.examplemod.blockentity.custom;
 
 import com.example.examplemod.API.APIHelper;
+import com.example.examplemod.API.ModUtils;
 import com.example.examplemod.API.ingredient.IngredientAPI;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.kettle.KettleAPI;
@@ -28,6 +29,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 import java.util.Objects;
@@ -203,14 +205,14 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         if(StringUtil.isNullOrEmpty(this.ingredientsSerialized)){
             return;
         }
-        BlockPos spawnPos = getBlockPos();
+        Vec3 itemSpawnPosition = ModUtils.calcCenterOfBlock(getBlockPos().above());
         List<ModIngredient> items = IngredientAPI.deserializeIngredientList(this.ingredientsSerialized);
         if(Objects.isNull(items)){
             return;
         }
         items.stream()
                 .map(item -> new ItemStack(item.item()))
-                .forEach(itemStack -> APIHelper.spawnItemEntity(level,spawnPos,itemStack,Vec3.ZERO));
+                .forEach(itemStack -> APIHelper.spawnItemEntity(level,itemSpawnPosition,itemStack,Vec3.ZERO));
         this.ingredientsSerialized = "";
     }
     private void spawnRitualResultItem(ModRecipe<ItemStack> recipe) {
@@ -218,7 +220,8 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
                 return;
             }
             BlockPos aboveBlock = this.getBlockPos().above();
-            APIHelper.spawnItemEntity(level,aboveBlock,recipe.result(),Vec3.ZERO);
+            Vec3 itemSpawnPosition = ModUtils.calcCenterOfBlock(aboveBlock);
+            APIHelper.spawnItemEntity(level,itemSpawnPosition,recipe.result(),Vec3.ZERO);
             ((ServerLevel) level).sendParticles(ParticleTypes.EXPLOSION, aboveBlock.getX() + 0.5f,aboveBlock.getY()+0.5f,aboveBlock.getZ() +0.5f,0,1,1,1,1);
             level.playSound(null, getBlockPos(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS,0.25f,1f);
             resetToDefault();
