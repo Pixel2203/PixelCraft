@@ -2,6 +2,7 @@ package com.example.examplemod.item.custom;
 
 import com.example.examplemod.registry.MobEffectRegistry;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -9,14 +10,12 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class HungerRegenerationTalisman extends Item {
-
-    public HungerRegenerationTalisman() {
-        super(new Item.Properties());
-    }
+public class HungerRegenerationTalisman extends Talisman {
 
     @Override
-    public void onInventoryTick(ItemStack stack, Level level, Player player, int slotIndex, int selectedIndex) {
-        System.out.println("HI");
+    protected List<MobEffectInstance> getEffects() {
+        return List.of(
+                new MobEffectInstance(MobEffectRegistry.HUNGER_REGENERATION.get(),200,0)
+        );
     }
 }

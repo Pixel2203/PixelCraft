@@ -1,7 +1,11 @@
 package com.example.examplemod.item.custom;
 
+import com.example.examplemod.registry.MobEffectRegistry;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -24,14 +28,22 @@ public abstract class Talisman extends Item {
     }
 
     @Override
-    public void onInventoryTick(ItemStack stack, Level level, Player player, int slotIndex, int selectedIndex) {
-        if(level.isClientSide){
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotIndex, boolean p_41408_) {
+        if(!(entity instanceof Player player)){
             return;
         }
-        super.onInventoryTick(stack, level, player, slotIndex, selectedIndex);
+        if(level.isClientSide){
+            if(player.hasEffect(MobEffectRegistry.HUNGER_REGENERATION.get())){
+                return;
+            }
+            player.playSound(getSoundOnGrantEffect());
+        }
+        getEffects().forEach(player::addEffect);
     }
+
 
     protected abstract List<MobEffectInstance> getEffects();
 
+    protected abstract SoundEvent getSoundOnGrantEffect();
 
 }
