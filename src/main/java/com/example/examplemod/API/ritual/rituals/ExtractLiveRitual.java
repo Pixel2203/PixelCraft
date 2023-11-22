@@ -67,6 +67,14 @@ public class ExtractLiveRitual extends ModRitual {
                     if(level.getBlockState(pos).is(Blocks.GRASS_BLOCK)){
                         level.setBlockAndUpdate(pos,getRandomGrassBlockReplaceable().defaultBlockState());
                         changedBlocks++;
+                    }else if(level.getBlockState(pos).is(Blocks.ROSE_BUSH)){
+                        Random random = new Random();
+                        int probability = random.nextInt(0,4);
+                        if(probability == 3){
+                            level.setBlockAndUpdate(pos,Blocks.DEAD_BUSH.defaultBlockState());
+                        }else{
+                            level.setBlockAndUpdate(pos,Blocks.AIR.defaultBlockState());
+                        }
                     }
                 }
             }

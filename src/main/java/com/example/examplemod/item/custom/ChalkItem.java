@@ -1,4 +1,4 @@
-package com.example.examplemod.item.custom.ritual;
+package com.example.examplemod.item.custom;
 
 import com.example.examplemod.block.custom.ritual.chalk.ChalkBlock;
 import net.minecraft.core.BlockPos;

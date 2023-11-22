@@ -29,10 +29,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fml.common.Mod;
+import org.antlr.v4.runtime.misc.IntegerList;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBlockEntity {
 
@@ -135,6 +136,15 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             case RitualStates.ACTIVE -> activeRitualTick();
         }
         ticker = 0;
+        Vec3 spawnParticlePosition = ModUtils.calcCenterOfBlock(getBlockPos().above());
+        Random random = new Random();
+        int amountOfParticles = random.nextInt(1,4);
+        for(int i = 0; i < amountOfParticles; i++){
+            float offsetX = random.nextInt(0,4) * 0.1f;
+            float offsetZ = random.nextInt(0,4) * 0.1f;
+            ((ServerLevel)getLevel()).sendParticles(ParticleTypes.FLAME,spawnParticlePosition.x + offsetX,spawnParticlePosition.y,spawnParticlePosition.z + offsetZ,1,0,0,0,0);
+        }
+
         setChanged();
     }
 

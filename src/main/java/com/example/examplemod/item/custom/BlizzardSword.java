@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.level.Level;
 
 public class BlizzardSword extends SwordItem {
     public BlizzardSword(Tier p_43269_, int p_43270_, float p_43271_, Properties p_43272_) {
@@ -32,4 +33,5 @@ public class BlizzardSword extends SwordItem {
         }
         return super.onLeftClickEntity(stack, player, entity);
     }
+
 }

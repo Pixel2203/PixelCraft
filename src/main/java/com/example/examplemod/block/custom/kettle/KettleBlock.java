@@ -7,7 +7,6 @@ import com.example.examplemod.API.kettle.KettleFluidColors;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.API.result.ResultTypes;
-import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.custom.KettleBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;

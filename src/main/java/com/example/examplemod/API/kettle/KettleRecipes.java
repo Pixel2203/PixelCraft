@@ -4,13 +4,9 @@ import com.example.examplemod.API.ingredient.ModIngredients;
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.API.result.ModResults;
 import com.example.examplemod.API.result.ResultTypes;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.PotionItem;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.Potions;
 
 public class KettleRecipes {
 

@@ -3,11 +3,8 @@ package com.example.examplemod.registry.api;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.ingredient.ModIngredients;
 import com.example.examplemod.API.recipe.ModRecipe;
-import com.example.examplemod.API.result.ModResults;
 import com.example.examplemod.API.result.ResultTypes;
-import com.example.examplemod.API.ritual.ModRitual;
 import com.example.examplemod.API.ritual.rituals.ModRituals;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;

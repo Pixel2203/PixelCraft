@@ -30,6 +30,8 @@ public class ItemRegistry {
             ITEMS.register("golden_chalk", () -> GoldenChalkItem);
     private static final RegistryObject<Item> BLIZZARDSWORD =
             ITEMS.register("blizzard_sword", () -> BlizzardSwordItem);
+    private static final RegistryObject<Item> HUNGERREGENERATIONTALISMAN =
+            ITEMS.register("hunger_regeneration_talisman", () -> HungerRegenerationTalisman);
     // BlockItems
 
 

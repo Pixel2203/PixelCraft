@@ -1,7 +1,6 @@
 package com.example.examplemod;
 
 import com.example.examplemod.API.ingredient.IngredientAPI;
-import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.ItemFactory;
 import com.example.examplemod.registry.*;

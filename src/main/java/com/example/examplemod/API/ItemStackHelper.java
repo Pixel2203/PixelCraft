@@ -6,7 +6,6 @@ import com.example.examplemod.item.ItemFactory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.Objects;
 
