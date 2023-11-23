@@ -32,6 +32,8 @@ public class ItemRegistry {
             ITEMS.register("blizzard_sword", () -> BlizzardSwordItem);
     private static final RegistryObject<Item> HUNGERREGENERATIONTALISMAN =
             ITEMS.register("hunger_regeneration_talisman", () -> HungerRegenerationTalisman);
+    private static final RegistryObject<Item> PROTECTIONOFPROJECTILESTALISMAN =
+            ITEMS.register("protection_of_death_talisman", () -> ProtectionOfProjectilesTalisman);
     // BlockItems
 
 

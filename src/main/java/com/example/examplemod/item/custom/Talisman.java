@@ -1,5 +1,6 @@
 package com.example.examplemod.item.custom;
 
+import com.example.examplemod.item.custom.talisman.InstantaneousEffect;
 import com.example.examplemod.registry.MobEffectRegistry;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -29,6 +30,7 @@ public abstract class Talisman extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotIndex, boolean p_41408_) {
+        InstantaneousEffect effect = stack.getItem();
         if(!(entity instanceof Player player)){
             return;
         }

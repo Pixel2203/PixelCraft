@@ -3,6 +3,7 @@ package com.example.examplemod.API;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -25,6 +26,16 @@ public class APIHelper {
         ItemEntity itemEntity = new ItemEntity(level,spawnPos.x ,spawnPos.y,spawnPos.z,itemStack);
         itemEntity.setDeltaMovement(deltaMovement);
         level.addFreshEntity(itemEntity);
+    }
+    public static int findItemInInventory(Player player, ItemStack itemStack) {
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack slotStack = player.getInventory().getItem(i);
+            if (ItemStack.isSameItem(slotStack, itemStack) && ItemStack.isSameItemSameTags(slotStack, itemStack)) {
+                return i; // Found the item in this slot
+            }
+        }
+
+        return -1; // Item not found in the player's inventory
     }
 
 }

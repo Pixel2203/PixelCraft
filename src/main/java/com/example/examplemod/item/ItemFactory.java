@@ -1,10 +1,7 @@
 package com.example.examplemod.item;
 
 import com.example.examplemod.block.BlockFactory;
-import com.example.examplemod.item.custom.BlizzardSword;
-import com.example.examplemod.item.custom.HungerRegenerationTalisman;
-import com.example.examplemod.item.custom.ZirconItem;
-import com.example.examplemod.item.custom.ChalkItem;
+import com.example.examplemod.item.custom.*;
 import com.example.examplemod.potion.custom.flora.FloraSplashPotionItem;
 import com.example.examplemod.potion.custom.freezing.FreezingSplashPotionItem;
 import com.example.examplemod.potion.custom.hungerregeneration.HungerRegenerationSplashPotionItem;
@@ -39,4 +36,6 @@ public class ItemFactory {
             new BlizzardSword(Tiers.DIAMOND,3,-2.4F,new Item.Properties());
     public static final Item HungerRegenerationTalisman =
             new HungerRegenerationTalisman();
+    public static final Item ProtectionOfProjectilesTalisman =
+            new ProtectionOfDeathTalisman();
 }
