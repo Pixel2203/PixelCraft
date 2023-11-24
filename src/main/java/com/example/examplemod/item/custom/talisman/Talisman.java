@@ -42,9 +42,6 @@ public abstract class Talisman extends Item {
                 player.playSound(effectOverTime.effectsAppliedFirstTime());
             }
             effectOverTime.effectsToApply().forEach(player::addEffect);
-        }else if(this instanceof InstantaneousEffect){
-            InstantaneousEffect instantaneousEffect = (InstantaneousEffect) this;
-            player.playSound(instantaneousEffect.effectAppliedSound());
         }
     }
 }
