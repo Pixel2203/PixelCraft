@@ -2,6 +2,8 @@ package com.example.examplemod.item;
 
 import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.custom.*;
+import com.example.examplemod.item.custom.talisman.HungerRegenerationTalisman;
+import com.example.examplemod.item.custom.talisman.ProtectionOfDeathTalisman;
 import com.example.examplemod.potion.custom.flora.FloraSplashPotionItem;
 import com.example.examplemod.potion.custom.freezing.FreezingSplashPotionItem;
 import com.example.examplemod.potion.custom.hungerregeneration.HungerRegenerationSplashPotionItem;

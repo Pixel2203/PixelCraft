@@ -3,6 +3,8 @@ package com.example.examplemod.event;
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.item.ItemFactory;
+import com.example.examplemod.item.custom.talisman.HungerRegenerationTalisman;
+import com.example.examplemod.item.custom.talisman.InstantaneousEffect;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,12 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = ExampleMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class EventHandler {
     @SubscribeEvent
-    public static void pickupItem(EntityItemPickupEvent event) {
-        System.out.println("Item picked up!");
-    }
-
-    @SubscribeEvent
-    public static void onEntityDamageByEntityEvent(LivingHurtEvent event){
+    public static void onEntityDamageEvent(LivingHurtEvent event){
         if(event.getEntity() instanceof Player player){
             float currentPlayerHealth = player.getHealth();
             if(currentPlayerHealth - event.getAmount() < 0.5){
@@ -42,6 +39,7 @@ public class EventHandler {
             }
         }
     }
+
 
 
 }

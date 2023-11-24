@@ -1,5 +1,6 @@
-package com.example.examplemod.item.custom;
+package com.example.examplemod.item.custom.talisman;
 
+import com.example.examplemod.item.custom.talisman.EffectOverTime;
 import com.example.examplemod.item.custom.talisman.InstantaneousEffect;
 import com.example.examplemod.registry.MobEffectRegistry;
 import net.minecraft.sounds.SoundEvent;
@@ -17,7 +18,6 @@ import java.util.List;
 
 public abstract class Talisman extends Item {
 
-
     public Talisman() {
         super(new Item.Properties().stacksTo(1));
     }
@@ -30,22 +30,21 @@ public abstract class Talisman extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotIndex, boolean p_41408_) {
-        InstantaneousEffect effect = stack.getItem();
         if(!(entity instanceof Player player)){
             return;
         }
-        if(level.isClientSide){
-            if(player.hasEffect(MobEffectRegistry.HUNGER_REGENERATION.get())){
-                return;
+        if(this instanceof EffectOverTime){
+            EffectOverTime effectOverTime = (EffectOverTime) this;
+            if(level.isClientSide){
+                if(player.hasEffect(MobEffectRegistry.HUNGER_REGENERATION.get())){
+                    return;
+                }
+                player.playSound(effectOverTime.effectsAppliedFirstTime());
             }
-            player.playSound(getSoundOnGrantEffect());
+            effectOverTime.effectsToApply().forEach(player::addEffect);
+        }else if(this instanceof InstantaneousEffect){
+            InstantaneousEffect instantaneousEffect = (InstantaneousEffect) this;
+            player.playSound(instantaneousEffect.effectAppliedSound());
         }
-        getEffects().forEach(player::addEffect);
     }
-
-
-    protected abstract List<MobEffectInstance> getEffects();
-
-    protected abstract SoundEvent getSoundOnGrantEffect();
-
 }
