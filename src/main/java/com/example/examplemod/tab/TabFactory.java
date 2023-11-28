@@ -5,6 +5,7 @@ import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.ItemFactory;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemFrameItem;
 import net.minecraft.world.item.ItemStack;
 
 public class TabFactory {
@@ -30,5 +31,8 @@ public class TabFactory {
                         output.accept(ItemStackHelper.createHungerRegenerationPotion(2,1,200,1));
                         output.accept(ItemStackHelper.createHungerRegenerationPotion(3,1,300,2));
                         output.accept(ItemStackHelper.createFreezePotion(1,200,0));
+                        output.accept(ItemFactory.ProtectionOfDeathTalisman);
+                        output.accept(ItemFactory.HungerRegenerationTalisman);
+                        output.accept(ItemFactory.ProtectionOfFreezingTalisman);
                     }).build();
 }

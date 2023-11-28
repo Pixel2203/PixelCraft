@@ -10,7 +10,4 @@ public interface EffectOverTime {
 
     @NotNull
     List<MobEffectInstance> effectsToApply();
-
-    @NotNull
-    SoundEvent effectsAppliedFirstTime();
 }

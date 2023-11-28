@@ -28,5 +28,7 @@
   "pixelcraft.potion_freeze.description": "§8Freezes the Target to its current position!",
 
   "effect.pixelcraft.freeze": "Freeze",
-  "effect.pixelcraft.blizzard_poisoning": "Blizzard Poisoning"
+  "effect.pixelcraft.blizzard_poisoning": "Blizzard Poisoning",
+  "effect.pixelcraft.guardian_angle": "Guardian Angle",
+  "effect.pixelcraft.freezing_protection": "Freezing Protection"
 }
