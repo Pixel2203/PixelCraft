@@ -1,12 +1,13 @@
 package com.example.examplemod.blockentity.custom;
 
 import com.example.examplemod.API.APIHelper;
+import com.example.examplemod.API.ModUtils;
 import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.block.custom.kettle.KettleBlock;
+import com.example.examplemod.block.custom.KettleBlock;
 import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -14,7 +15,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringUtil;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -76,35 +76,49 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
 
     @Override
     public void tick() {
-        if(isProgressing && ticker >= 40){
-            ticker = 0;
-            isProgressing = false;
-            spawnResultOfRecipeOnKettle(KettleAPI.getRecipeBySerializedIngredientList(this.kettleIngredientsSerialized));
-            setChanged();
+        BlockState blockState = getBlockState();
+        boolean isFireBelow = ((KettleBlock) blockState.getBlock()).isFireBelow(this.level, this.getBlockPos());
+        boolean isAlreadyBoiling = blockState.getValue(KettleBlock.isBoiling);
+
+        if (isFireBelow != isAlreadyBoiling) {
+            level.setBlock(getBlockPos(), blockState.setValue(KettleBlock.isBoiling, isFireBelow), 3);
         }
 
-        if(isProgressing){
-            this.ticker++;
+        if (isProgressing) {
+            ticker++;
             setChanged();
-        }else {
-            if(Objects.isNull(this.level) || this.level.isClientSide() ){
-                return;
-            }
-            boolean isFireBelow = ((KettleBlock)this.getBlockState().getBlock()).isFireBelow(this.level,this.getBlockPos());
-            boolean isMaxFluidLevel = this.getBlockState().getValue(KettleBlock.fluid_level) == KettleBlock.MAX_FLUID_LEVEL;
-            if(!isFireBelow || !isMaxFluidLevel){
-                return;
-            }
-            BlockPos aboveBlock = this.getBlockPos().above();
-            Random random = new Random();
-            int bubbleChange = random.nextInt(30);
-            if(bubbleChange <= 25){
-                return;
-            }
-            ((ServerLevel)level).sendParticles(ParticleTypes.BUBBLE_POP,aboveBlock.getX() + 0.5f, aboveBlock.getY(), aboveBlock.getZ()+0.5f,1,0.2,0,0.2,0);
 
+            if (ticker >= 40) {
+                ticker = 0;
+                isProgressing = false;
+                spawnResultOfRecipeOnKettle(KettleAPI.getRecipeBySerializedIngredientList(this.kettleIngredientsSerialized));
+                setChanged();
+            }
+        }
+
+        if (Objects.isNull(level) || level.isClientSide()) {
+            return;
+        }
+
+        boolean isMaxFluidLevel = blockState.getValue(KettleBlock.fluid_level) == KettleBlock.MAX_FLUID_LEVEL;
+
+        if (isFireBelow && isMaxFluidLevel && !blockState.getValue(KettleBlock.isMixture)) {
+            spawnBubbles();
         }
     }
+    private void spawnBubbles(){
+        BlockPos aboveBlock = this.getBlockPos().above();
+        Random random = new Random();
+        int bubbleChange = random.nextInt(30);
+        if(bubbleChange <= 25){
+            return;
+        }
+        Vec3 particlePos = ModUtils.calcCenterOfBlock(aboveBlock);
+        ((ServerLevel)level).sendParticles(ParticleTypes.BUBBLE_POP,particlePos.x, particlePos.y - 0.5d, particlePos.z,1,0.2,0,0.2,0);
+
+    }
+
+
     private void spawnResultOfRecipeOnKettle(
             @NotNull ModRecipe<ItemStack> recipe
 
@@ -112,9 +126,7 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
     ){
         if(this.getBlockState().getValue(KettleBlock.fluid_level) == KettleBlock.MAX_FLUID_LEVEL && !level.isClientSide()){
             BlockPos aboveBlock = this.getBlockPos().above();
-            ItemEntity itemEntity = new ItemEntity(level,aboveBlock.getX() +0.5f,aboveBlock.getY()+0.5f,aboveBlock.getZ()+0.5f,recipe.result());
-            itemEntity.setDeltaMovement(Vec3.ZERO);
-            level.addFreshEntity(itemEntity);
+            APIHelper.spawnItemEntity(level, ModUtils.calcCenterOfBlock(aboveBlock),recipe.result(),Vec3.ZERO);
             level.setBlock(this.getBlockPos(),this.getBlockState().setValue(KettleBlock.fluid_level,KettleBlock.MIN_FLUID_LEVEL),3);
             ((ServerLevel) level).sendParticles(ParticleTypes.EXPLOSION, aboveBlock.getX() + 0.5f,aboveBlock.getY()+0.5f,aboveBlock.getZ() +0.5f,0,1,1,1,1);
             this.resetContent();

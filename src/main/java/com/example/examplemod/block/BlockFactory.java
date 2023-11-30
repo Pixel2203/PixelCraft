@@ -1,13 +1,12 @@
 package com.example.examplemod.block;
 
-import com.example.examplemod.block.custom.kettle.KettleBlock;
-import com.example.examplemod.block.custom.ritual.chalk.ChalkBlock;
-import com.example.examplemod.block.custom.ritual.chalk.GoldenChalkBlock;
+import com.example.examplemod.block.custom.KettleBlock;
+import com.example.examplemod.block.custom.ChalkBlock;
+import com.example.examplemod.block.custom.GoldenChalkBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 public class BlockFactory {

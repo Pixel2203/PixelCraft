@@ -1,4 +1,4 @@
-package com.example.examplemod.block.custom.kettle;
+package com.example.examplemod.block.custom;
 
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.ingredient.IngredientAPI;
@@ -24,6 +24,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -36,6 +37,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
@@ -51,18 +53,13 @@ public class KettleBlock extends Block implements EntityBlock {
     private static final int COLOR_AMOUNT = 4;
     private final int DEFAULT_FLUID_COLOR = KettleFluidColors.BLUE;
     public static final IntegerProperty fluid_level = IntegerProperty.create("kettle_fluid_level",MIN_FLUID_LEVEL, MAX_FLUID_LEVEL);
-    public static final IntegerProperty fluid_color = IntegerProperty.create("fluidcolor",0, COLOR_AMOUNT);
+    public static final BooleanProperty isMixture = BooleanProperty.create("kettle_fluid_ismixture");
+    public static final BooleanProperty isBoiling = BooleanProperty.create("kettle_fluid_isboling");
     public KettleBlock() {
         super(BlockBehaviour.Properties.copy(Blocks.CAULDRON).randomTicks());
         registerDefaultState(
-                this.stateDefinition.any().setValue(fluid_level,0).setValue(fluid_color,DEFAULT_FLUID_COLOR)
+                this.stateDefinition.any().setValue(fluid_level,0).setValue(isMixture,false).setValue(isBoiling,false)
         );
-    }
-
-    @Override
-    public void randomTick(BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, RandomSource p_222957_) { //randomness dX dZ -- -- dY
-        serverLevel.sendParticles(ParticleFactory.CustomBubbleParticle.get(), blockPos.getX(),blockPos.getY(),blockPos.getZ(),0,2,1,1,1);
-        super.randomTick(blockState, serverLevel, blockPos, p_222957_);
     }
 
     @Nullable
@@ -74,7 +71,8 @@ public class KettleBlock extends Block implements EntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(fluid_level);
-        builder.add(fluid_color);
+        builder.add(isMixture);
+        builder.add(isBoiling);
     }
     @Nullable
     @Override
@@ -126,6 +124,9 @@ public class KettleBlock extends Block implements EntityBlock {
         }
         return InteractionResult.SUCCESS;
     }
+    public boolean isFireBelow(Level level, BlockPos blockPos){
+        return level.getBlockState(blockPos.below()).getBlock() == Blocks.FIRE;
+    }
 
 
     private boolean handleFillFluidInBottle(
@@ -148,11 +149,11 @@ public class KettleBlock extends Block implements EntityBlock {
 
         int bottleCount = bottleItemStack.getCount();
         if(bottleCount == 0){
-            player.setItemInHand(hand, foundRecipe.result());
+            player.setItemInHand(hand, foundRecipe.result().copy());
         }
         if(bottleCount > 0){
             bottleItemStack.shrink(1);
-            player.addItem(foundRecipe.result());
+            player.addItem(foundRecipe.result().copy());
         }
 
         // IF Fluid level is going to be 0 , remove all ingredients from the kettle entity
@@ -195,9 +196,7 @@ public class KettleBlock extends Block implements EntityBlock {
         }
         String serializedRecipe = entity.getSerializedKettleRecipe();
         String nextRecipeString = APIHelper.getNextRecipeString(serializedRecipe, foundMatchingIngredient);
-        //if(KettleAPI.isPartOfOrCompleteRecipe(nextRecipeString)){
-            acceptIngredient(itemStack, entity, foundMatchingIngredient);
-        //}
+        acceptIngredient(itemStack, entity, foundMatchingIngredient);
         if(KettleAPI.isValidRecipe(nextRecipeString)){
             ModRecipe recipe = KettleAPI.getRecipeBySerializedIngredientList(nextRecipeString);
             if(recipe.resultType() == ResultTypes.ITEM){
@@ -210,11 +209,9 @@ public class KettleBlock extends Block implements EntityBlock {
         entity.add(ingredient);
         itemStack.shrink(1);
         entity.getLevel().playSound(null, entity.getBlockPos(), SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS,0.25f,1f);
-        Random random = new Random();
+        if(entity.getBlockState().getValue(isMixture) == false){
+            entity.getLevel().setBlock(entity.getBlockPos(),entity.getBlockState().setValue(isMixture,true),3);
+        }
 
-        entity.getLevel().setBlock(entity.getBlockPos(),entity.getBlockState().setValue(fluid_color,random.nextInt(COLOR_AMOUNT)),3);
-    }
-    public boolean isFireBelow(Level level, BlockPos blockPos){
-        return level.getBlockState(blockPos.below()).getBlock() == Blocks.FIRE;
     }
 }

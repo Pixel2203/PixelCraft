@@ -13,7 +13,7 @@ import com.example.examplemod.API.ritual.rituals.ExtractLiveRitual;
 import com.example.examplemod.API.ritual.ModRitual;
 import com.example.examplemod.API.ritual.RitualStates;
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.block.custom.ritual.chalk.GoldenChalkBlock;
+import com.example.examplemod.block.custom.GoldenChalkBlock;
 import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.registry.api.RitualRecipeRegistry;
@@ -29,7 +29,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import org.antlr.v4.runtime.misc.IntegerList;
 
 import java.util.List;
 import java.util.Objects;

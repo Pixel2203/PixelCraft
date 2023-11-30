@@ -1,5 +1,10 @@
 {
 	"credit": "Made py PlayTics",
+	"textures": {
+		"outside": "pixelcraft:block/cauldron_side",
+		"inside": "pixelcraft:block/cauldron_side",
+		"particle": "pixelcraft:block/cauldron_custom"
+	},
 	"elements": [
 		{
 			"from": [2, 4, 2],

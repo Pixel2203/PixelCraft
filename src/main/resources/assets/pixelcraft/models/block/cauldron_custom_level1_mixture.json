@@ -1,6 +1,6 @@
 {
   "parent":"pixelcraft:block/cauldron_custom_template_level1",
   "textures": {
-    "content": "pixelcraft:block/water_default"
+    "content": "pixelcraft:block/mixture_still"
   }
 }

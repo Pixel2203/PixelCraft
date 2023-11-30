@@ -1,6 +1,6 @@
 package com.example.examplemod.item.custom;
 
-import com.example.examplemod.block.custom.ritual.chalk.ChalkBlock;
+import com.example.examplemod.block.custom.ChalkBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
