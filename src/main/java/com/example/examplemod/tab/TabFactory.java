@@ -1,15 +1,11 @@
 package com.example.examplemod.tab;
 
 import com.example.examplemod.API.ItemStackHelper;
-import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.ItemFactory;
-import com.example.examplemod.registry.ItemRegistry;
+import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemFrameItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.DeferredRegister;
 
 public class TabFactory {
 

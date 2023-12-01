@@ -3,6 +3,7 @@ package com.example.examplemod;
 import com.example.examplemod.API.ingredient.IngredientAPI;
 import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.item.ItemFactory;
+import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.registry.*;
 import com.example.examplemod.event.ModEventHandler;
 import com.example.examplemod.particle.ParticleFactory;

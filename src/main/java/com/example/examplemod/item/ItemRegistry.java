@@ -1,6 +1,5 @@
-package com.example.examplemod.registry;
+package com.example.examplemod.item;
 
-import com.example.examplemod.item.custom.talisman.impl.ProtectionOfFreezingTalisman;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -37,6 +36,8 @@ public class ItemRegistry {
             ITEMS.register("protection_of_death_talisman", () -> ProtectionOfDeathTalisman);
     private static final RegistryObject<Item> PROTECTIONOFFREEZINGTALISMAN =
             ITEMS.register("protection_of_freezing_talisman", () -> ProtectionOfFreezingTalisman);
+
+    //private static final RegistryObject<Item> TESTSCROLL = ITEMS.register("test_scroll", () -> TestScrollItem);
     // BlockItems
 
 
