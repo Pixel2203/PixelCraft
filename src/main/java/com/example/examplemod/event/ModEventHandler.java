@@ -26,5 +26,4 @@ public class ModEventHandler {
 
         LogUtils.getLogger().info("RegisterParticleProvider has been registered!!");
     }
-
 }

@@ -2,6 +2,7 @@ package com.example.examplemod;
 
 import com.example.examplemod.API.ingredient.IngredientAPI;
 import com.example.examplemod.block.BlockFactory;
+import com.example.examplemod.entity.EntityRegistry;
 import com.example.examplemod.item.ItemFactory;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.registry.*;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -64,6 +66,7 @@ public class ExampleMod
         BlockEntityRegistry.registerBlockEntityTypes(modEventBus);
         ParticleFactory.registerParticles(modEventBus);
         MobEffectRegistry.register(modEventBus);
+        EntityRegistry.ENTITIES.register(modEventBus);
         // Register Ritual Recipes
         RitualRecipeRegistry.register();
         IngredientAPI.register();
@@ -117,6 +120,11 @@ public class ExampleMod
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        }
+
+        @SubscribeEvent
+        public static void onRegisterAttributes(EntityAttributeCreationEvent event){
+            System.out.println("HALLO!!");
         }
     }
 }

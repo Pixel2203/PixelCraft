@@ -1,6 +1,6 @@
 package com.example.examplemod.entity;
 
-import com.example.examplemod.entity.custom.ExampleEntity;
+import com.example.examplemod.entity.entities.ExampleEntity;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
