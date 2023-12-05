@@ -1,6 +1,5 @@
-package com.example.examplemod.item.custom.talisman;
+package com.example.examplemod.item.items.talisman;
 
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.NotNull;
 

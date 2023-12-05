@@ -1,9 +1,9 @@
-package com.example.examplemod.item.custom.talisman.impl;
+package com.example.examplemod.item.items.talisman;
 
 import com.example.examplemod.API.APIHelper;
-import com.example.examplemod.item.ItemFactory;
-import com.example.examplemod.item.custom.talisman.EffectOverTime;
-import com.example.examplemod.item.custom.talisman.TalismanItem;
+import com.example.examplemod.item.ItemRegistry;
+import com.example.examplemod.item.items.talisman.EffectOverTime;
+import com.example.examplemod.item.items.talisman.TalismanItem;
 import com.example.examplemod.registry.MobEffectRegistry;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -40,7 +40,7 @@ public class ProtectionOfDeathTalisman extends TalismanItem implements EffectOve
         LivingEntity entity = event.getEntity();
         entity.setHealth(0.5f);
         event.setCanceled(true);
-        APIHelper.breakCurioOfEntity(entity, ItemFactory.ProtectionOfDeathTalisman);
+        APIHelper.breakCurioOfEntity(entity, ItemRegistry.PROTECTION_OF_DEATH_TALISMAN.get());
         removeAllAppliedEffect(entity);
     }
 

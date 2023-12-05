@@ -1,7 +1,7 @@
 package com.example.examplemod.entity.models;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.entity.entities.ExampleEntity;
+import com.example.examplemod.entity.entities.ScrollEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
@@ -12,12 +12,12 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 
 
-public class ExampleEntityModel<T extends ExampleEntity> extends EntityModel<T> {
+public class ScrollEntityModel<T extends ScrollEntity> extends EntityModel<T> {
 	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation(ExampleMod.MODID, "example_entity"), "main");
 	private final ModelPart bb_main;
 
-	public ExampleEntityModel(ModelPart root) {
+	public ScrollEntityModel(ModelPart root) {
 		this.bb_main = root.getChild("bb_main");
 	}
 

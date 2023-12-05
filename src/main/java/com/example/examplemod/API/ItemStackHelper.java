@@ -2,7 +2,7 @@ package com.example.examplemod.API;
 
 import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.translation.CustomTranslatable;
-import com.example.examplemod.item.ItemFactory;
+import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -12,7 +12,7 @@ import java.util.Objects;
 public class ItemStackHelper {
 
     public static ItemStack createFloraPotion(int level, int amount){
-        ItemStack potion = new ItemStack(ItemFactory.FloraPotion, amount);
+        ItemStack potion = new ItemStack(ItemRegistry.POTION_FLORA.get(), amount);
         addFloraBoundsTag(potion,level);
         addLevelNbtData(potion,level);
         setHoverName(potion,CustomTranslatable.POTION_FLORA_NAME);
@@ -43,13 +43,13 @@ public class ItemStackHelper {
         itemStack.setTag(nbt);
     }
     public static ItemStack createFreezePotion(int amount, int duration, int amplifier){
-        ItemStack potion = new ItemStack(ItemFactory.FreezePotion,amount);
+        ItemStack potion = new ItemStack(ItemRegistry.POTION_FREEZE.get(),amount);
         addCommonNbtData(potion,duration,amplifier);
         setHoverName(potion, CustomTranslatable.POTION_FREEZE_NAME);
         return potion;
     }
     public static ItemStack createHungerRegenerationPotion(int level,int amount, int duration, int amplifier){
-        ItemStack potion = new ItemStack(ItemFactory.HungerRegenerationPotion,amount);
+        ItemStack potion = new ItemStack(ItemRegistry.POTION_HUNGER_REGENERATION.get(),amount);
         setHoverName(potion,CustomTranslatable.POTION_HUNGERREGENERATION_NAME);
         addCommonNbtData(potion,duration,amplifier);
         addLevelNbtData(potion,level);

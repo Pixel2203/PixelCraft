@@ -1,4 +1,4 @@
-package com.example.examplemod.item.custom;
+package com.example.examplemod.item.items;
 
 import com.example.examplemod.block.custom.ChalkBlock;
 import net.minecraft.core.BlockPos;

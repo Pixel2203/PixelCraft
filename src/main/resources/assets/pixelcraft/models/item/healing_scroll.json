@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "pixelcraft:item/test_scroll"
+    "layer0": "pixelcraft:item/sealed_scroll"
   }
 }

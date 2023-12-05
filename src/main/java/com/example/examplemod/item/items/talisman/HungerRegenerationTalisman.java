@@ -1,7 +1,7 @@
-package com.example.examplemod.item.custom.talisman.impl;
+package com.example.examplemod.item.items.talisman;
 
-import com.example.examplemod.item.custom.talisman.EffectOverTime;
-import com.example.examplemod.item.custom.talisman.TalismanItem;
+import com.example.examplemod.item.items.talisman.EffectOverTime;
+import com.example.examplemod.item.items.talisman.TalismanItem;
 import com.example.examplemod.registry.MobEffectRegistry;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;

@@ -3,7 +3,6 @@ package com.example.examplemod;
 import com.example.examplemod.API.ingredient.IngredientAPI;
 import com.example.examplemod.block.BlockFactory;
 import com.example.examplemod.entity.EntityRegistry;
-import com.example.examplemod.item.ItemFactory;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.registry.*;
 import com.example.examplemod.event.ModEventHandler;
@@ -82,7 +81,7 @@ public class ExampleMod
     public void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-            event.accept(ItemFactory.ZirconItem);
+            event.accept(ItemRegistry.ZIRCON.get());
     }
     private void commonSetup(final FMLCommonSetupEvent event)
     {
@@ -120,11 +119,6 @@ public class ExampleMod
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
-        }
-
-        @SubscribeEvent
-        public static void onRegisterAttributes(EntityAttributeCreationEvent event){
-            System.out.println("HALLO!!");
         }
     }
 }
