@@ -1,4 +1,4 @@
-package com.example.examplemod.blockentity.custom;
+package com.example.examplemod.blockentity.entities;
 
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.ModUtils;
@@ -8,15 +8,15 @@ import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.API.ritual.rituals.ChangeTimeToDayRitual;
-import com.example.examplemod.API.ritual.rituals.ModRituals;
+import com.example.examplemod.API.ritual.util.ModRituals;
 import com.example.examplemod.API.ritual.rituals.ExtractLiveRitual;
-import com.example.examplemod.API.ritual.ModRitual;
-import com.example.examplemod.API.ritual.RitualStates;
+import com.example.examplemod.API.ritual.util.ModRitual;
+import com.example.examplemod.API.ritual.util.RitualStates;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.custom.GoldenChalkBlock;
-import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
-import com.example.examplemod.registry.api.RitualRecipeRegistry;
+import com.example.examplemod.blockentity.BlockEntityRegistry;
+import com.example.examplemod.API.ritual.RitualAPI;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -58,7 +58,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
 
 
     public GoldenChalkBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(BlockEntityFactory.GoldenChalkBlockEntity, blockPos, blockState);
+        super(BlockEntityRegistry.GOLDEN_CHALK_BLOCK_ENTITY.get(), blockPos, blockState);
         setChanged();
     }
 
@@ -173,7 +173,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     }
 
     private void handleCollectedBehaviour(){
-        ModRecipe<?> recipe = RitualRecipeRegistry.getRitualRecipeBySerializedIngredients(
+        ModRecipe<?> recipe = RitualAPI.getRitualRecipeBySerializedIngredients(
                 IngredientAPI.deserializeIngredientList(this.ingredientsSerialized));
         if(Objects.isNull(recipe)){
             cancelRitual();

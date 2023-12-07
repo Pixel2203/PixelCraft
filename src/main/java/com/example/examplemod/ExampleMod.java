@@ -1,13 +1,15 @@
 package com.example.examplemod;
 
 import com.example.examplemod.API.ingredient.IngredientAPI;
-import com.example.examplemod.block.BlockFactory;
+import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.blockentity.BlockEntityRegistry;
+import com.example.examplemod.effect.MobEffectRegistry;
 import com.example.examplemod.entity.EntityRegistry;
 import com.example.examplemod.item.ItemRegistry;
-import com.example.examplemod.registry.*;
 import com.example.examplemod.event.ModEventHandler;
 import com.example.examplemod.particle.ParticleFactory;
-import com.example.examplemod.registry.api.RitualRecipeRegistry;
+import com.example.examplemod.API.ritual.RitualAPI;
+import com.example.examplemod.tab.TabRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -17,7 +19,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -67,7 +68,7 @@ public class ExampleMod
         MobEffectRegistry.register(modEventBus);
         EntityRegistry.ENTITIES.register(modEventBus);
         // Register Ritual Recipes
-        RitualRecipeRegistry.register();
+        RitualAPI.register();
         IngredientAPI.register();
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -114,8 +115,8 @@ public class ExampleMod
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            ItemBlockRenderTypes.setRenderLayer(BlockFactory.WhiteChalkBlock_BLK, RenderType.translucent());
-            ItemBlockRenderTypes.setRenderLayer(BlockFactory.GoldenChalkBlock_BLK, RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(BlockRegistry.WhiteChalkBlock.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GoldenChalkBlock.get(), RenderType.translucent());
             // Some client setup code
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());

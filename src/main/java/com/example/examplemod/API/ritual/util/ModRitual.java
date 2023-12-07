@@ -1,4 +1,4 @@
-package com.example.examplemod.API.ritual;
+package com.example.examplemod.API.ritual.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

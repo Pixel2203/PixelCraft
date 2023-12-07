@@ -1,9 +1,9 @@
 package com.example.examplemod.block.custom;
 
-import com.example.examplemod.block.BlockFactory;
-import com.example.examplemod.blockentity.BlockEntityFactory;
-import com.example.examplemod.blockentity.custom.GoldenChalkBlockEntity;
+import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
+import com.example.examplemod.blockentity.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -114,9 +114,9 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
                 int i = x + range;
                 int j = z + range;
 
-                if (foundBlock == BlockFactory.WhiteChalkBlock_BLK) {
+                if (foundBlock == BlockRegistry.WhiteChalkBlock.get()) {
                     map[i][j] = 'W';
-                } else if (foundBlock == BlockFactory.GoldenChalkBlock_BLK) {
+                } else if (foundBlock == BlockRegistry.GoldenChalkBlock.get()) {
                     map[i][j] = 'O';
                 } else if (foundBlock == Blocks.AIR) {
                     map[i][j] = 'A';
@@ -133,7 +133,7 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return BlockEntityFactory.GoldenChalkBlockEntity.create(blockPos,blockState);
+        return BlockEntityRegistry.GOLDEN_CHALK_BLOCK_ENTITY.get().create(blockPos,blockState);
     }
 
     @Nullable

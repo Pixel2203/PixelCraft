@@ -1,6 +1,6 @@
 package com.example.examplemod.item.items;
 
-import com.example.examplemod.registry.MobEffectRegistry;
+import com.example.examplemod.effect.MobEffectRegistry;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

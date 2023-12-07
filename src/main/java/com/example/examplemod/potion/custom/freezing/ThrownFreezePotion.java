@@ -1,7 +1,7 @@
 package com.example.examplemod.potion.custom.freezing;
 
 import com.example.examplemod.potion.CustomThrownPotion;
-import com.example.examplemod.registry.MobEffectRegistry;
+import com.example.examplemod.effect.MobEffectRegistry;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;

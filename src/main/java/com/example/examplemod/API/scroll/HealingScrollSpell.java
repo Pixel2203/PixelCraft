@@ -1,6 +1,7 @@
 package com.example.examplemod.API.scroll;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -15,9 +16,8 @@ public class HealingScrollSpell extends ScrollSpell{
     }
 
     @Override
-    public void scheduledTick(Level level, BlockPos blockPos) {
+    public void scheduledTick(ServerLevel level, BlockPos blockPos) {
         AABB box = new AABB(blockPos).inflate(range,range,range);
-
         List<LivingEntity> foundEntities = level.getEntitiesOfClass(LivingEntity.class,box);
 
         for(LivingEntity entity : foundEntities){

@@ -1,4 +1,4 @@
-package com.example.examplemod.effect;
+package com.example.examplemod.effect.effects;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;

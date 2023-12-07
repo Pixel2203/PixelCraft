@@ -1,4 +1,4 @@
-package com.example.examplemod.API.ritual.rituals;
+package com.example.examplemod.API.ritual.util;
 
 public interface ModRituals {
     String EXTRACT_LIVE = "ritual_extract_live";

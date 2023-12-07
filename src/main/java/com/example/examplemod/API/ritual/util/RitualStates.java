@@ -1,4 +1,4 @@
-package com.example.examplemod.API.ritual;
+package com.example.examplemod.API.ritual.util;
 
 public interface RitualStates {
         int FREE = 0;

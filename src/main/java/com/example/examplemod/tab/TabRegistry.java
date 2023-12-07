@@ -1,4 +1,4 @@
-package com.example.examplemod.registry;
+package com.example.examplemod.tab;
 
 import com.example.examplemod.tab.TabFactory;
 import net.minecraft.core.registries.Registries;

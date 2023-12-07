@@ -1,6 +1,6 @@
 package com.example.examplemod.API.ritual.rituals;
 
-import com.example.examplemod.API.ritual.ModRitual;
+import com.example.examplemod.API.ritual.util.ModRitual;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

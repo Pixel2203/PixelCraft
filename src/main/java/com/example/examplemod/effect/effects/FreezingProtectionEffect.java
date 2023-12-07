@@ -1,4 +1,4 @@
-package com.example.examplemod.effect;
+package com.example.examplemod.effect.effects;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;

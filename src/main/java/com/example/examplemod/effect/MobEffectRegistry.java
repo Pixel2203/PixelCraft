@@ -1,8 +1,7 @@
-package com.example.examplemod.registry;
+package com.example.examplemod.effect;
 
-import ca.weblite.objc.Proxy;
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.effect.*;
+import com.example.examplemod.effect.effects.*;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.eventbus.api.IEventBus;

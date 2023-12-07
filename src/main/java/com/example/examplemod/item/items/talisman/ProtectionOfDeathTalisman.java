@@ -2,9 +2,7 @@ package com.example.examplemod.item.items.talisman;
 
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.item.ItemRegistry;
-import com.example.examplemod.item.items.talisman.EffectOverTime;
-import com.example.examplemod.item.items.talisman.TalismanItem;
-import com.example.examplemod.registry.MobEffectRegistry;
+import com.example.examplemod.effect.MobEffectRegistry;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;

@@ -1,6 +1,7 @@
 package com.example.examplemod.API.scroll;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
 public abstract class ScrollSpell {
@@ -11,12 +12,15 @@ public abstract class ScrollSpell {
         this.ticks = 0;
     }
     public void tick(Level level, BlockPos entityPos){
+        if(level.isClientSide){
+            return;
+        }
         ticks++;
         if(ticks < tickInterval){
             return;
         }
         ticks = 0;
-        scheduledTick(level,entityPos);
+        scheduledTick((ServerLevel)level,entityPos);
     }
-    public abstract void scheduledTick(Level level, BlockPos blockPos);
+    public abstract void scheduledTick(ServerLevel level, BlockPos blockPos);
 }

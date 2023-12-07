@@ -1,7 +1,9 @@
 package com.example.examplemod.item;
 
 import com.example.examplemod.API.scroll.HealingScrollSpell;
-import com.example.examplemod.block.BlockFactory;
+import com.example.examplemod.API.scroll.ProjectileBarrierScrollSpell;
+import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.block.custom.ChalkBlock;
 import com.example.examplemod.item.items.BlizzardSword;
 import com.example.examplemod.item.items.ChalkItem;
 import com.example.examplemod.item.items.ZirconItem;
@@ -29,13 +31,14 @@ public class ItemRegistry {
     public static final RegistryObject<Item> POTION_FLORA = ITEMS.register("potion_flora" , () -> new FloraSplashPotionItem(new Item.Properties()));
     public static final RegistryObject<Item> POTION_FREEZE = ITEMS.register("potion_freeze" , () -> new FreezingSplashPotionItem(new Item.Properties()));
     public static final RegistryObject<Item> POTION_HUNGER_REGENERATION = ITEMS.register("potion_hunger_regeneration" , () ->  new HungerRegenerationSplashPotionItem(new Item.Properties()));
-    public static final RegistryObject<Item> WHITE_CHALK = ITEMS.register("white_chalk", () ->  new ChalkItem(new Item.Properties(), BlockFactory.WhiteChalkBlock_BLK));
-    public static final RegistryObject<Item> GOLDEN_CHALK = ITEMS.register("golden_chalk", () -> new ChalkItem(new Item.Properties(), BlockFactory.GoldenChalkBlock_BLK));
+    public static final RegistryObject<Item> WHITE_CHALK = ITEMS.register("white_chalk", () ->  new ChalkItem(new Item.Properties(), (ChalkBlock) BlockRegistry.WhiteChalkBlock.get()));
+    public static final RegistryObject<Item> GOLDEN_CHALK = ITEMS.register("golden_chalk", () -> new ChalkItem(new Item.Properties(), (ChalkBlock) BlockRegistry.GoldenChalkBlock.get()));
     public static final RegistryObject<Item> BLIZZARD_SWORD = ITEMS.register("blizzard_sword", () -> new BlizzardSword(Tiers.DIAMOND,3,-2.4F,new Item.Properties()));
     public static final RegistryObject<Item> HUNGER_REGENERATION_TALISMAN = ITEMS.register("hunger_regeneration_talisman", () -> new HungerRegenerationTalisman());
     public static final RegistryObject<Item> PROTECTION_OF_DEATH_TALISMAN = ITEMS.register("protection_of_death_talisman", () -> new ProtectionOfDeathTalisman());
     public static final RegistryObject<Item> PROTECTION_OF_FREEZING_TALISMAN = ITEMS.register("protection_of_freezing_talisman", () -> new ProtectionOfFreezingTalisman());
-    public static final RegistryObject<Item> HEALING_SCROLL = ITEMS.register("healing_scroll", () -> new ScrollItem(new HealingScrollSpell(40)));
+    public static final RegistryObject<Item> HEALING_SCROLL = ITEMS.register("healing_scroll", () -> new ScrollItem(new HealingScrollSpell(20)));
+    public static final RegistryObject<Item> PROJECTILE_BARRIER_SCROLL = ITEMS.register("projectile_barrier_scroll", () -> new ScrollItem(new ProjectileBarrierScrollSpell(0)));
 
 
     public static void registerItems(IEventBus eventBus){

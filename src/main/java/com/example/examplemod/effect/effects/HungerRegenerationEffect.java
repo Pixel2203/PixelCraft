@@ -1,4 +1,4 @@
-package com.example.examplemod.effect;
+package com.example.examplemod.effect.effects;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.server.level.ServerPlayer;

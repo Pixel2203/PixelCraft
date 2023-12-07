@@ -7,24 +7,20 @@ import com.example.examplemod.API.kettle.KettleFluidColors;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.API.result.ResultTypes;
-import com.example.examplemod.blockentity.BlockEntityFactory;
-import com.example.examplemod.blockentity.custom.KettleBlockEntity;
+import com.example.examplemod.blockentity.entities.KettleBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
-import com.example.examplemod.particle.ParticleFactory;
+import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.tag.TagFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -43,7 +39,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class KettleBlock extends Block implements EntityBlock {
@@ -77,7 +72,7 @@ public class KettleBlock extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return BlockEntityFactory.KettleBlockEntity.create(blockPos,blockState);
+        return BlockEntityRegistry.KETTLE_BLOCK_ENTITY.get().create(blockPos,blockState);
     }
     @Override
     public void fallOn(Level level, BlockState state, BlockPos blockPos, Entity entity, float v) {

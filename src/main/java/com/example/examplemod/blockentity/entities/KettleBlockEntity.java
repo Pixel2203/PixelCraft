@@ -1,4 +1,4 @@
-package com.example.examplemod.blockentity.custom;
+package com.example.examplemod.blockentity.entities;
 
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.ModUtils;
@@ -8,8 +8,8 @@ import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.custom.KettleBlock;
-import com.example.examplemod.blockentity.BlockEntityFactory;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
+import com.example.examplemod.blockentity.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +31,7 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
 
 
     public KettleBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(BlockEntityFactory.KettleBlockEntity, blockPos, blockState);
+        super(BlockEntityRegistry.KETTLE_BLOCK_ENTITY.get(), blockPos, blockState);
     }
 
     @Override
