@@ -1,6 +1,8 @@
 package com.example.examplemod.API.ingredient;
 
 import net.minecraft.world.item.Item;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -12,14 +14,15 @@ public class IngredientAPI {
         registerIngredient(ModIngredients.GREEN_DYE);
         registerIngredient(ModIngredients.REDSTONE_DUST);
     }
-    private static ModIngredient registerIngredient(ModIngredient ingredient){
+
+
+    private static void registerIngredient(ModIngredient ingredient){
         INGREDIENTS.put(ingredient.id(), ingredient.item());
-        return ingredient;
     }
-    public static ModIngredient getIngredientByName(String id){
+    public static @NotNull ModIngredient getIngredientByName(String id){
         return new ModIngredient(INGREDIENTS.get(id),id);
     }
-    public static ModIngredient getIngredientByItem(Item item){
+    public static @Nullable ModIngredient getIngredientByItem(Item item){
         if(!INGREDIENTS.containsValue(item)){
             return null;
         }
@@ -35,9 +38,6 @@ public class IngredientAPI {
         List<ModIngredient> deserialized = new ArrayList<>();
         for(String ingredientID : ingredients){
             ModIngredient ingredient = getIngredientByName(ingredientID);
-            if(Objects.isNull(ingredient)){
-                return null;
-            }
             deserialized.add(ingredient);
         }
         return deserialized;

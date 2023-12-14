@@ -2,12 +2,14 @@ package com.example.examplemod.API.kettle;
 
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.tag.TagFactory;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class KettleAPI {
-    private static final HashMap<String, ModRecipe> KETTLE_RECIPES = new HashMap<>();
+
 
     private static final ModRecipe<?> TestKettleRecipe = registerRecipe(KettleRecipes.TestKettleRecipe);
     private static final ModRecipe<?> TestKettleRecipe2 = registerRecipe(KettleRecipes.TestKettleRecipe2);
@@ -22,16 +24,16 @@ public class KettleAPI {
     }
 
     public static boolean isPartOfOrCompleteRecipe(String serializedIngredientList){
-        if(serializedIngredientList == null){
+        if(StringUtil.isNullOrEmpty(serializedIngredientList)){
             return false;
         }
 
-        return  0 < KETTLE_RECIPES.keySet().stream().filter(key -> key.startsWith(serializedIngredientList.toUpperCase()) || key.equalsIgnoreCase(serializedIngredientList)).count();
+        return KETTLE_RECIPES.keySet().stream().anyMatch(key -> key.startsWith(serializedIngredientList.toUpperCase()) || key.equalsIgnoreCase(serializedIngredientList));
     }
     public static boolean isValidRecipe(String serializedIngredientList){
-        return KETTLE_RECIPES.get(serializedIngredientList.toUpperCase()) != null;
+        return Objects.nonNull(KETTLE_RECIPES.get(serializedIngredientList.toUpperCase()));
     }
-    public static ModRecipe getRecipeBySerializedIngredientList(String serializedIngredientList){
+    public static ModRecipe<?> getRecipeBySerializedIngredientList(String serializedIngredientList){
         return KETTLE_RECIPES.get(serializedIngredientList.toUpperCase());
     }
 

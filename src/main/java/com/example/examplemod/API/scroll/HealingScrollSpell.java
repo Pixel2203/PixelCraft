@@ -11,14 +11,14 @@ import java.util.List;
 public class HealingScrollSpell extends ScrollSpell{
     private final int range = 5;
 
-    public HealingScrollSpell(int tickInterval) {
-        super(tickInterval);
+    public HealingScrollSpell(int tickInterval, int ticks) {
+        super(tickInterval,ticks);
     }
 
     @Override
-    public void scheduledTick(ServerLevel level, BlockPos blockPos) {
-        AABB box = new AABB(blockPos).inflate(range,range,range);
-        List<LivingEntity> foundEntities = level.getEntitiesOfClass(LivingEntity.class,box);
+    public void scheduledTick(LivingEntity scrollEntity) {
+        AABB box = new AABB(scrollEntity.getOnPos()).inflate(range,range,range);
+        List<LivingEntity> foundEntities = scrollEntity.level().getEntitiesOfClass(LivingEntity.class,box);
 
         for(LivingEntity entity : foundEntities){
             if(entity.isDeadOrDying()){
@@ -27,4 +27,10 @@ public class HealingScrollSpell extends ScrollSpell{
             entity.setHealth(Math.min(entity.getHealth() + 1, entity.getMaxHealth()));
         }
     }
+
+    @Override
+    public String getSpellName() {
+        return Scrolls.HEALING_SCROLL;
+    }
+
 }

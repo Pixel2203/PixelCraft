@@ -7,7 +7,7 @@ import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.block.custom.KettleBlock;
+import com.example.examplemod.block.blocks.KettleBlock;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import net.minecraft.core.BlockPos;
@@ -91,7 +91,7 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
             if (ticker >= 40) {
                 ticker = 0;
                 isProgressing = false;
-                spawnResultOfRecipeOnKettle(KettleAPI.getRecipeBySerializedIngredientList(this.kettleIngredientsSerialized));
+                spawnResultOfRecipeOnKettle((ModRecipe<ItemStack>) KettleAPI.getRecipeBySerializedIngredientList(this.kettleIngredientsSerialized));
                 setChanged();
             }
         }

@@ -1,8 +1,8 @@
 package com.example.examplemod.block;
 
-import com.example.examplemod.block.custom.ChalkBlock;
-import com.example.examplemod.block.custom.GoldenChalkBlock;
-import com.example.examplemod.block.custom.KettleBlock;
+import com.example.examplemod.block.blocks.ChalkBlock;
+import com.example.examplemod.block.blocks.GoldenChalkBlock;
+import com.example.examplemod.block.blocks.KettleBlock;
 import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

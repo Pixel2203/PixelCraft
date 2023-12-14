@@ -1,6 +1,6 @@
 package com.example.examplemod.item.items;
 
-import com.example.examplemod.block.custom.ChalkBlock;
+import com.example.examplemod.block.blocks.ChalkBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;

@@ -7,16 +7,16 @@ import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.recipe.ModRecipe;
+import com.example.examplemod.API.recipe.RecipeAPI;
 import com.example.examplemod.API.ritual.rituals.ChangeTimeToDayRitual;
 import com.example.examplemod.API.ritual.util.ModRituals;
 import com.example.examplemod.API.ritual.rituals.ExtractLiveRitual;
 import com.example.examplemod.API.ritual.util.ModRitual;
 import com.example.examplemod.API.ritual.util.RitualStates;
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.block.custom.GoldenChalkBlock;
+import com.example.examplemod.block.blocks.GoldenChalkBlock;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
-import com.example.examplemod.API.ritual.RitualAPI;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -32,6 +32,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 
 public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBlockEntity {
@@ -173,12 +174,12 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     }
 
     private void handleCollectedBehaviour(){
-        ModRecipe<?> recipe = RitualAPI.getRitualRecipeBySerializedIngredients(
-                IngredientAPI.deserializeIngredientList(this.ingredientsSerialized));
-        if(Objects.isNull(recipe)){
+        Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(this.ingredientsSerialized);
+        if(recipeOptional.isEmpty()){
             cancelRitual();
             return;
         }
+        ModRecipe<?> recipe = recipeOptional.get();
         switch (recipe.resultType()){
             case ITEM -> spawnRitualResultItem((ModRecipe<ItemStack>) recipe);
             case RITUAL -> performRitual((String)recipe.result());

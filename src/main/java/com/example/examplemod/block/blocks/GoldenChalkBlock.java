@@ -1,4 +1,4 @@
-package com.example.examplemod.block.custom;
+package com.example.examplemod.block.blocks;
 
 import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
