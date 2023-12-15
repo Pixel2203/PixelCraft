@@ -7,13 +7,13 @@ import com.example.examplemod.block.blocks.ChalkBlock;
 import com.example.examplemod.item.items.BlizzardSword;
 import com.example.examplemod.item.items.ChalkItem;
 import com.example.examplemod.item.items.ZirconItem;
-import com.example.examplemod.item.items.scrolls.ScrollItem;
+import com.example.examplemod.item.items.ScrollItem;
 import com.example.examplemod.item.items.talisman.HungerRegenerationTalisman;
 import com.example.examplemod.item.items.talisman.ProtectionOfDeathTalisman;
 import com.example.examplemod.item.items.talisman.ProtectionOfFreezingTalisman;
-import com.example.examplemod.potion.custom.flora.FloraSplashPotionItem;
-import com.example.examplemod.potion.custom.freezing.FreezingSplashPotionItem;
-import com.example.examplemod.potion.custom.hungerregeneration.HungerRegenerationSplashPotionItem;
+import com.example.examplemod.potion.potions.flora.FloraSplashPotionItem;
+import com.example.examplemod.potion.potions.freezing.FreezingSplashPotionItem;
+import com.example.examplemod.potion.potions.hungerregeneration.HungerRegenerationSplashPotionItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.Tiers;
@@ -39,7 +39,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> PROTECTION_OF_FREEZING_TALISMAN = ITEMS.register("protection_of_freezing_talisman", () -> new ProtectionOfFreezingTalisman());
     public static final RegistryObject<Item> HEALING_SCROLL = ITEMS.register("healing_scroll", () -> new ScrollItem(new HealingScrollSpell(20,0)));
     public static final RegistryObject<Item> PROJECTILE_BARRIER_SCROLL = ITEMS.register("projectile_barrier_scroll", () -> new ScrollItem(new ProjectileBarrierScrollSpell(0,0)));
-
+    public static final RegistryObject<Item> FOUR_LEAF_CLOVER = ITEMS.register("four_leaf_clover", () -> new Item(new Item.Properties()));
 
     public static void registerItems(IEventBus eventBus){
         ITEMS.register(eventBus);

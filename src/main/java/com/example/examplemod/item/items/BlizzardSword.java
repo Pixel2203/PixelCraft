@@ -26,7 +26,6 @@ public class BlizzardSword extends SwordItem {
                 MobEffectInstance appliedEffect = new MobEffectInstance(MobEffectRegistry.BLIZZARD_POISONING.get(),200,0);
                 livingEntity.addEffect(appliedEffect);
             }
-
         }
         return super.onLeftClickEntity(stack, player, entity);
     }

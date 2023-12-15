@@ -4,6 +4,7 @@ import com.example.examplemod.effect.MobEffectRegistry;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class HungerRegenerationTalisman extends TalismanItem implements EffectOv
 
 
     @Override
-    public List<MobEffectInstance> effectsToApply() {
+    public @NotNull List<MobEffectInstance> effectsToApply() {
         return List.of(
                 new MobEffectInstance(MobEffectRegistry.HUNGER_REGENERATION.get(),-1,0)
         );

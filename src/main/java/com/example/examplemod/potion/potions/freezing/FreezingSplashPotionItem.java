@@ -1,4 +1,4 @@
-package com.example.examplemod.potion.custom.freezing;
+package com.example.examplemod.potion.potions.freezing;
 
 import com.example.examplemod.API.translation.CustomTranslatable;
 import com.example.examplemod.potion.CustomSplashPotionItem;

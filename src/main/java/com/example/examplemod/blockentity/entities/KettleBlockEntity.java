@@ -2,10 +2,10 @@ package com.example.examplemod.blockentity.entities;
 
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.ModUtils;
-import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.recipe.ModRecipe;
+import com.example.examplemod.API.recipe.RecipeAPI;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.blocks.KettleBlock;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
@@ -22,6 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 
 public class KettleBlockEntity extends BlockEntity implements ITickableBlockEntity {
@@ -91,8 +92,12 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
             if (ticker >= 40) {
                 ticker = 0;
                 isProgressing = false;
-                spawnResultOfRecipeOnKettle((ModRecipe<ItemStack>) KettleAPI.getRecipeBySerializedIngredientList(this.kettleIngredientsSerialized));
-                setChanged();
+                Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.KETTLE_RECIPES,this.kettleIngredientsSerialized);
+                if(recipeOptional.isPresent()){
+                    spawnResultOfRecipeOnKettle((ModRecipe<ItemStack>) recipeOptional.get());
+                    setChanged();
+                }
+
             }
         }
 
@@ -119,14 +124,10 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
     }
 
 
-    private void spawnResultOfRecipeOnKettle(
-            @NotNull ModRecipe<ItemStack> recipe
-
-
-    ){
+    private void spawnResultOfRecipeOnKettle(@NotNull ModRecipe<ItemStack> recipe){
         if(this.getBlockState().getValue(KettleBlock.fluid_level) == KettleBlock.MAX_FLUID_LEVEL && !level.isClientSide()){
             BlockPos aboveBlock = this.getBlockPos().above();
-            APIHelper.spawnItemEntity(level, ModUtils.calcCenterOfBlock(aboveBlock),recipe.result(),Vec3.ZERO);
+            APIHelper.spawnItemEntity(level, ModUtils.calcCenterOfBlock(aboveBlock),recipe.result().get(),Vec3.ZERO);
             level.setBlock(this.getBlockPos(),this.getBlockState().setValue(KettleBlock.fluid_level,KettleBlock.MIN_FLUID_LEVEL),3);
             ((ServerLevel) level).sendParticles(ParticleTypes.EXPLOSION, aboveBlock.getX() + 0.5f,aboveBlock.getY()+0.5f,aboveBlock.getZ() +0.5f,0,1,1,1,1);
             this.resetContent();

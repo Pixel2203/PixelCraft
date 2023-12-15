@@ -3,14 +3,15 @@ package com.example.examplemod.API.recipe;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.result.ResultTypes;
 import net.minecraft.util.StringUtil;
+import net.minecraftforge.common.util.Lazy;
 
 public class ModRecipe<T> {
-    private T _result;
+    private Lazy<T> _result;
     private ModIngredient[] _ingredients;
     private String _serializedRecipe;
     private ResultTypes _resultType;
 
-    public ModRecipe(ResultTypes resultType, T result, ModIngredient... ingredients){
+    public ModRecipe(ResultTypes resultType, Lazy<T> result, ModIngredient... ingredients){
         this._result = result;
         this._ingredients = ingredients;
         this._serializedRecipe = this.serializeRecipe(ingredients);
@@ -22,7 +23,7 @@ public class ModRecipe<T> {
     public ModIngredient[] ingredients(){
         return _ingredients;
     }
-    public T result(){
+    public Lazy<T> result(){
         return this._result;
     }
     public ResultTypes resultType(){

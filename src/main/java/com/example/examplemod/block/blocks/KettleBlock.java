@@ -2,16 +2,15 @@ package com.example.examplemod.block.blocks;
 
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.ingredient.IngredientAPI;
-import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.ingredient.ModIngredient;
 import com.example.examplemod.API.recipe.ModRecipe;
+import com.example.examplemod.API.recipe.RecipeAPI;
 import com.example.examplemod.API.result.ResultTypes;
 import com.example.examplemod.blockentity.entities.KettleBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.tag.TagFactory;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringUtil;
@@ -39,6 +38,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @SuppressWarnings("deprecation")
 public class KettleBlock extends Block implements EntityBlock {
@@ -78,7 +78,7 @@ public class KettleBlock extends Block implements EntityBlock {
                 if(!isFireBelow(level,blockPos)){
                     return;
                 }
-                if (KettleAPI.hasIngredientTag(itemEntity.getItem())) {
+                if (IngredientAPI.hasIngredientTag(itemEntity.getItem())) {
                     handleIngredientFallOnKettle(itemEntity.getItem(), kettleBlockEntity);
                     return;
                 }
@@ -103,8 +103,9 @@ public class KettleBlock extends Block implements EntityBlock {
 
             boolean hasIngredients = !StringUtil.isNullOrEmpty(blockEntity.getSerializedKettleRecipe());
             if(itemStackInHand.is(Items.GLASS_BOTTLE) && hasIngredients){
-                ModRecipe<?> foundRecipe = KettleAPI.getRecipeBySerializedIngredientList(blockEntity.getSerializedKettleRecipe());
-                if(Objects.isNull(foundRecipe)){return InteractionResult.FAIL;}
+                Optional<ModRecipe<?>> foundRecipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.KETTLE_RECIPES,blockEntity.getSerializedKettleRecipe());
+                if(foundRecipeOptional.isEmpty()){return InteractionResult.FAIL;}
+                ModRecipe<?> foundRecipe = foundRecipeOptional.get();
                 if(foundRecipe.resultType() != ResultTypes.POTION){return InteractionResult.FAIL;}
                 boolean worked = handleFillFluidInBottle(player,level,blockPos,blockState,hand,itemStackInHand, (ModRecipe<ItemStack>) foundRecipe,blockEntity);
                 return worked ? InteractionResult.SUCCESS : InteractionResult.FAIL;
@@ -124,7 +125,7 @@ public class KettleBlock extends Block implements EntityBlock {
             return false;
         }
         bottleItemStack.shrink(1);
-        player.addItem(foundRecipe.result().copy());
+        player.addItem(foundRecipe.result().get().copy());
 
 
         // IF Fluid level is going to be 0 , remove all ingredients from the kettle entity
@@ -158,20 +159,22 @@ public class KettleBlock extends Block implements EntityBlock {
     }
     public static void handleIngredientFallOnKettle(ItemStack itemStack, KettleBlockEntity entity) {
 
-        if(!KettleAPI.hasIngredientTag(itemStack)){
+        if(!IngredientAPI.hasIngredientTag(itemStack)){
             return;
         }
         ModIngredient foundMatchingIngredient = IngredientAPI.getIngredientByItem(itemStack.getItem());
         String serializedRecipe = entity.getSerializedKettleRecipe();
         String nextRecipeString = APIHelper.getNextRecipeString(serializedRecipe, foundMatchingIngredient);
         acceptIngredient(itemStack, entity, foundMatchingIngredient);
-        if(KettleAPI.isValidRecipe(nextRecipeString)){
-            ModRecipe<?> recipe = KettleAPI.getRecipeBySerializedIngredientList(nextRecipeString);
-            if(recipe.resultType() == ResultTypes.ITEM){
-                entity.startBrewing();
-            }
-
+        Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.KETTLE_RECIPES,nextRecipeString);
+        if(recipeOptional.isEmpty()){
+            return;
         }
+        if(recipeOptional.get().resultType() == ResultTypes.ITEM){
+            entity.startBrewing();
+        }
+
+
     }
     private static void acceptIngredient(ItemStack itemStack, KettleBlockEntity entity, ModIngredient ingredient){
         entity.add(ingredient);

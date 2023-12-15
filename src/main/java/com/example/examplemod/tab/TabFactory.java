@@ -5,6 +5,7 @@ import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.RegistryObject;
 
 public class TabFactory {
 
@@ -13,7 +14,7 @@ public class TabFactory {
                     .icon(() -> new ItemStack(ItemRegistry.ZIRCON.get()))
                     .title(Component.translatable("creativetab.example_tab"))
                     .displayItems((parameters, output) -> {
-                        ItemRegistry.ITEMS.getEntries().stream().map(itemRegistryObject -> itemRegistryObject.get()).forEach(output::accept);
+                        ItemRegistry.ITEMS.getEntries().stream().map(RegistryObject::get).forEach(output::accept);
                         output.accept(ItemStackHelper.createFloraPotion(1,1));
                         output.accept(ItemStackHelper.createFloraPotion(2,1));
                         output.accept(ItemStackHelper.createFloraPotion(3,1));

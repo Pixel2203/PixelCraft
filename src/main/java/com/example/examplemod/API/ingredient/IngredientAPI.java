@@ -1,6 +1,8 @@
 package com.example.examplemod.API.ingredient;
 
+import com.example.examplemod.tag.TagFactory;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,7 +35,7 @@ public class IngredientAPI {
         }
         return null;
     }
-    public static List<ModIngredient> deserializeIngredientList(String serializedIngredients){
+    public static @NotNull List<ModIngredient> deserializeIngredientList(String serializedIngredients){
         String[] ingredients = serializedIngredients.split(",");
         List<ModIngredient> deserialized = new ArrayList<>();
         for(String ingredientID : ingredients){
@@ -41,5 +43,8 @@ public class IngredientAPI {
             deserialized.add(ingredient);
         }
         return deserialized;
+    }
+    public static boolean hasIngredientTag(ItemStack itemStack){
+        return itemStack.is(TagFactory.INGREDIENT);
     }
 }

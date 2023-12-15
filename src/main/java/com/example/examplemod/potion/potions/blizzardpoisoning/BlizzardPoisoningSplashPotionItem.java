@@ -1,4 +1,4 @@
-package com.example.examplemod.potion.custom.blizzardpoisoning;
+package com.example.examplemod.potion.potions.blizzardpoisoning;
 
 import com.example.examplemod.potion.CustomSplashPotionItem;
 import net.minecraft.world.entity.player.Player;

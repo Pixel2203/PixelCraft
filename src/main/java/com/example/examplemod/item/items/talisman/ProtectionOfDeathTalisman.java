@@ -39,7 +39,7 @@ public class ProtectionOfDeathTalisman extends TalismanItem implements EffectOve
         entity.setHealth(0.5f);
         event.setCanceled(true);
         APIHelper.breakCurioOfEntity(entity, ItemRegistry.PROTECTION_OF_DEATH_TALISMAN.get());
-        removeAllAppliedEffect(entity);
+        removeAllAppliedEffects(entity);
     }
 
     @Override

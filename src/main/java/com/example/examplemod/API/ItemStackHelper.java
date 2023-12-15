@@ -50,7 +50,7 @@ public class ItemStackHelper {
     }
     public static ItemStack createHungerRegenerationPotion(int level,int amount, int duration, int amplifier){
         ItemStack potion = new ItemStack(ItemRegistry.POTION_HUNGER_REGENERATION.get(),amount);
-        setHoverName(potion,CustomTranslatable.POTION_HUNGERREGENERATION_NAME);
+        setHoverName(potion,CustomTranslatable.POTION_HUNGER_REGENERATION_NAME);
         addCommonNbtData(potion,duration,amplifier);
         addLevelNbtData(potion,level);
         return potion;

@@ -47,16 +47,14 @@ public abstract class TalismanItem extends Item implements ICurioItem {
         if(newStack.is(stack.getItem())){
             return;
         }
-        if(Objects.isNull(getUnEquipSound())){
-            return;
+        if(Objects.nonNull(getUnEquipSound())){
+            player.playSound(getUnEquipSound());
         }
-        player.playSound(getUnEquipSound());
-        removeAllAppliedEffect(slotContext.entity());
+        removeAllAppliedEffects(slotContext.entity());
 
     }
-    public void removeAllAppliedEffect(LivingEntity entity){
-        if(this instanceof EffectOverTime){
-            EffectOverTime effectOverTime = (EffectOverTime) this;
+    public void removeAllAppliedEffects(LivingEntity entity){
+        if(this instanceof EffectOverTime effectOverTime){
             effectOverTime.effectsToApply().stream().map(MobEffectInstance::getEffect).forEach(entity::removeEffect);
         }
     }

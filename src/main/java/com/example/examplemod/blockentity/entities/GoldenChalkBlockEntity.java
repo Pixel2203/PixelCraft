@@ -4,7 +4,6 @@ import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.API.ModUtils;
 import com.example.examplemod.API.ingredient.IngredientAPI;
 import com.example.examplemod.API.ingredient.ModIngredient;
-import com.example.examplemod.API.kettle.KettleAPI;
 import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.API.recipe.ModRecipe;
 import com.example.examplemod.API.recipe.RecipeAPI;
@@ -174,7 +173,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     }
 
     private void handleCollectedBehaviour(){
-        Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(this.ingredientsSerialized);
+        Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.RITUAL_RECIPES,this.ingredientsSerialized);
         if(recipeOptional.isEmpty()){
             cancelRitual();
             return;
@@ -182,7 +181,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         ModRecipe<?> recipe = recipeOptional.get();
         switch (recipe.resultType()){
             case ITEM -> spawnRitualResultItem((ModRecipe<ItemStack>) recipe);
-            case RITUAL -> performRitual((String)recipe.result());
+            case RITUAL -> performRitual((String)recipe.result().get());
             default -> cancelRitual();
         }
     }
@@ -217,9 +216,6 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         }
         Vec3 itemSpawnPosition = ModUtils.calcCenterOfBlock(getBlockPos().above());
         List<ModIngredient> items = IngredientAPI.deserializeIngredientList(this.ingredientsSerialized);
-        if(Objects.isNull(items)){
-            return;
-        }
         items.stream()
                 .map(item -> new ItemStack(item.item()))
                 .forEach(itemStack -> APIHelper.spawnItemEntity(level,itemSpawnPosition,itemStack,Vec3.ZERO));
@@ -231,7 +227,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             }
             BlockPos aboveBlock = this.getBlockPos().above();
             Vec3 itemSpawnPosition = ModUtils.calcCenterOfBlock(aboveBlock);
-            APIHelper.spawnItemEntity(level,itemSpawnPosition,recipe.result(),Vec3.ZERO);
+            APIHelper.spawnItemEntity(level,itemSpawnPosition,recipe.result().get(),Vec3.ZERO);
             ((ServerLevel) level).sendParticles(ParticleTypes.EXPLOSION, aboveBlock.getX() + 0.5f,aboveBlock.getY()+0.5f,aboveBlock.getZ() +0.5f,0,1,1,1,1);
             level.playSound(null, getBlockPos(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS,0.25f,1f);
             resetToDefault();
@@ -263,7 +259,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             return;
         }
         ItemEntity chosenEntity = foundEntities.get(0);
-        if(!KettleAPI.hasIngredientTag(chosenEntity.getItem())){
+        if(!IngredientAPI.hasIngredientTag(chosenEntity.getItem())){
             cancelRitual();
             return;
         }

@@ -1,4 +1,4 @@
-package com.example.examplemod.potion.custom.flora;
+package com.example.examplemod.potion.potions.flora;
 
 import com.example.examplemod.API.nbt.NBTHelper;
 import com.example.examplemod.API.translation.CustomTranslatable;

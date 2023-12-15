@@ -10,6 +10,6 @@ public interface CustomTranslatable {
     String POTION_FLORA_DESCRIPTION = ExampleMod.MODID + ".potion_flora.description";
     String POTION_FREEZE_NAME = ExampleMod.MODID + ".potion_freeze.name";
     String POTION_FREEZE_DESCRIPTION = ExampleMod.MODID + ".potion_freeze.description";
-    String POTION_HUNGERREGENERATION_NAME = ExampleMod.MODID + ".potion_hunger_regeneration.name";
-    String POTION_HUNGERREGENERATION_DESCRIPTION = ExampleMod.MODID + ".potion_hunger_regeneration.description";
+    String POTION_HUNGER_REGENERATION_NAME = ExampleMod.MODID + ".potion_hunger_regeneration.name";
+    String POTION_HUNGER_REGENERATION_DESCRIPTION = ExampleMod.MODID + ".potion_hunger_regeneration.description";
 }

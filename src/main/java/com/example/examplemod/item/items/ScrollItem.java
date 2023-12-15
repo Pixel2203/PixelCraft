@@ -1,4 +1,4 @@
-package com.example.examplemod.item.items.scrolls;
+package com.example.examplemod.item.items;
 
 import com.example.examplemod.API.scroll.ScrollSpell;
 import com.example.examplemod.entity.EntityRegistry;

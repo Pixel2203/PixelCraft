@@ -1,4 +1,4 @@
-package com.example.examplemod.potion.custom.hungerregeneration;
+package com.example.examplemod.potion.potions.hungerregeneration;
 
 import com.example.examplemod.API.nbt.NBTHelper;
 import com.example.examplemod.API.translation.CustomTranslatable;
@@ -25,7 +25,7 @@ public class HungerRegenerationSplashPotionItem extends CustomSplashPotionItem {
 
     @Override
     protected Component getTranslatedDescription() {
-        return Component.translatable(CustomTranslatable.POTION_HUNGERREGENERATION_DESCRIPTION);
+        return Component.translatable(CustomTranslatable.POTION_HUNGER_REGENERATION_DESCRIPTION);
     }
 
     @Override
