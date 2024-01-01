@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "pixelcraft:cauldron_custom"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "pixelcraft:blocks/cauldron_custom"
+}

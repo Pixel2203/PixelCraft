@@ -8,8 +8,8 @@ import net.minecraft.world.item.Item;
 
 public class TagFactory {
     public static final TagKey<Item> KETTLE_ALLOWED_FLUID_ITEMS = tag("kettle_allowed_fluid_items");
-    public static final TagKey<Item> INGREDIENT = tag("kettle_ingredients");
-
+    public static final TagKey<Item> KETTLE_INGREDIENT = tag("kettle_ingredient");
+    public static final TagKey<Item> RITUAL_INGREDIENT = tag("ritual_ingredient");
     private static TagKey<Item> tag(String name){
         return ItemTags.create(new ResourceLocation(ExampleMod.MODID,name));
     }

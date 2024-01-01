@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
@@ -19,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class APIHelper {
-    public static String getNextRecipeString(String currentRecipe, ModIngredient ingredient){
+    public static String getNextRecipeString(String currentRecipe, @NotNull ModIngredient ingredient){
         if(StringUtil.isNullOrEmpty(currentRecipe)){
             currentRecipe = ingredient.id();
         }else {

@@ -259,7 +259,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             return;
         }
         ItemEntity chosenEntity = foundEntities.get(0);
-        if(!IngredientAPI.hasIngredientTag(chosenEntity.getItem())){
+        if(!IngredientAPI.isRitualIngredient(chosenEntity.getItem())){
             cancelRitual();
             return;
         }

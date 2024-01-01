@@ -78,7 +78,7 @@ public class KettleBlock extends Block implements EntityBlock {
                 if(!isFireBelow(level,blockPos)){
                     return;
                 }
-                if (IngredientAPI.hasIngredientTag(itemEntity.getItem())) {
+                if (IngredientAPI.isKettleIngredient(itemEntity.getItem())) {
                     handleIngredientFallOnKettle(itemEntity.getItem(), kettleBlockEntity);
                     return;
                 }
@@ -159,7 +159,7 @@ public class KettleBlock extends Block implements EntityBlock {
     }
     public static void handleIngredientFallOnKettle(ItemStack itemStack, KettleBlockEntity entity) {
 
-        if(!IngredientAPI.hasIngredientTag(itemStack)){
+        if(!IngredientAPI.isKettleIngredient(itemStack)){
             return;
         }
         ModIngredient foundMatchingIngredient = IngredientAPI.getIngredientByItem(itemStack.getItem());

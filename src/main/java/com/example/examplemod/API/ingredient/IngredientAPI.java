@@ -44,7 +44,10 @@ public class IngredientAPI {
         }
         return deserialized;
     }
-    public static boolean hasIngredientTag(ItemStack itemStack){
-        return itemStack.is(TagFactory.INGREDIENT);
+    public static boolean isRitualIngredient(ItemStack itemStack){
+        return itemStack.is(TagFactory.RITUAL_INGREDIENT);
+    }
+    public static boolean isKettleIngredient(ItemStack itemStack){
+        return itemStack.is(TagFactory.KETTLE_INGREDIENT);
     }
 }

@@ -1,11 +1,15 @@
 package com.example.examplemod.event;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.datagen.ModLootTableProvider;
 import com.example.examplemod.particle.ParticleFactory;
 import com.example.examplemod.particle.custom.CustomBubbleProvider;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
@@ -26,4 +30,5 @@ public class ModEventHandler {
 
         LogUtils.getLogger().info("RegisterParticleProvider has been registered!!");
     }
+
 }

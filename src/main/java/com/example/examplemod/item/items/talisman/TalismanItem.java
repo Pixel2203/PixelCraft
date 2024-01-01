@@ -31,8 +31,7 @@ public abstract class TalismanItem extends Item implements ICurioItem {
             return;
         }
         player.playSound(getEquipSound());
-        if(this instanceof EffectOverTime){
-            EffectOverTime effectOverTime = (EffectOverTime) this;
+        if(this instanceof EffectOverTime effectOverTime){
             effectOverTime.effectsToApply().forEach(player::addEffect);
         }
     }
@@ -47,10 +46,11 @@ public abstract class TalismanItem extends Item implements ICurioItem {
         if(newStack.is(stack.getItem())){
             return;
         }
+        removeAllAppliedEffects(slotContext.entity());
         if(Objects.nonNull(getUnEquipSound())){
             player.playSound(getUnEquipSound());
         }
-        removeAllAppliedEffects(slotContext.entity());
+
 
     }
     public void removeAllAppliedEffects(LivingEntity entity){

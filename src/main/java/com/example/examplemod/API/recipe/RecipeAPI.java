@@ -32,10 +32,14 @@ public class RecipeAPI {
     public static @NotNull Optional<ModRecipe<?>> getRecipeBySerializedIngredients(List<ModRecipe<?>> RECIPE_LIST, String recipeSerialized){
         return RECIPE_LIST.stream().filter(modRecipe -> modRecipe.serializedRecipe().equalsIgnoreCase(recipeSerialized)).findFirst();
     }
+
+
     private static class RitualRecipeFactory {
         public static ModRecipe<String> EXTRACT_LIVE = new ModRecipe<>(ResultTypes.RITUAL, Lazy.of(() -> ModRituals.EXTRACT_LIVE), ModIngredients.BLAZE_ROD,ModIngredients.GLOWSTONE_DUST);
         public static ModRecipe<String> CHANGE_TIME_TO_DAY = new ModRecipe<>(ResultTypes.RITUAL, Lazy.of(() -> ModRituals.CHANGE_TIME_TO_DAY), ModIngredients.REDSTONE_DUST, ModIngredients.GREEN_DYE, ModIngredients.BLAZE_ROD);
     }
+
+
     private static class KettleRecipeFactory {
         public static ModRecipe<ItemStack> DIAMOND_RECIPE = new ModRecipe<>(ResultTypes.ITEM, ModResults.DIAMONDS_5, ModIngredients.BLAZE_ROD, ModIngredients.GLOWSTONE_DUST);
         public static ModRecipe<ItemStack> DIARRHEA_POTION_RECIPE = new ModRecipe<>(ResultTypes.POTION, ModResults.DIARRHEA_POTION, ModIngredients.GLOWSTONE_DUST, ModIngredients.BLAZE_ROD);

@@ -27,4 +27,23 @@ public class NBTHelper {
         int level = nbt.getInt(CustomNBTTags.POTION_LEVEL);
         return level > 0;
     }
+    public static void addCommonNbtData(ItemStack stack, int duration, int amplifier){
+        CompoundTag nbt = new CompoundTag();
+        nbt.putInt(CustomNBTTags.POTION_DURATION, duration);
+        nbt.putInt(CustomNBTTags.POTION_AMPLIFIER, amplifier);
+        stack.setTag(nbt);
+    }
+    public static void addLevelNbtData(ItemStack stack, int level){
+        CompoundTag nbt;
+        if(stack.hasTag()){
+            nbt = stack.getTag();
+        }else {
+            nbt = new CompoundTag();
+        }
+        if(Objects.isNull(nbt)){
+            return;
+        }
+        nbt.putInt(CustomNBTTags.POTION_LEVEL, level);
+        stack.setTag(nbt);
+    }
 }

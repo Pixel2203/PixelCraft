@@ -2,9 +2,13 @@ package com.example.examplemod.event;
 
 import com.example.examplemod.API.APIHelper;
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.datagen.ModLootTableProvider;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.talisman.ProtectionOfDeathTalisman;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -27,9 +31,6 @@ public class EventHandler {
             }
         }
     }
-
-
-
 
 
 }

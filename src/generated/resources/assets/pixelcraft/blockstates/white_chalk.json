@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "pixelcraft:block/white_chalk_variant1"
+      },
+      {
+        "model": "pixelcraft:block/white_chalk_variant2"
+      },
+      {
+        "model": "pixelcraft:block/white_chalk_variant3"
+      }
+    ]
+  }
+}
