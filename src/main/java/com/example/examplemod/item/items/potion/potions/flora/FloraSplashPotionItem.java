@@ -45,7 +45,7 @@ public class FloraSplashPotionItem extends CustomSplashPotionItem {
     public static ItemStack createFloraPotion(int level, int amount){
         ItemStack potion = new ItemStack(ItemRegistry.POTION_FLORA.get(), amount);
         addFloraBoundsTag(potion,level);
-        NBTHelper.addLevelNbtData(potion,level);
+        NBTHelper.addPotionLevelNbtData(potion,level);
         ModUtils.setHoverName(potion,CustomTranslatable.POTION_FLORA_NAME);
         return potion;
     }

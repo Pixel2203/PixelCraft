@@ -26,7 +26,7 @@ public class FreezingSplashPotionItem extends CustomSplashPotionItem {
     }
     public static ItemStack createFreezePotion(int amount, int duration, int amplifier){
         ItemStack potion = new ItemStack(ItemRegistry.POTION_FREEZE.get(),amount);
-        NBTHelper.addCommonNbtData(potion,duration,amplifier);
+        NBTHelper.addPotionCommonNbtData(potion,duration,amplifier);
         ModUtils.setHoverName(potion, CustomTranslatable.POTION_FREEZE_NAME);
         return potion;
     }

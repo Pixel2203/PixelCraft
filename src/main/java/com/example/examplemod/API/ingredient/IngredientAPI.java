@@ -1,6 +1,7 @@
 package com.example.examplemod.API.ingredient;
 
 import com.example.examplemod.tag.TagFactory;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;

@@ -5,11 +5,14 @@ import com.example.examplemod.API.result.ResultTypes;
 import net.minecraft.util.StringUtil;
 import net.minecraftforge.common.util.Lazy;
 
+import java.util.Arrays;
+import java.util.StringJoiner;
+
 public class ModRecipe<T> {
-    private Lazy<T> _result;
-    private ModIngredient[] _ingredients;
-    private String _serializedRecipe;
-    private ResultTypes _resultType;
+    private final Lazy<T> _result;
+    private final ModIngredient[] _ingredients;
+    private final String _serializedRecipe;
+    private final ResultTypes _resultType;
 
     public ModRecipe(ResultTypes resultType, Lazy<T> result, ModIngredient... ingredients){
         this._result = result;
@@ -29,15 +32,10 @@ public class ModRecipe<T> {
     public ResultTypes resultType(){
         return _resultType;
     }
+
     private String serializeRecipe(ModIngredient... ingredients){
-        String recipe = "";
-        for(ModIngredient ingredient: ingredients){
-            if(StringUtil.isNullOrEmpty(recipe)){
-                recipe = ingredient.id();
-                continue;
-            }
-            recipe += "," + ingredient.id();
-        }
-        return recipe;
+        StringJoiner recipeJoiner = new StringJoiner(",");
+        Arrays.stream(ingredients).map(ModIngredient::id).forEach(recipeJoiner::add);
+        return recipeJoiner.toString();
     }
 }
