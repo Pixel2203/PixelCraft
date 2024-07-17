@@ -1,9 +1,11 @@
 package com.example.examplemod.API.nbt;
 
+import com.example.examplemod.ExampleMod;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class NBTHelper {
     public static int getPotionLevel(ItemStack itemStack){

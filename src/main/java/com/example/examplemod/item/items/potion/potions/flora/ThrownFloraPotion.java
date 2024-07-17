@@ -1,5 +1,6 @@
 package com.example.examplemod.item.items.potion.potions.flora;
 
+import com.example.examplemod.API.nbt.CustomNBTTags;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.item.items.potion.CustomThrownPotion;
 import net.minecraft.core.BlockPos;
@@ -7,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -17,6 +19,12 @@ import java.util.Objects;
 import java.util.Random;
 
 public class ThrownFloraPotion extends CustomThrownPotion {
+    private static final List<Block> FLOWERS_TO_PLACE = List.of(
+            Blocks.WHITE_TULIP,
+            Blocks.RED_TULIP,
+            Blocks.ORANGE_TULIP,
+            Blocks.ROSE_BUSH
+    );
     public ThrownFloraPotion(Level p_37535_, LivingEntity p_37536_) {
         super(p_37535_, p_37536_);
     }
@@ -49,7 +57,9 @@ public class ThrownFloraPotion extends CustomThrownPotion {
                    );
                    BlockState foundBlock = level.getBlockState(foundBlockPos);
                    if(foundBlock.getBlock() == Blocks.GRASS_BLOCK){
-                       level.setBlockAndUpdate(foundBlockPos.above(),Blocks.WHITE_TULIP.defaultBlockState());
+                       int flowerIndex = probabilityGenerator.nextInt(FLOWERS_TO_PLACE.size());
+                       level.setBlockAndUpdate(foundBlockPos.above(), FLOWERS_TO_PLACE.get(flowerIndex).defaultBlockState());
+
                    }
                }
            }
@@ -63,6 +73,6 @@ public class ThrownFloraPotion extends CustomThrownPotion {
         if(Objects.isNull(nbt)){
             return null;
         }
-        return nbt.getIntArray(ExampleMod.MODID + "_potion_bounds");
+        return nbt.getIntArray(ExampleMod.MODID + CustomNBTTags.POTION_BOUNDS);
     }
 }

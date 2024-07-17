@@ -82,7 +82,7 @@ public class ScrollEntity extends LivingEntity {
     }
 
     @Override
-    public ItemStack getItemBySlot(EquipmentSlot p_21127_) {
+    public @NotNull ItemStack getItemBySlot(EquipmentSlot p_21127_) {
         return ItemStack.EMPTY;
     }
 
@@ -91,7 +91,7 @@ public class ScrollEntity extends LivingEntity {
 
     }
     @Override
-    public HumanoidArm getMainArm() {
+    public @NotNull HumanoidArm getMainArm() {
         return null;
     }
 

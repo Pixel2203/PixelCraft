@@ -16,6 +16,7 @@ import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.blocks.GoldenChalkBlock;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ProtectionOfFreezingTalisman extends TalismanItem implements EffectOverTime {
+public class  ProtectionOfFreezingTalisman extends TalismanItem implements EffectOverTime {
     @Override
     protected SoundEvent getEquipSound() {
         return null;
