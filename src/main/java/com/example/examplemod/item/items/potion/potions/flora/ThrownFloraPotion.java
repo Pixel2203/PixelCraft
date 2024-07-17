@@ -73,6 +73,6 @@ public class ThrownFloraPotion extends CustomThrownPotion {
         if(Objects.isNull(nbt)){
             return null;
         }
-        return nbt.getIntArray(ExampleMod.MODID + CustomNBTTags.POTION_BOUNDS);
+        return nbt.getIntArray(CustomNBTTags.POTION_BOUNDS);
     }
 }
