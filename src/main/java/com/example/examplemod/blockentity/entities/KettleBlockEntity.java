@@ -1,11 +1,11 @@
 package com.example.examplemod.blockentity.entities;
 
-import com.example.examplemod.API.APIHelper;
-import com.example.examplemod.API.ModUtils;
-import com.example.examplemod.API.ingredient.ModIngredient;
-import com.example.examplemod.API.nbt.CustomNBTTags;
-import com.example.examplemod.API.recipe.ModRecipe;
-import com.example.examplemod.API.recipe.RecipeAPI;
+import com.example.examplemod.api.APIHelper;
+import com.example.examplemod.api.ModUtils;
+import com.example.examplemod.api.ingredient.ModIngredient;
+import com.example.examplemod.api.nbt.CustomNBTTags;
+import com.example.examplemod.api.recipe.ModRecipe;
+import com.example.examplemod.api.recipe.RecipeAPI;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.blocks.KettleBlock;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;

@@ -1,21 +1,27 @@
 package com.example.examplemod.event;
 
-import com.example.examplemod.API.APIHelper;
+import com.example.examplemod.api.APIHelper;
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.datagen.ModLootTableProvider;
+import com.example.examplemod.entity.EntityRegistry;
+import com.example.examplemod.entity.entities.ScrollEntity;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.talisman.ProtectionOfDeathTalisman;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber(modid = ExampleMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class EventHandler {
+    private static final Logger log = LoggerFactory.getLogger(EventHandler.class);
+
     @SubscribeEvent
     public static void onEntityDamageEvent(LivingHurtEvent event){
         float currentEntityHealth = event.getEntity().getHealth();
@@ -31,6 +37,8 @@ public class EventHandler {
             }
         }
     }
+
+
 
 
 }

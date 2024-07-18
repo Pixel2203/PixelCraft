@@ -1,7 +1,6 @@
 package com.example.examplemod.item.items.potion.potions.flora;
 
-import com.example.examplemod.API.nbt.CustomNBTTags;
-import com.example.examplemod.ExampleMod;
+import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.item.items.potion.CustomThrownPotion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

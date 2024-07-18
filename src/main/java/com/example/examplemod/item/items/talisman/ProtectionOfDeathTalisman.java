@@ -1,6 +1,6 @@
 package com.example.examplemod.item.items.talisman;
 
-import com.example.examplemod.API.APIHelper;
+import com.example.examplemod.api.APIHelper;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.effect.MobEffectRegistry;
 import net.minecraft.sounds.SoundEvent;
@@ -39,6 +39,7 @@ public class ProtectionOfDeathTalisman extends TalismanItem implements EffectOve
         entity.setHealth(0.5f);
         event.setCanceled(true);
         APIHelper.breakCurioOfEntity(entity, ItemRegistry.PROTECTION_OF_DEATH_TALISMAN.get());
+        //TODO Do not remove all effects, only the Protection of Death Effect
         removeAllAppliedEffects(entity);
     }
 

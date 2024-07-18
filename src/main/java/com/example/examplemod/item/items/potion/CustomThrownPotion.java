@@ -1,6 +1,6 @@
 package com.example.examplemod.item.items.potion;
 
-import com.example.examplemod.API.nbt.CustomNBTTags;
+import com.example.examplemod.api.nbt.CustomNBTTags;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;

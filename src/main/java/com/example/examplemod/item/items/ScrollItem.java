@@ -1,14 +1,10 @@
 package com.example.examplemod.item.items;
 
-import com.example.examplemod.API.scroll.ScrollSpell;
+import com.example.examplemod.api.scroll.ScrollSpell;
 import com.example.examplemod.entity.EntityRegistry;
 import com.example.examplemod.entity.entities.ScrollEntity;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

@@ -1,7 +1,7 @@
 package com.example.examplemod.entity.entities;
 
-import com.example.examplemod.API.nbt.CustomNBTTags;
-import com.example.examplemod.API.scroll.ScrollSpell;
+import com.example.examplemod.api.nbt.CustomNBTTags;
+import com.example.examplemod.api.scroll.ScrollSpell;
 import com.example.examplemod.ExampleMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

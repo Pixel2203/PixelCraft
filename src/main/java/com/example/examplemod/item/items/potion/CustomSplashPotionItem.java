@@ -1,6 +1,6 @@
 package com.example.examplemod.item.items.potion;
 
-import com.example.examplemod.API.translation.CustomTranslatable;
+import com.example.examplemod.api.translation.CustomTranslatable;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

@@ -1,8 +1,8 @@
 package com.example.examplemod.item.items.potion.potions.freezing;
 
-import com.example.examplemod.API.ModUtils;
-import com.example.examplemod.API.nbt.NBTHelper;
-import com.example.examplemod.API.translation.CustomTranslatable;
+import com.example.examplemod.api.ModUtils;
+import com.example.examplemod.api.nbt.NBTHelper;
+import com.example.examplemod.api.translation.CustomTranslatable;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.potion.CustomSplashPotionItem;
 import net.minecraft.network.chat.Component;

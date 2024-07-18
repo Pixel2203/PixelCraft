@@ -1,7 +1,7 @@
 package com.example.examplemod;
 
-import com.example.examplemod.API.ingredient.IngredientAPI;
-import com.example.examplemod.API.recipe.RecipeAPI;
+import com.example.examplemod.api.ingredient.IngredientAPI;
+import com.example.examplemod.api.recipe.RecipeAPI;
 import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.effect.MobEffectRegistry;

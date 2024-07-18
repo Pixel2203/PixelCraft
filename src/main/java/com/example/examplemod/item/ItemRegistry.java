@@ -1,8 +1,8 @@
 package com.example.examplemod.item;
 
-import com.example.examplemod.API.scroll.ConfusionScrollSpell;
-import com.example.examplemod.API.scroll.HealingScrollSpell;
-import com.example.examplemod.API.scroll.ProjectileBarrierScrollSpell;
+import com.example.examplemod.api.scroll.ConfusionScrollSpell;
+import com.example.examplemod.api.scroll.HealingScrollSpell;
+import com.example.examplemod.api.scroll.ProjectileBarrierScrollSpell;
 import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.block.blocks.ChalkBlock;
 import com.example.examplemod.item.items.BlizzardSword;
@@ -16,7 +16,6 @@ import com.example.examplemod.item.items.potion.potions.flora.FloraSplashPotionI
 import com.example.examplemod.item.items.potion.potions.freezing.FreezingSplashPotionItem;
 import com.example.examplemod.item.items.potion.potions.hungerregeneration.HungerRegenerationSplashPotionItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

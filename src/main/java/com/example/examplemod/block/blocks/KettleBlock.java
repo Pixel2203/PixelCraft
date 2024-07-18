@@ -1,11 +1,11 @@
 package com.example.examplemod.block.blocks;
 
-import com.example.examplemod.API.APIHelper;
-import com.example.examplemod.API.ingredient.IngredientAPI;
-import com.example.examplemod.API.ingredient.ModIngredient;
-import com.example.examplemod.API.recipe.ModRecipe;
-import com.example.examplemod.API.recipe.RecipeAPI;
-import com.example.examplemod.API.result.ResultTypes;
+import com.example.examplemod.api.APIHelper;
+import com.example.examplemod.api.ingredient.IngredientAPI;
+import com.example.examplemod.api.ingredient.ModIngredient;
+import com.example.examplemod.api.recipe.ModRecipe;
+import com.example.examplemod.api.recipe.RecipeAPI;
+import com.example.examplemod.api.result.ResultTypes;
 import com.example.examplemod.blockentity.entities.KettleBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
@@ -37,7 +37,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @SuppressWarnings("deprecation")
