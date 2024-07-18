@@ -23,7 +23,7 @@ public abstract class CustomSplashPotionItem extends SplashPotionItem {
         super(p_43241_);
     }
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if(level.isClientSide()){
             return InteractionResultHolder.pass(itemstack);
@@ -45,7 +45,7 @@ public abstract class CustomSplashPotionItem extends SplashPotionItem {
         return Component.translatable(CustomTranslatable.POTION_DESCRIPTION_DEFAULT);
     };
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack itemStack, @Nullable Level level, @NotNull List<Component> components, @NotNull TooltipFlag flag) {
         if(Objects.nonNull(getTranslatedDescription())){
             components.add(getTranslatedDescription());
         }

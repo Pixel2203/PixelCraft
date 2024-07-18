@@ -24,6 +24,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         simpleItemFromTexture(ItemRegistry.HEALING_SCROLL, "sealed_scroll");
         simpleItemFromTexture(ItemRegistry.PROJECTILE_BARRIER_SCROLL,"sealed_scroll");
+        simpleItemFromTexture(ItemRegistry.CONFUSION_SCROLL,  "sealed_scroll");
 
         simpleItemFromTexture(ItemRegistry.PROTECTION_OF_DEATH_TALISMAN, "necklace");
         simpleItemFromTexture(ItemRegistry.HUNGER_REGENERATION_TALISMAN,"necklace");

@@ -1,5 +1,6 @@
 package com.example.examplemod.item;
 
+import com.example.examplemod.API.scroll.ConfusionScrollSpell;
 import com.example.examplemod.API.scroll.HealingScrollSpell;
 import com.example.examplemod.API.scroll.ProjectileBarrierScrollSpell;
 import com.example.examplemod.block.BlockRegistry;
@@ -38,6 +39,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> PROTECTION_OF_FREEZING_TALISMAN = ITEMS.register("protection_of_freezing_talisman", ProtectionOfFreezingTalisman::new);
     public static final RegistryObject<Item> HEALING_SCROLL = ITEMS.register("healing_scroll", () -> new ScrollItem(new HealingScrollSpell(20,0)));
     public static final RegistryObject<Item> PROJECTILE_BARRIER_SCROLL = ITEMS.register("projectile_barrier_scroll", () -> new ScrollItem(new ProjectileBarrierScrollSpell(0,0)));
+    public static final RegistryObject<Item> CONFUSION_SCROLL = ITEMS.register("confusion_scroll", () -> new ScrollItem(new ConfusionScrollSpell(0,0)));
 
     public static void registerItems(IEventBus eventBus){
         ITEMS.register(eventBus);

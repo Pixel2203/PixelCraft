@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 
 public abstract class ScrollSpell {
-    private int tickInterval;
+    private final int tickInterval;
     private int ticks;
     public ScrollSpell(int tickInterval, int ticks){
         this.tickInterval = tickInterval;
