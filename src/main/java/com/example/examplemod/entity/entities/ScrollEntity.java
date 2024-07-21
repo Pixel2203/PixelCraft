@@ -144,11 +144,6 @@ public class ScrollEntity extends LivingEntity {
     }
 
     @Override
-    public boolean canBeCollidedWith() {
-        return false;
-    }
-
-    @Override
     public boolean canBeHitByProjectile() {
         return false;
     }
