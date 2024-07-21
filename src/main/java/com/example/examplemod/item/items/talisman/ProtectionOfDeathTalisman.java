@@ -3,6 +3,8 @@ package com.example.examplemod.item.items.talisman;
 import com.example.examplemod.api.APIHelper;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.effect.MobEffectRegistry;
+import com.example.examplemod.networking.NetworkMessages;
+import com.example.examplemod.networking.packets.ExampleC2SPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;

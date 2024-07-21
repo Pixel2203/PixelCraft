@@ -8,6 +8,7 @@ import com.example.examplemod.effect.MobEffectRegistry;
 import com.example.examplemod.entity.EntityRegistry;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.event.ModEventHandler;
+import com.example.examplemod.networking.NetworkMessages;
 import com.example.examplemod.particle.ParticleFactory;
 import com.example.examplemod.tab.TabRegistry;
 import com.mojang.logging.LogUtils;
@@ -86,15 +87,7 @@ public class ExampleMod
     }
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+        NetworkMessages.registerChannel();
     }
 
     // Add the example block item to the building blocks tab

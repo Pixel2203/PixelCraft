@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PlayerSoulEnergyProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    public static Capability<PlayerSoulEnergy> PLAYER_SOUL_ENERGY = CapabilityManager.get(new CapabilityToken<PlayerSoulEnergy>() {});
+    public static Capability<PlayerSoulEnergy> PLAYER_SOUL_ENERGY = CapabilityManager.get(new CapabilityToken<>() {});
 
     private PlayerSoulEnergy soulEnergy = null;
     private final LazyOptional<PlayerSoulEnergy> optional = LazyOptional.of(this::createPlayerSoulEnergy);
@@ -42,6 +42,6 @@ public class PlayerSoulEnergyProvider implements ICapabilityProvider, INBTSerial
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-
+        createPlayerSoulEnergy().loadNBTData(nbt);
     }
 }
