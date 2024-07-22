@@ -5,10 +5,7 @@ import com.example.examplemod.api.scroll.HealingScrollSpell;
 import com.example.examplemod.api.scroll.ProjectileBarrierScrollSpell;
 import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.block.blocks.ChalkBlock;
-import com.example.examplemod.item.items.BlizzardSword;
-import com.example.examplemod.item.items.ChalkItem;
-import com.example.examplemod.item.items.ZirconItem;
-import com.example.examplemod.item.items.ScrollItem;
+import com.example.examplemod.item.items.*;
 import com.example.examplemod.item.items.talisman.HungerRegenerationTalisman;
 import com.example.examplemod.item.items.talisman.ProtectionOfDeathTalisman;
 import com.example.examplemod.item.items.talisman.ProtectionOfFreezingTalisman;
@@ -39,6 +36,8 @@ public class ItemRegistry {
     public static final RegistryObject<Item> HEALING_SCROLL = ITEMS.register("healing_scroll", () -> new ScrollItem(new HealingScrollSpell(20,0)));
     public static final RegistryObject<Item> PROJECTILE_BARRIER_SCROLL = ITEMS.register("projectile_barrier_scroll", () -> new ScrollItem(new ProjectileBarrierScrollSpell(0,0)));
     public static final RegistryObject<Item> CONFUSION_SCROLL = ITEMS.register("confusion_scroll", () -> new ScrollItem(new ConfusionScrollSpell(0,0)));
+    public static final RegistryObject<Item> SOUL_CRYSTAL = ITEMS.register("soul_crystal", () -> new SoulCrystalItem(new Item.Properties()));
+
 
     public static void registerItems(IEventBus eventBus){
         ITEMS.register(eventBus);

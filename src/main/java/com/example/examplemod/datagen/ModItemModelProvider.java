@@ -21,6 +21,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.GOLDEN_CHALK);
         simpleItem(ItemRegistry.WHITE_CHALK);
         simpleItem(ItemRegistry.ZIRCON);
+        simpleItemFromTexture(ItemRegistry.SOUL_CRYSTAL, "zircon");
 
         simpleItemFromTexture(ItemRegistry.HEALING_SCROLL, "sealed_scroll");
         simpleItemFromTexture(ItemRegistry.PROJECTILE_BARRIER_SCROLL,"sealed_scroll");

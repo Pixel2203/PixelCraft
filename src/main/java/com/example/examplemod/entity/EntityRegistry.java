@@ -12,6 +12,6 @@ import net.minecraftforge.registries.RegistryObject;
 public class EntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ExampleMod.MODID);
 
-    public static final RegistryObject<EntityType<ScrollEntity>> SCROLL_ENTITY = ENTITIES.register("example", () -> EntityType.Builder.of(ScrollEntity::new, MobCategory.MISC).build(ExampleMod.MODID + ":example"));
+    public static final RegistryObject<EntityType<ScrollEntity>> SCROLL_ENTITY = ENTITIES.register("example", () -> EntityType.Builder.of(ScrollEntity::new, MobCategory.MISC).sized(1,1).build(ExampleMod.MODID + ":example"));
     public static final RegistryObject<EntityType<SoulEntity>> SOUL_ENTITY = ENTITIES.register("soul", () -> EntityType.Builder.of(SoulEntity::new, MobCategory.MISC).build(ExampleMod.MODID + ":example"));
 }

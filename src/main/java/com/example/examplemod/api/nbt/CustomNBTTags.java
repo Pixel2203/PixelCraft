@@ -25,4 +25,10 @@ public interface CustomNBTTags {
     String SCROLL_NAME = "scroll_spell_name";
 
 
+    // Soul Entity
+    String SPAWNED_HEIGHT = ExampleMod.MODID + "_spawned_height";
+
+    // SoulCrystal
+    String ENERGY_CHARGE = ExampleMod.MODID + "_energy_charge";
+
 }
