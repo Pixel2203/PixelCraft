@@ -8,6 +8,7 @@
   "item.pixelcraft.healing_scroll": "§dScroll of Healing",
   "item.pixelcraft.projectile_barrier_scroll": "§dProtection of Projectiles",
   "item.pixelcraft.confusion_scroll": "§dScroll of Confusion",
+  "item.pixelcraft.soul_crystal": "Soul Crystal",
   "creativetab.example_tab": "Example Tab",
 
   "block.pixelcraft.example_block": "Example Block",
@@ -32,6 +33,7 @@
   "pixelcraft.potion_freeze.name": "§fFreeze Potion",
   "pixelcraft.potion_freeze.description": "§8Freezes the Target to its current position!",
 
+  "pixelcraft.soul_crystal.info": "Currently storing: ",
   "effect.pixelcraft.freeze": "Freeze",
   "effect.pixelcraft.blizzard_poisoning": "Blizzard Poisoning",
   "effect.pixelcraft.guardian_angle": "Guardian Angle",

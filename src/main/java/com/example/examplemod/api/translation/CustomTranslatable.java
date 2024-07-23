@@ -11,4 +11,7 @@ public interface CustomTranslatable {
     String POTION_FREEZE_DESCRIPTION = ExampleMod.MODID + ".potion_freeze.description";
     String POTION_HUNGER_REGENERATION_NAME = ExampleMod.MODID + ".potion_hunger_regeneration.name";
     String POTION_HUNGER_REGENERATION_DESCRIPTION = ExampleMod.MODID + ".potion_hunger_regeneration.description";
+
+
+    String SOUL_CRYTAL_INFO = ExampleMod.MODID + ".soul_crytal.info";
 }
