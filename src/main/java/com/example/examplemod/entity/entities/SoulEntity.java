@@ -2,11 +2,9 @@ package com.example.examplemod.entity.entities;
 
 import com.example.examplemod.api.ModUtils;
 import com.example.examplemod.api.nbt.CustomNBTTags;
-import com.example.examplemod.entity.EntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -17,7 +15,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -26,18 +23,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
-import java.util.Objects;
 import java.util.Random;
-import java.util.Set;
 
 public class SoulEntity extends LivingEntity {
     private static final EntityDataAccessor<Integer> SPAWNED_POS = SynchedEntityData.defineId(SoulEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> ENERGY = SynchedEntityData.defineId(SoulEntity.class, EntityDataSerializers.FLOAT);
+    //private static final EntityDataAccessor<Boolean> ALREADY_GENERATED_VALUES = SynchedEntityData.defineId(SoulEntity.class, EntityDataSerializers.BOOLEAN);
     private static final Logger log = LoggerFactory.getLogger(SoulEntity.class);
-
     private static final int DISAPPEARANCE_HEIGHT = 10;
     private static float MAX_CHARGE = 0.5f;
     private float highestEntityEnergy;
+    private boolean alreadyGenerated = false;
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -48,18 +44,13 @@ public class SoulEntity extends LivingEntity {
     @Override
     public void onAddedToWorld() {
         super.onAddedToWorld();
-        Random random = new Random();
-        CompoundTag nbt = this.serializeNBT();
-        if(!nbt.contains(CustomNBTTags.ENERGY_CHARGE)){
-            // If it has no Energy Charge assigned yet, assign it
+        if(!alreadyGenerated) {
+            Random random = new Random();
             highestEntityEnergy = random.nextFloat(MAX_CHARGE);
-            this.entityData.set(ENERGY, highestEntityEnergy);
+            entityData.set(ENERGY, highestEntityEnergy);
+            entityData.set(SPAWNED_POS, this.getOnPos().getY());
+            alreadyGenerated = true;
         }
-        if(!nbt.contains(CustomNBTTags.SPAWNED_HEIGHT)){
-            this.entityData.set(SPAWNED_POS, this.getOnPos().getY());
-        }
-
-
     }
 
     public float retrieveEnergyFromSoul(BlockPos playerPos) {
@@ -80,17 +71,6 @@ public class SoulEntity extends LivingEntity {
     @Override
     public boolean isInvisibleTo(Player player) {
         return true;
-        /*ItemStack helmet = player.getInventory().getArmor(ModUtils.ArmorSlots.HELMET);
-        if(helmet.isEmpty()){
-            return true;
-        }
-        if(helmet.getItem() == Items.IRON_HELMET){
-            return false;
-        }
-
-        return true;
-
-         */
     }
 
     @Override
@@ -115,14 +95,16 @@ public class SoulEntity extends LivingEntity {
     public void addAdditionalSaveData(CompoundTag nbt) {
         nbt.putInt(CustomNBTTags.SPAWNED_HEIGHT, this.entityData.get(SPAWNED_POS));
         nbt.putFloat(CustomNBTTags.ENERGY_CHARGE, this.entityData.get(ENERGY));
+        nbt.putBoolean(CustomNBTTags.ALREADY_GENERATED, alreadyGenerated);
         super.addAdditionalSaveData(nbt);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag nbt) {
+    public void readAdditionalSaveData(@NotNull CompoundTag nbt) {
         super.readAdditionalSaveData(nbt);
         this.entityData.set(SPAWNED_POS,nbt.getInt(CustomNBTTags.SPAWNED_HEIGHT));
         this.entityData.set(ENERGY,nbt.getFloat(CustomNBTTags.ENERGY_CHARGE));
+        this.alreadyGenerated = nbt.getBoolean(CustomNBTTags.ALREADY_GENERATED);
     }
 
     public SoulEntity(EntityType<? extends LivingEntity> entityType, Level level) {
@@ -162,5 +144,4 @@ public class SoulEntity extends LivingEntity {
     public boolean isAlwaysTicking() {
         return true;
     }
-
 }

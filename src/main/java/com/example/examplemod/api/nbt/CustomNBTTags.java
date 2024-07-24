@@ -30,5 +30,6 @@ public interface CustomNBTTags {
 
     // SoulCrystal
     String ENERGY_CHARGE = ExampleMod.MODID + "_energy_charge";
+    String ALREADY_GENERATED = ExampleMod.MODID + "_already_generated";
 
 }
