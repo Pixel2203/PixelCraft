@@ -44,4 +44,12 @@ public class ModUtils {
         }
 
     }
+
+
+    public static interface ArmorSlots {
+        int HELMET = 0;
+        int CHEST_PLATE = 1;
+        int LEGGINGS = 2;
+        int SHOES = 3;
+    }
 }
