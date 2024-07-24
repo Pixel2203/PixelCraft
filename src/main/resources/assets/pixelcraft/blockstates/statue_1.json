@@ -1,0 +1,19 @@
+
+{
+  "variants": {
+    "facing=east": {
+      "model": "pixelcraft:block/statue_1",
+      "y": 90    },
+    "facing=north": {
+      "model": "pixelcraft:block/statue_1"
+    },
+    "facing=south": {
+      "model": "pixelcraft:block/statue_1",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pixelcraft:block/statue_1",
+      "y": 270
+    }
+  }
+}

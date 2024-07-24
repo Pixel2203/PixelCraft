@@ -1,0 +1,8 @@
+{  
+	"credit": "By PlayTics",
+  "parent": "pixelcraft:custom/statue",
+  "textures": {
+    "2": "pixelcraft:block/statue_1",
+    "particle": "pixelcraft:block/statue_1"
+  }
+}
