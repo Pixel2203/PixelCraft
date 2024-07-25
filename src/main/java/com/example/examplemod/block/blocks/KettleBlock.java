@@ -162,9 +162,6 @@ public class KettleBlock extends Block implements EntityBlock {
             return;
         }
         ModIngredient foundMatchingIngredient = IngredientAPI.getIngredientByItem(itemStack.getItem());
-        if (foundMatchingIngredient == null) {
-            return;
-        }
         String serializedRecipe = entity.getSerializedKettleRecipe();
         String nextRecipeString = APIHelper.getNextRecipeString(serializedRecipe, foundMatchingIngredient);
         acceptIngredient(itemStack, entity, foundMatchingIngredient);
