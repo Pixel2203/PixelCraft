@@ -2,6 +2,7 @@ package com.example.examplemod.entity.entities;
 
 import com.example.examplemod.api.ModUtils;
 import com.example.examplemod.api.nbt.CustomNBTTags;
+import com.example.examplemod.config.entity.SoulConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -23,17 +24,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Random;
 
 public class SoulEntity extends LivingEntity {
     private static final EntityDataAccessor<Integer> SPAWNED_POS = SynchedEntityData.defineId(SoulEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> ENERGY = SynchedEntityData.defineId(SoulEntity.class, EntityDataSerializers.FLOAT);
-    //private static final EntityDataAccessor<Boolean> ALREADY_GENERATED_VALUES = SynchedEntityData.defineId(SoulEntity.class, EntityDataSerializers.BOOLEAN);
+
     private static final Logger log = LoggerFactory.getLogger(SoulEntity.class);
-    private static final int DISAPPEARANCE_HEIGHT = 10;
-    private static float MAX_CHARGE = 0.5f;
+
+
+
+
     private float highestEntityEnergy;
     private boolean alreadyGenerated = false;
+    private Integer nextRandomTick;
+    private Integer ticker;
+    private final Random random = new Random();
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -46,25 +53,28 @@ public class SoulEntity extends LivingEntity {
         super.onAddedToWorld();
         if(!alreadyGenerated) {
             Random random = new Random();
-            highestEntityEnergy = random.nextFloat(MAX_CHARGE);
+            highestEntityEnergy = random.nextFloat(1f);
             entityData.set(ENERGY, highestEntityEnergy);
             entityData.set(SPAWNED_POS, this.getOnPos().getY());
             alreadyGenerated = true;
         }
     }
 
-    public float retrieveEnergyFromSoul(BlockPos playerPos) {
+
+    public float summonSoulParticles(ServerLevel serverLevel) {
         float currentEnergy = this.entityData.get(ENERGY);
-        Random random = new Random();
-        float retrieved = Math.max(random.nextFloat(currentEnergy),MAX_CHARGE / 10);
+        float retrieved = Math.min(random.nextFloat(currentEnergy), currentEnergy / 10);
         float newEnergyLevel = currentEnergy - retrieved;
         this.entityData.set(ENERGY, newEnergyLevel);
         if(newEnergyLevel <= 0){
-            log.warn("Du hast eine grenze Überschritten!");
-            EntityType.LIGHTNING_BOLT.spawn((ServerLevel) level(), playerPos, MobSpawnType.MOB_SUMMONED);
             this.discard();
         }
-
+        AreaEffectCloud areaeffectcloud = new AreaEffectCloud(this.level(), this.getX(), this.getY(), this.getZ());
+        areaeffectcloud.setRadius(retrieved);
+        //areaeffectcloud.setRadiusOnUse(-0.5f);
+        areaeffectcloud.setDuration(SoulConfig.SOUL_PARTICLE_LIFESPAN);
+        areaeffectcloud.setOwner(this);
+        serverLevel.addFreshEntity(areaeffectcloud);
         return retrieved;
     }
 
@@ -81,12 +91,31 @@ public class SoulEntity extends LivingEntity {
             float probability = this.entityData.get(ENERGY) / highestEntityEnergy;
             ModUtils.sendParticles((ServerLevel) this.level(), ParticleTypes.SNOWFLAKE, this.getOnPos(), probability ,1, 2, 2, 2,0);
             checkFlightDistanceReached();
+            checkRandomTick();
         }
+    }
+
+    private void checkRandomTick() {
+        if(Objects.isNull(ticker)){
+            ticker = 0;
+            nextRandomTick = random.nextInt(SoulConfig.MINIMUM_TICKS_TO_COLLECTABLE_PARTICLE_SPAWN , SoulConfig.MAXIMUM_TICKS_TO_COLLECTABLE_PARTICLE_SPAWN);
+            return;
+        }
+        if(ticker >= nextRandomTick){
+            ticker = 0;
+            nextRandomTick = random.nextInt(SoulConfig.MINIMUM_TICKS_TO_COLLECTABLE_PARTICLE_SPAWN , SoulConfig.MAXIMUM_TICKS_TO_COLLECTABLE_PARTICLE_SPAWN);
+            this.onRandomTick((ServerLevel) level());
+        }
+        ticker++;
+    }
+
+    private void onRandomTick(ServerLevel serverLevel) {
+        summonSoulParticles(serverLevel);
     }
 
     private void checkFlightDistanceReached() {
         int heightDifference = this.getOnPos().getY() - this.entityData.get(SPAWNED_POS);
-        if(heightDifference >= DISAPPEARANCE_HEIGHT) {
+        if(heightDifference >= SoulConfig.SOUL_DISAPPEARANCE_HEIGHT) {
             this.discard();
         }
     }

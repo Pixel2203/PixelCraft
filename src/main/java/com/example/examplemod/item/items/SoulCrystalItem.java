@@ -2,12 +2,13 @@ package com.example.examplemod.item.items;
 
 import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.api.translation.CustomTranslatable;
-import com.example.examplemod.entity.EntityRegistry;
 import com.example.examplemod.entity.entities.SoulEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -26,25 +27,34 @@ public class SoulCrystalItem extends Item {
         this.maxCharge = maxCharge;
     }
 
-    @NotNull
-    @Override
-    public InteractionResult interactLivingEntity(ItemStack itemStack, Player player, LivingEntity entity, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if(player.level().isClientSide() || hand == InteractionHand.OFF_HAND){
-            return InteractionResult.PASS;
+            return InteractionResultHolder.pass(player.getItemInHand(hand));
         }
-        if(entity.getType() == EntityRegistry.SOUL_ENTITY.get()){
-            SoulEntity soulEntity = (SoulEntity) entity;
-            ItemStack crystal = player.getItemInHand(hand);
-            CompoundTag nbt = crystal.hasTag() ? crystal.getTag() : new CompoundTag();
-            float chargedInItem = nbt.getFloat(CustomNBTTags.ENERGY_CHARGE);
-            float retrievedFromSoul = soulEntity.retrieveEnergyFromSoul(player.getOnPos());
-            float nextEnergyLevel= Math.min(maxCharge, chargedInItem + retrievedFromSoul);
-            nbt.putFloat(CustomNBTTags.ENERGY_CHARGE, nextEnergyLevel);
-            crystal.setTag(nbt);
-            return InteractionResult.SUCCESS;
+        List<AreaEffectCloud> soulParticlesInRange = level.getEntitiesOfClass(AreaEffectCloud.class, player.getBoundingBox().inflate(2.0D), (effectCloud) -> effectCloud != null && effectCloud.isAlive() && effectCloud.getOwner() instanceof SoulEntity);
+        if(soulParticlesInRange.isEmpty()){
+            return InteractionResultHolder.pass(player.getItemInHand(hand));
         }
+        AreaEffectCloud clickedEntity = soulParticlesInRange.get(0);
+        return retrieveEnergyFromEffectCloud(level, player, hand, clickedEntity);
 
-        return super.interactLivingEntity(itemStack, player, entity, hand);
+    }
+    @NotNull
+    public InteractionResultHolder<ItemStack> retrieveEnergyFromEffectCloud(Level level, Player player, InteractionHand hand,AreaEffectCloud entity) {
+
+        ItemStack crystal = player.getItemInHand(hand);
+        CompoundTag nbt = crystal.hasTag() ? crystal.getTag() : new CompoundTag();
+        float chargedInItem = nbt.getFloat(CustomNBTTags.ENERGY_CHARGE);
+        //float retrievedFromSoul = soulEntity.retrieveEnergyFromSoul(player.getOnPos());
+        float retrieved = Math.min(entity.getRadius(), 0.05f);
+        entity.setRadius(entity.getRadius() - retrieved);
+        if(entity.getRadius() == 0){
+            entity.discard();
+        }
+        float nextEnergyLevel= Math.min(maxCharge, chargedInItem + retrieved);
+        nbt.putFloat(CustomNBTTags.ENERGY_CHARGE, nextEnergyLevel);
+        crystal.setTag(nbt);
+        return InteractionResultHolder.success(crystal);
     }
 
     @Override
