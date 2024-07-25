@@ -15,6 +15,7 @@ public class IngredientAPI {
         registerIngredient(ModIngredients.GLOWSTONE_DUST);
         registerIngredient(ModIngredients.GREEN_DYE);
         registerIngredient(ModIngredients.REDSTONE_DUST);
+        registerIngredient(ModIngredients.PURPLE_DYE);
     }
 
 
