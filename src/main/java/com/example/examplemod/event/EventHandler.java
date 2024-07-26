@@ -9,6 +9,7 @@ import com.example.examplemod.entity.entities.SoulEntity;
 import com.example.examplemod.entity.models.SoulEntityModel;
 import com.example.examplemod.entity.renderers.SoulEntityRenderer;
 import com.example.examplemod.event.entity.Renderers;
+import com.example.examplemod.entity.entities.SoulEntity;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.talisman.ProtectionOfDeathTalisman;
 import net.minecraft.client.Minecraft;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -33,6 +35,8 @@ import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.theillusivec4.curios.api.CuriosApi;
+
+import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = ExampleMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class EventHandler {
@@ -65,9 +69,13 @@ public class EventHandler {
             return;
         }
         if(event.getEntity().getType() != EntityRegistry.SOUL_ENTITY.get() && !entity.level().isClientSide()){
+            Random random = new Random();
             ServerLevel level = (ServerLevel) entity.level();
             BlockPos entityDeathPosition = entity.blockPosition();
-            EntityRegistry.SOUL_ENTITY.get().spawn(level, entityDeathPosition ,MobSpawnType.EVENT);
+            SoulEntity soulEntity = new SoulEntity(EntityRegistry.SOUL_ENTITY.get(),entity.level());
+            soulEntity.setEnergy(random.nextFloat(0.8f));
+            soulEntity.setPos(entityDeathPosition.getX(), entityDeathPosition.getY(), entityDeathPosition.getZ());
+            entity.level().addFreshEntity(soulEntity);
         }
     }
 
@@ -97,6 +105,7 @@ public class EventHandler {
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event){
         event.register(PlayerSoulEnergy.class);
     }
+
 
 
 
