@@ -116,7 +116,7 @@ public class SoulEntity extends GeneralSoulEntity {
         areaeffectcloud.setOwner(this);
         serverLevel.addFreshEntity(areaeffectcloud);
     }
-    public boolean renderToPlayer(LocalPlayer player) {
+    public boolean renderToPlayer(Player player) {
         return player.getInventory()
                 .getArmor(ModUtils.ArmorSlots.HELMET)
                 .is(Items.IRON_HELMET);
@@ -153,10 +153,16 @@ public class SoulEntity extends GeneralSoulEntity {
     private void sendParticlesToPlayers(ServerLevel serverLevel, float probability) {
         //ModUtils.sendParticles((ServerLevel) this.level(), ParticleTypes.SNOWFLAKE, this.getOnPos(), probability ,1, 2, 2, 2,0);
         var players = serverLevel.getPlayers(serverPlayer -> true);
-
+        AABB boundingBox = this.getBoundingBox().inflate(2);
+        var blocks = ModUtils.getBlocksInBoundingBox(serverLevel, boundingBox);
+        if(blocks.isEmpty()){
+            return;
+        }
+        BlockPos pos = blocks.get(random.nextInt(blocks.size())).blockPos();
         for(ServerPlayer player : players) {
-            CustomParticlePackage particlePackage = new CustomParticlePackage();
-            NetworkMessages.sendToClient(new CustomParticlePackage(), player);
+            if(renderToPlayer(player)){
+                NetworkMessages.sendToClient(new CustomParticlePackage(pos.getX(), pos.getY(), pos.getZ(), 0,0,0), player);
+            }
         }
 
     }

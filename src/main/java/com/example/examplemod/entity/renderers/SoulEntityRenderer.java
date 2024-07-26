@@ -41,7 +41,7 @@ public class SoulEntityRenderer extends LivingEntityRenderer<SoulEntity, SoulEnt
             super.render(soulEntity, p_115309_, p_115310_, p_115311_, p_115312_, p_115313_);
             return;
         }
-        if(soulEntity.renderToPlayer(player)) return;
+        if(!soulEntity.renderToPlayer(player)) return;
 
         super.render(soulEntity, p_115309_, p_115310_, p_115311_, p_115312_, p_115313_);
     }
