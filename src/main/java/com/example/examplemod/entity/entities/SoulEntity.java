@@ -5,6 +5,9 @@ import com.example.examplemod.api.ModUtils;
 import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.config.entity.SoulConfig;
 import com.example.examplemod.entity.entities.generalEntities.GeneralSoulEntity;
+import com.example.examplemod.networking.NetworkMessages;
+import com.example.examplemod.networking.packets.CustomParticlePackage;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -12,12 +15,15 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -110,6 +116,11 @@ public class SoulEntity extends GeneralSoulEntity {
         areaeffectcloud.setOwner(this);
         serverLevel.addFreshEntity(areaeffectcloud);
     }
+    public boolean renderToPlayer(Player player) {
+        return player.getInventory()
+                .getArmor(ModUtils.ArmorSlots.HELMET)
+                .is(Items.IRON_HELMET);
+    }
 
     @Override
     public void tick() {
@@ -117,7 +128,7 @@ public class SoulEntity extends GeneralSoulEntity {
         if(!level().isClientSide()) {
             this.setDeltaMovement(new Vec3(0, this.getAttributeValue(Attributes.MOVEMENT_SPEED), 0));
             float probability = this.entityData.get(ENERGY) / getHighestEntityEnergy();
-            ModUtils.sendParticles((ServerLevel) this.level(), ParticleTypes.SNOWFLAKE, this.getOnPos(), probability ,1, 2, 2, 2,0);
+            sendParticlesToPlayers((ServerLevel) level(), probability);
             checkFlightDistanceReached();
             checkRandomTick();
         }
@@ -137,6 +148,23 @@ public class SoulEntity extends GeneralSoulEntity {
     }
     private void onRandomTick(ServerLevel serverLevel) {
         summonSoulParticles(serverLevel);
+    }
+
+    private void sendParticlesToPlayers(ServerLevel serverLevel, float probability) {
+        //ModUtils.sendParticles((ServerLevel) this.level(), ParticleTypes.SNOWFLAKE, this.getOnPos(), probability ,1, 2, 2, 2,0);
+        var players = serverLevel.getPlayers(serverPlayer -> true);
+        AABB boundingBox = this.getBoundingBox().inflate(2);
+        var blocks = ModUtils.getBlocksInBoundingBox(serverLevel, boundingBox);
+        if(blocks.isEmpty()){
+            return;
+        }
+        BlockPos pos = blocks.get(random.nextInt(blocks.size())).blockPos();
+        for(ServerPlayer player : players) {
+            if(renderToPlayer(player)){
+                NetworkMessages.sendToClient(new CustomParticlePackage(pos.getX(), pos.getY(), pos.getZ(), 0,0,0), player);
+            }
+        }
+
     }
 
     private void checkFlightDistanceReached() {

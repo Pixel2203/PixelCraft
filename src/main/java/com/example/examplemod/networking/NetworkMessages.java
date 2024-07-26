@@ -1,6 +1,7 @@
 package com.example.examplemod.networking;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.networking.packets.CustomParticlePackage;
 import com.example.examplemod.networking.packets.ExampleC2SPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,6 +37,11 @@ public class NetworkMessages {
                 .decoder(ExampleC2SPacket::new)
                 .encoder(ExampleC2SPacket::toBytes)
                 .consumerMainThread(ExampleC2SPacket::handle)
+                .add();
+        COMMUNICATION_CHANNEL.messageBuilder(CustomParticlePackage.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(CustomParticlePackage::new)
+                .encoder(CustomParticlePackage::toBytes)
+                .consumerMainThread(CustomParticlePackage::handle)
                 .add();
     }
 

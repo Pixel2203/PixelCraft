@@ -50,11 +50,11 @@ public class ModUtils {
     }
 
 
-    public static interface ArmorSlots {
-        int HELMET = 0;
-        int CHEST_PLATE = 1;
-        int LEGGINGS = 2;
-        int SHOES = 3;
+    public interface ArmorSlots {
+        int HELMET = 3;
+        int CHEST_PLATE = 2;
+        int LEGGINGS = 1;
+        int SHOES = 0;
     }
 
     public static List<BlockInfo> getBlocksInBoundingBox(Level level, AABB boundingBox){
