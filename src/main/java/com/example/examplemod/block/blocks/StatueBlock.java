@@ -2,6 +2,7 @@ package com.example.examplemod.block.blocks;
 
 import com.example.examplemod.block.BlockRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -59,9 +60,8 @@ public class StatueBlock extends Block {
 
     @Override
     public @Nullable PushReaction getPistonPushReaction(BlockState state) {
-        return null;
+        return PushReaction.BLOCK; // Block ist unverschiebbar durch Kolben
     }
-
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
         checkAndDestroy(level, pos, state);
@@ -91,7 +91,9 @@ public class StatueBlock extends Block {
     @Override
     public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean b) {
         if (level.getBlockState(blockPos.above()).getBlock() == Blocks.AIR) {
-            level.setBlock(blockPos.above(), BlockRegistry.StatuePolishedTuffTopBlock.get().defaultBlockState(), 3);
+            Direction facing = blockState.getValue(FACING);
+            BlockState topBlockState = BlockRegistry.StatuePolishedTuffTopBlock.get().defaultBlockState().setValue(FACING, facing);
+            level.setBlock(blockPos.above(), topBlockState, 3);
         }
         else {
             level.destroyBlock(blockPos, true);
