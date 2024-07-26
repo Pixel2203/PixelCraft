@@ -5,8 +5,13 @@ import com.example.examplemod.ExampleMod;
 import com.example.examplemod.capabilities.PlayerSoulEnergy;
 import com.example.examplemod.capabilities.PlayerSoulEnergyProvider;
 import com.example.examplemod.entity.EntityRegistry;
+import com.example.examplemod.entity.entities.SoulEntity;
+import com.example.examplemod.entity.models.SoulEntityModel;
+import com.example.examplemod.entity.renderers.SoulEntityRenderer;
+import com.example.examplemod.event.entity.Renderers;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.talisman.ProtectionOfDeathTalisman;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -15,6 +20,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -90,7 +97,6 @@ public class EventHandler {
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event){
         event.register(PlayerSoulEnergy.class);
     }
-
 
 
 

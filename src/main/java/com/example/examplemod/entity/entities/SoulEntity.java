@@ -2,6 +2,7 @@ package com.example.examplemod.entity.entities;
 
 import com.example.examplemod.api.ModUtils;
 import com.example.examplemod.api.nbt.CustomNBTTags;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -14,7 +15,9 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -66,6 +69,11 @@ public class SoulEntity extends LivingEntity {
         }
 
         return retrieved;
+    }
+    public boolean renderToPlayer(LocalPlayer player) {
+        return player.getInventory()
+                .getArmor(ModUtils.ArmorSlots.HELMET)
+                .is(Items.IRON_HELMET);
     }
 
     @Override
