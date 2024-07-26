@@ -6,4 +6,6 @@ public interface SoulConfig {
     int SOUL_DISAPPEARANCE_HEIGHT = 10;
 
     int SOUL_PARTICLE_LIFESPAN = 100;
+
+    float DEFAULT_SOUL_ENTITY_ENERGY = 1f;
 }
