@@ -1,0 +1,19 @@
+
+{
+  "variants": {
+    "facing=east": {
+      "model": "pixelcraft:block/statue_polished_tuff_top",
+      "y": 90    },
+    "facing=north": {
+      "model": "pixelcraft:block/statue_polished_tuff_top"
+    },
+    "facing=south": {
+      "model": "pixelcraft:block/statue_polished_tuff_top",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "pixelcraft:block/statue_polished_tuff_top",
+      "y": 270
+    }
+  }
+}

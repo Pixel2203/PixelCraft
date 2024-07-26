@@ -1,6 +1,6 @@
 {  
   "credit": "By PlayTics",
-  "parent": "pixelcraft:custom/statue",
+  "parent": "pixelcraft:custom/statue_top",
   "textures": {
     "0": "minecraft:block/polished_blackstone",
     "particle": "minecraft:block/polished_blackstone"

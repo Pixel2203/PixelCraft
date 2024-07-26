@@ -25,6 +25,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(BlockRegistry.CauldronCustomBlock.get());
         this.dropNothing(BlockRegistry.GoldenChalkBlock.get());
         this.dropNothing(BlockRegistry.WhiteChalkBlock.get());
+        this.dropSelf(BlockRegistry.StatuePolishedTuffBlock.get());
+        this.dropNothing(BlockRegistry.StatuePolishedTuffTopBlock.get());
     }
 
     @Override

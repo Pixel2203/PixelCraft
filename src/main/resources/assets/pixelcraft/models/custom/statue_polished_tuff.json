@@ -1,5 +1,9 @@
 {
   "credit": "By PlayTics",
+  "textures": {
+    "0": "block/polished_blackstone",
+    "particle": "block/polished_blackstone"
+  },
   "elements": [
     {
       "from": [1, 1, 14],
