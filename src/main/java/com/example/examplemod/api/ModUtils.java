@@ -5,8 +5,12 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class ModUtils {
@@ -51,5 +55,24 @@ public class ModUtils {
         int CHEST_PLATE = 1;
         int LEGGINGS = 2;
         int SHOES = 3;
+    }
+
+    public static List<BlockInfo> getBlocksInBoundingBox(Level level, AABB boundingBox){
+        int minX = (int) boundingBox.minX;
+        int minY = (int) boundingBox.minY;
+        int minZ = (int) boundingBox.minZ;
+        int maxX = (int) boundingBox.maxX;
+        int maxY = (int) boundingBox.maxY;
+        int maxZ = (int) boundingBox.maxZ;
+        List<BlockInfo> list = new ArrayList<>();
+        for(int x = minX; x < maxX; x++){
+            for(int y = minY; y < maxY; y++){
+                for(int z = minZ; z < maxZ; z++){
+                    BlockPos pos = new BlockPos(x, y, z);
+                    list.add(new BlockInfo(pos,level.getBlockState(pos)));
+                }
+            }
+        }
+        return list;
     }
 }

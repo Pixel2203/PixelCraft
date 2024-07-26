@@ -3,6 +3,7 @@ package com.example.examplemod.entity.entities;
 import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.api.scroll.ScrollSpell;
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.entity.entities.generalEntities.GeneralScrollEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -22,7 +23,7 @@ import java.util.Collections;
 import java.util.Objects;
 
 
-public class ScrollEntity extends LivingEntity {
+public class ScrollEntity extends GeneralScrollEntity {
     private ScrollSpell scrollSpell;
 
     protected static EntityDataAccessor<Integer> DATA_CURRENT_TICK = SynchedEntityData.defineId(ScrollEntity.class,EntityDataSerializers.INT);
@@ -76,80 +77,4 @@ public class ScrollEntity extends LivingEntity {
         this.scrollSpell = scrollSpell;
     }
 
-    @Override
-    public Iterable<ItemStack> getArmorSlots() {
-        return Collections.singleton(ItemStack.EMPTY);
-    }
-
-    @Override
-    public @NotNull ItemStack getItemBySlot(EquipmentSlot p_21127_) {
-        return ItemStack.EMPTY;
-    }
-
-    @Override
-    public void setItemSlot(EquipmentSlot p_21036_, ItemStack p_21037_) {
-
-    }
-    @Override
-    public @NotNull HumanoidArm getMainArm() {
-        return null;
-    }
-
-    public static AttributeSupplier.Builder createAttributes(){
-        return LivingEntity.createLivingAttributes().add(Attributes.KNOCKBACK_RESISTANCE,10);
-    }
-
-    public static <T extends Entity> boolean canSpawn(EntityType<T> tEntityType, ServerLevelAccessor serverLevelAccessor, MobSpawnType mobSpawnType, BlockPos blockPos, RandomSource randomSource) {
-        return true;
-    }
-
-    @Override
-    public void setNoGravity(boolean p_20243_) {
-        super.setNoGravity(true);
-    }
-
-    @Override
-    protected boolean isAffectedByFluids() {
-        return false;
-    }
-
-    @Override
-    public boolean isAffectedByPotions() {
-        return false;
-    }
-
-    @Override
-    public boolean isAttackable() {
-        return false;
-    }
-
-    @Override
-    protected boolean isImmobile() {
-        return true;
-    }
-
-    @Override
-    public boolean isBlocking() {
-        return false;
-    }
-
-    @Override
-    public boolean isColliding(BlockPos p_20040_, BlockState p_20041_) {
-        return false;
-    }
-
-    @Override
-    public boolean canCollideWith(Entity p_20303_) {
-        return false;
-    }
-
-    @Override
-    public boolean canBeHitByProjectile() {
-        return false;
-    }
-
-    @Override
-    public boolean shouldShowName() {
-        return false;
-    }
 }

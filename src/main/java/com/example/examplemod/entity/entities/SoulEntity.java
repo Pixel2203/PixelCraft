@@ -1,7 +1,10 @@
 package com.example.examplemod.entity.entities;
 
+import com.example.examplemod.api.BlockInfo;
 import com.example.examplemod.api.ModUtils;
 import com.example.examplemod.api.nbt.CustomNBTTags;
+import com.example.examplemod.config.entity.SoulConfig;
+import com.example.examplemod.entity.entities.generalEntities.GeneralSoulEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -17,23 +20,41 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
-public class SoulEntity extends LivingEntity {
+public class SoulEntity extends GeneralSoulEntity {
     private static final EntityDataAccessor<Integer> SPAWNED_POS = SynchedEntityData.defineId(SoulEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> ENERGY = SynchedEntityData.defineId(SoulEntity.class, EntityDataSerializers.FLOAT);
-    //private static final EntityDataAccessor<Boolean> ALREADY_GENERATED_VALUES = SynchedEntityData.defineId(SoulEntity.class, EntityDataSerializers.BOOLEAN);
+
+
+
     private static final Logger log = LoggerFactory.getLogger(SoulEntity.class);
-    private static final int DISAPPEARANCE_HEIGHT = 10;
-    private static float MAX_CHARGE = 0.5f;
-    private float highestEntityEnergy;
+    @Nullable
+    private Float highestEntityEnergy;
     private boolean alreadyGenerated = false;
+    private Integer nextRandomTick;
+    private Integer ticker;
+    private final Random random = new Random();
+
+
+
+
+    public SoulEntity(EntityType<? extends LivingEntity> p_20966_, Level p_20967_) {
+        super(p_20966_, p_20967_);
+    }
+
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -41,36 +62,53 @@ public class SoulEntity extends LivingEntity {
         this.entityData.define(ENERGY,0f);
     }
 
+    private float getHighestEntityEnergy() {
+        if(Objects.isNull(highestEntityEnergy)){
+            this.highestEntityEnergy = random.nextFloat(SoulConfig.DEFAULT_SOUL_ENTITY_ENERGY);
+            return highestEntityEnergy;
+        }
+        return highestEntityEnergy;
+    }
+
     @Override
     public void onAddedToWorld() {
         super.onAddedToWorld();
         if(!alreadyGenerated) {
-            Random random = new Random();
-            highestEntityEnergy = random.nextFloat(MAX_CHARGE);
-            entityData.set(ENERGY, highestEntityEnergy);
+            entityData.set(ENERGY, getHighestEntityEnergy());
             entityData.set(SPAWNED_POS, this.getOnPos().getY());
             alreadyGenerated = true;
         }
     }
 
-    public float retrieveEnergyFromSoul(BlockPos playerPos) {
+    public void summonSoulParticles(ServerLevel serverLevel) {
         float currentEnergy = this.entityData.get(ENERGY);
-        Random random = new Random();
-        float retrieved = Math.max(random.nextFloat(currentEnergy),MAX_CHARGE / 10);
+        float retrieved= random.nextFloat(currentEnergy);
+        if(retrieved < 0.1f){
+            retrieved = Math.min(currentEnergy, getHighestEntityEnergy() / 10);
+        }
         float newEnergyLevel = currentEnergy - retrieved;
         this.entityData.set(ENERGY, newEnergyLevel);
         if(newEnergyLevel <= 0){
-            log.warn("Du hast eine grenze Überschritten!");
-            EntityType.LIGHTNING_BOLT.spawn((ServerLevel) level(), playerPos, MobSpawnType.MOB_SUMMONED);
             this.discard();
         }
 
-        return retrieved;
-    }
 
-    @Override
-    public boolean isInvisibleTo(Player player) {
-        return true;
+        // Get Spawn Position
+        AABB boundingBox = this.getBoundingBox().inflate(3);
+        List<BlockInfo> airBlocks = ModUtils.getBlocksInBoundingBox(serverLevel, boundingBox).stream()
+                .filter(blockInfo -> blockInfo.blockState().isAir()).toList();
+
+
+        if(airBlocks.isEmpty()){
+            // Can not spawn particles becuase no air block is nearby
+            return;
+        }
+        BlockPos spawnPos = airBlocks.get(random.nextInt(airBlocks.size())).blockPos();
+        AreaEffectCloud areaeffectcloud = new AreaEffectCloud(this.level(), spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+        areaeffectcloud.setRadius(retrieved);
+        areaeffectcloud.setDuration(SoulConfig.SOUL_PARTICLE_LIFESPAN);
+        areaeffectcloud.setOwner(this);
+        serverLevel.addFreshEntity(areaeffectcloud);
     }
 
     @Override
@@ -78,15 +116,32 @@ public class SoulEntity extends LivingEntity {
         super.tick();
         if(!level().isClientSide()) {
             this.setDeltaMovement(new Vec3(0, this.getAttributeValue(Attributes.MOVEMENT_SPEED), 0));
-            float probability = this.entityData.get(ENERGY) / highestEntityEnergy;
+            float probability = this.entityData.get(ENERGY) / getHighestEntityEnergy();
             ModUtils.sendParticles((ServerLevel) this.level(), ParticleTypes.SNOWFLAKE, this.getOnPos(), probability ,1, 2, 2, 2,0);
             checkFlightDistanceReached();
+            checkRandomTick();
         }
+    }
+    private void checkRandomTick() {
+        if(Objects.isNull(ticker)){
+            ticker = 0;
+            nextRandomTick = random.nextInt(SoulConfig.MINIMUM_TICKS_TO_COLLECTABLE_PARTICLE_SPAWN , SoulConfig.MAXIMUM_TICKS_TO_COLLECTABLE_PARTICLE_SPAWN);
+            return;
+        }
+        if(ticker >= nextRandomTick){
+            ticker = 0;
+            nextRandomTick = random.nextInt(SoulConfig.MINIMUM_TICKS_TO_COLLECTABLE_PARTICLE_SPAWN , SoulConfig.MAXIMUM_TICKS_TO_COLLECTABLE_PARTICLE_SPAWN);
+            this.onRandomTick((ServerLevel) level());
+        }
+        ticker++;
+    }
+    private void onRandomTick(ServerLevel serverLevel) {
+        summonSoulParticles(serverLevel);
     }
 
     private void checkFlightDistanceReached() {
         int heightDifference = this.getOnPos().getY() - this.entityData.get(SPAWNED_POS);
-        if(heightDifference >= DISAPPEARANCE_HEIGHT) {
+        if(heightDifference >= SoulConfig.SOUL_DISAPPEARANCE_HEIGHT) {
             this.discard();
         }
     }
@@ -107,41 +162,10 @@ public class SoulEntity extends LivingEntity {
         this.alreadyGenerated = nbt.getBoolean(CustomNBTTags.ALREADY_GENERATED);
     }
 
-    public SoulEntity(EntityType<? extends LivingEntity> entityType, Level level) {
-        super(entityType, level);
+    public void setEnergy(float energy) {
+        this.highestEntityEnergy = energy;
     }
-    public static AttributeSupplier.Builder createAttributes(){
-        return LivingEntity.createLivingAttributes().add(Attributes.MOVEMENT_SPEED, 0.05D);
-    }
-    @Override
-    public @NotNull Iterable<ItemStack> getArmorSlots() {
-        return Collections.singleton(ItemStack.EMPTY);
-    }
-    @Override
-    public @NotNull ItemStack getItemBySlot(@NotNull EquipmentSlot p_21127_) {
-        return ItemStack.EMPTY;
-    }
-    @Override
-    public void setItemSlot(@NotNull EquipmentSlot p_21036_, @NotNull ItemStack p_21037_) {
 
-    }
-    @Override
-    public HumanoidArm getMainArm() {
-        return HumanoidArm.RIGHT;
-    }
-    public static <T extends Entity> boolean canSpawn(EntityType<T> tEntityType, ServerLevelAccessor serverLevelAccessor, MobSpawnType mobSpawnType, BlockPos blockPos, RandomSource randomSource) {
-        return true;
-    }
-    @Override
-    public boolean isInvulnerable() {
-        return true;
-    }
-    @Override
-    public boolean isAttackable() {
-        return false;
-    }
-    @Override
-    public boolean isAlwaysTicking() {
-        return true;
-    }
+
+
 }
