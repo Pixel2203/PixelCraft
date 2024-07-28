@@ -1,6 +1,7 @@
 package com.example.examplemod.item.items;
 
 import com.example.examplemod.effect.MobEffectRegistry;
+import com.example.examplemod.entity.entities.generalEntities.UntouchableEntity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +23,7 @@ public class BlizzardSword extends SwordItem {
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
         if(!entity.level().isClientSide()){
-            if(entity instanceof LivingEntity livingEntity){
+            if(entity instanceof LivingEntity livingEntity && livingEntity.isAffectedByPotions()){
                 MobEffectInstance appliedEffect = new MobEffectInstance(MobEffectRegistry.BLIZZARD_POISONING.get(),200,0);
                 livingEntity.addEffect(appliedEffect);
             }

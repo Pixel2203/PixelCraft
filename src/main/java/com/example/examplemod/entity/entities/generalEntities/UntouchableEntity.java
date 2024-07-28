@@ -74,4 +74,5 @@ public class UntouchableEntity extends LivingEntity {
     public boolean canBeHitByProjectile() {
         return false;
     }
+
 }
