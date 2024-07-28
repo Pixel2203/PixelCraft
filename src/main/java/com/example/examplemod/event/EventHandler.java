@@ -72,10 +72,10 @@ public class EventHandler {
             Random random = new Random();
             ServerLevel level = (ServerLevel) entity.level();
             BlockPos entityDeathPosition = entity.blockPosition();
-            SoulEntity soulEntity = new SoulEntity(EntityRegistry.SOUL_ENTITY.get(),entity.level());
+            SoulEntity soulEntity = new SoulEntity(EntityRegistry.SOUL_ENTITY.get(),level);
             soulEntity.setEnergy(random.nextFloat(0.8f));
-            soulEntity.setPos(entityDeathPosition.getX(), entityDeathPosition.getY(), entityDeathPosition.getZ());
-            entity.level().addFreshEntity(soulEntity);
+            soulEntity.setPos(entityDeathPosition.getX() + 0.5f, entityDeathPosition.getY(), entityDeathPosition.getZ() + 0.5f);
+            level.addFreshEntity(soulEntity);
         }
     }
 
