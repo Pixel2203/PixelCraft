@@ -17,14 +17,23 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class SoulCrystalItem extends Item {
+    private static final Logger log = LoggerFactory.getLogger(SoulCrystalItem.class);
     private final float maxCharge;
     public SoulCrystalItem(Properties p_41383_, float maxCharge) {
         super(p_41383_);
         this.maxCharge = maxCharge;
+    }
+
+    @Override
+    public InteractionResult interactLivingEntity(ItemStack p_41398_, Player p_41399_, LivingEntity p_41400_, InteractionHand p_41401_) {
+        log.info("Interacted with entity: {}" , p_41400_.getDisplayName().getString());
+        return super.interactLivingEntity(p_41398_, p_41399_, p_41400_, p_41401_);
     }
 
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {

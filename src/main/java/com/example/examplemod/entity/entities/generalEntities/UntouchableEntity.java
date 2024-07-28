@@ -1,10 +1,12 @@
 package com.example.examplemod.entity.entities.generalEntities;
 
+import com.example.examplemod.entity.entities.SoulEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -72,6 +74,15 @@ public class UntouchableEntity extends LivingEntity {
 
     @Override
     public boolean canBeHitByProjectile() {
+        return false;
+    }
+
+    @Override
+    protected void doPush(Entity entity) {
+    }
+
+    @Override
+    public boolean isPushable() {
         return false;
     }
 }
