@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pixelcraft:statue_polished_tuff"
+          "name": "pixelcraft:statue_stone"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "pixelcraft:blocks/statue_polished_tuff"
+  "random_sequence": "pixelcraft:blocks/statue_stone_base"
 }

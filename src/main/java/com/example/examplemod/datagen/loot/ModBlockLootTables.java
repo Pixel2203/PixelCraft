@@ -1,6 +1,7 @@
 package com.example.examplemod.datagen.loot;
 
 import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
@@ -25,8 +26,9 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(BlockRegistry.CauldronCustomBlock.get());
         this.dropNothing(BlockRegistry.GoldenChalkBlock.get());
         this.dropNothing(BlockRegistry.WhiteChalkBlock.get());
-        this.dropSelf(BlockRegistry.StatuePolishedTuffBlock.get());
-        this.dropNothing(BlockRegistry.StatuePolishedTuffTopBlock.get());
+        this.dropOther(BlockRegistry.StatueStoneBase.get(), () -> ItemRegistry.STATUE_STONE.get().asItem());
+//        this.dropSelf(BlockRegistry.StatuePolishedTuffBlock.get());
+        this.dropNothing(BlockRegistry.StatueStoneTop.get());
     }
 
     @Override
