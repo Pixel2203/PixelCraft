@@ -1,6 +1,7 @@
 package com.example.examplemod.entity.entities.generalEntities;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -75,4 +76,18 @@ public class UntouchableEntity extends LivingEntity {
         return false;
     }
 
+    @Override
+    public boolean isInvulnerable() {
+        return true;
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource p_20122_) {
+        return true;
+    }
+
+    @Override
+    public boolean displayFireAnimation() {
+        return false;
+    }
 }
