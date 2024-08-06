@@ -1,0 +1,9 @@
+{  
+  "credit": "By PlayTics",
+  "parent": "pixelcraft:custom/statue_tall_top",
+  "textures": {
+    "1": "minecraft:block/soul_campfire_fire",
+    "2": "minecraft:block/blast_furnace_top",
+    "particle": "minecraft:block/blast_furnace_top"
+  }
+}

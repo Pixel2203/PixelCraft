@@ -1,6 +1,6 @@
-package com.example.examplemod.block.blocks;
+package com.example.examplemod.block.template;
 
-import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.api.BlockDynamicUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -9,10 +9,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -20,17 +18,26 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-public class StatueBlock extends Block {
+public class MultiBlockBase extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    protected static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
-
-    public StatueBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.STONE).randomTicks().noOcclusion());
+    private String blockmiddle;
+    private String blocktop;
+    private String blockbase;
+    private boolean tall3 = false;
+    private int distanceMiddle = 1;
+    private int distanceTop = 2;
+    /**
+     * @param tall3 If true, the placement is defined to place 3 Blocks instead of 2
+     */
+    public MultiBlockBase(Properties pProperties, String blocktop, String blockmiddle, String blockbase, Boolean tall3) {
+        super(pProperties);
+        this.blocktop = blocktop;
+        this.blockmiddle = blockmiddle;
+        this.blockbase = blockbase;
+        this.tall3 = tall3;
     }
 
     @Override
@@ -54,13 +61,8 @@ public class StatueBlock extends Block {
 
     }
     @Override
-    public VoxelShape getShape(BlockState p_60555_, BlockGetter p_60556_, BlockPos p_60557_, CollisionContext p_60558_) {
-        return SHAPE;
-    }
-
-    @Override
     public @Nullable PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.BLOCK; // Block ist unverschiebbar durch Kolben
+        return PushReaction.BLOCK;
     }
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
@@ -79,25 +81,32 @@ public class StatueBlock extends Block {
     }
 
     protected void checkAndDestroy(Level level, BlockPos pos, BlockState blockState) {
-        if (level.getBlockState(pos.above()).getBlock() == BlockRegistry.StatuePolishedTuffTopBlock.get()) {
-            level.destroyBlock(pos.above(), true);
-//            Block.dropResources(blockState, level, pos, null);
-            level.gameEvent(null, GameEvent.BLOCK_DESTROY, pos.above());
+        if (BlockDynamicUtil.isBlockPos(level, pos, blockmiddle, false, distanceMiddle)) {
+            level.destroyBlock(pos.above(distanceMiddle), false);
+            level.gameEvent(null, GameEvent.BLOCK_DESTROY, pos.above(distanceMiddle));
         }
-        level.destroyBlock(pos, true);
+
+        if (tall3) {
+            if (BlockDynamicUtil.isBlockPos(level, pos, blocktop, false, distanceTop)) {
+                level.destroyBlock(pos.above(distanceTop), false);
+                level.gameEvent(null, GameEvent.BLOCK_DESTROY, pos.above(distanceTop));
+            }
+        }
+        level.destroyBlock(pos, false);
         level.gameEvent(null, GameEvent.BLOCK_DESTROY, pos);
     }
 
     @Override
     public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean b) {
-        if (level.getBlockState(blockPos.above()).getBlock() == Blocks.AIR) {
-            Direction facing = blockState.getValue(FACING);
-            BlockState topBlockState = BlockRegistry.StatuePolishedTuffTopBlock.get().defaultBlockState().setValue(FACING, facing);
-            level.setBlock(blockPos.above(), topBlockState, 3);
-        }
-        else {
-            level.destroyBlock(blockPos, true);
+        Direction facing = blockState.getValue(FACING);
+        BlockState BlockStateMiddle = BlockDynamicUtil.getBlockFromString(blockmiddle).defaultBlockState().setValue(FACING, facing);
+        if (tall3) {
+            BlockState BlockStateTop = BlockDynamicUtil.getBlockFromString(blocktop).defaultBlockState().setValue(FACING, facing);
+            level.setBlock(blockPos.above(distanceTop), BlockStateTop, 3);
 
         }
+        level.setBlock(blockPos.above(distanceMiddle), BlockStateMiddle, 3);
+
     }
 }
+

@@ -1,0 +1,13 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "pixelcraft:item/crystals/crystal_0"
+  },
+  "overrides": [
+    { "predicate": { "pixelcraft:crystal_state": 0 }, "model": "pixelcraft:item/crystals/crystal_0" },
+    { "predicate": { "pixelcraft:crystal_state": 1 }, "model": "pixelcraft:item/crystals/crystal_1" },
+    { "predicate": { "pixelcraft:crystal_state": 2 }, "model": "pixelcraft:item/crystals/crystal_2" },
+    { "predicate": { "pixelcraft:crystal_state": 3 }, "model": "pixelcraft:item/crystals/crystal_3" },
+    { "predicate": { "pixelcraft:crystal_state": 4 }, "model": "pixelcraft:item/crystals/crystal_4" }
+  ]
+}

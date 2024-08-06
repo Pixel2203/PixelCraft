@@ -21,6 +21,8 @@ public class TabFactory {
                                 .map(RegistryObject::get)
                                 .filter(item -> !(item instanceof CustomSplashPotionItem))
                                 .forEach(output::accept);
+                        output.accept(ItemRegistry.STATUE_STONE.get());
+                        output.accept(ItemRegistry.STATUE_POWERFUL_STONE.get());
                         output.accept(FloraSplashPotionItem.createFloraPotion(1,1));
                         output.accept(FloraSplashPotionItem.createFloraPotion(2,1));
                         output.accept(FloraSplashPotionItem.createFloraPotion(3,1));

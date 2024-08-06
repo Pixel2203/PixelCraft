@@ -37,6 +37,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> PROJECTILE_BARRIER_SCROLL = ITEMS.register("projectile_barrier_scroll", () -> new ScrollItem(new ProjectileBarrierScrollSpell(0,0)));
     public static final RegistryObject<Item> CONFUSION_SCROLL = ITEMS.register("confusion_scroll", () -> new ScrollItem(new ConfusionScrollSpell(0,0)));
     public static final RegistryObject<Item> SOUL_CRYSTAL = ITEMS.register("soul_crystal", () -> new SoulCrystalItem(new Item.Properties(), 1));
+    public static final RegistryObject<Item> STATUE_STONE = ITEMS.register("statue_stone", () -> new MultiBlockBlockItem(BlockRegistry.StatueStoneBase.get(), new Item.Properties(), 1));
+    public static final RegistryObject<Item> STATUE_POWERFUL_STONE = ITEMS.register("statue_powerful_stone", () -> new MultiBlockBlockItem(BlockRegistry.StatuePowerfulStoneBase.get(), new Item.Properties(), 2));
+
 
 
     public static void registerItems(IEventBus eventBus){
