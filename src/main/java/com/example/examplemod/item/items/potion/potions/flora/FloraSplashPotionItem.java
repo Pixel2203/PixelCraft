@@ -55,12 +55,11 @@ public class FloraSplashPotionItem extends CustomSplashPotionItem {
             return;
         }
         int[] bounds = switch (level) {
-            case 2 -> new int[]{3, 3};
-            case 3 -> new int[]{6, 6};
-            default -> new int[]{1, 1};
+            case 2 -> new int[]{3, 3 , 3};
+            case 3 -> new int[]{6, 6, 6};
+            default -> new int[]{1, 1, 1};
         };
         nbt.putIntArray(CustomNBTTags.POTION_BOUNDS,bounds);
         itemStack.setTag(nbt);
     }
-
 }
