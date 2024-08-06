@@ -21,6 +21,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -71,10 +72,10 @@ public class EventHandler {
         if(event.getEntity().getType() != EntityRegistry.SOUL_ENTITY.get() && !entity.level().isClientSide()){
             Random random = new Random();
             ServerLevel level = (ServerLevel) entity.level();
-            BlockPos entityDeathPosition = entity.blockPosition();
+            Vec3 entityDeathPosition = entity.position();
             SoulEntity soulEntity = new SoulEntity(EntityRegistry.SOUL_ENTITY.get(),level);
             soulEntity.setEnergy(random.nextFloat(0.8f));
-            soulEntity.setPos(entityDeathPosition.getX() + 0.5f, entityDeathPosition.getY(), entityDeathPosition.getZ() + 0.5f);
+            soulEntity.setPos(entityDeathPosition.x, entityDeathPosition.y, entityDeathPosition.z);
             level.addFreshEntity(soulEntity);
         }
     }
