@@ -7,5 +7,6 @@ public interface ModIngredients {
     ModIngredient GLOWSTONE_DUST = new ModIngredient(Items.GLOWSTONE_DUST, "glowstone_dust");
     ModIngredient GREEN_DYE = new ModIngredient(Items.GREEN_DYE,"green_dye");
     ModIngredient REDSTONE_DUST = new ModIngredient(Items.REDSTONE,"redstone_dust");
+    ModIngredient PURPLE_DYE = new ModIngredient(Items.PURPLE_DYE,"purple_dye");
 
 }
