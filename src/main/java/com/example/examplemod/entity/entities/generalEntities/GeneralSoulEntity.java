@@ -21,21 +21,13 @@ public class GeneralSoulEntity extends UntouchableEntity{
         super(p_20966_, p_20967_);
     }
 
-    @Override
-    public boolean isInvisibleTo(@NotNull Player player) {
-        return true;
-    }
-
     public static AttributeSupplier.Builder createAttributes(){
         return LivingEntity.createLivingAttributes().add(Attributes.MOVEMENT_SPEED, 0.05D);
     }
     public static <T extends Entity> boolean canSpawn(EntityType<T> tEntityType, ServerLevelAccessor serverLevelAccessor, MobSpawnType mobSpawnType, BlockPos blockPos, RandomSource randomSource) {
         return true;
     }
-    @Override
-    public boolean isInvulnerable() {
-        return true;
-    }
+
     @Override
     public boolean isAlwaysTicking() {
         return true;
