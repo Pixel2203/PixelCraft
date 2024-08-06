@@ -32,13 +32,10 @@ public class MultiBlockTop extends MultiBlockBase {
         }
         if (BlockDynamicUtil.isBlockPos(level, pos, blockmiddle, true, distanceMiddle)) {
             level.destroyBlock(pos.below(distanceMiddle), false);
-//            level.gameEvent(null, GameEvent.BLOCK_DESTROY, pos.below(distanceMiddle));
         }
         if (BlockDynamicUtil.isBlockPos(level, pos, blockbase, true, distanceBase)) {
             level.destroyBlock(pos.below(distanceBase), false);
-//            level.gameEvent(null, GameEvent.BLOCK_DESTROY, pos.below(distanceBase));
         }
         level.destroyBlock(pos, false);
-//        level.gameEvent(null, GameEvent.BLOCK_DESTROY, pos);
     }
 }
