@@ -18,13 +18,10 @@ public class BlockDynamicUtil {
      * @return
      */
     public static boolean isBlockPos(Level level, BlockPos pos, String blockName, Boolean IsBelow, int Distance) {
-        // Konvertiere den Blocknamen (String) zu einem ResourceLocation-Objekt
         ResourceLocation blockLocation = new ResourceLocation( namespace, blockName);
 
-        // Hole den Block anhand des ResourceLocation aus der Registry
         Block block = ForgeRegistries.BLOCKS.getValue(blockLocation);
 
-        // Überprüfe, ob der Block am angegebenen Ort gleich dem dynamisch ermittelten Block ist
         if (IsBelow) {
             if (block != null) {
                 BlockState blockState = level.getBlockState(pos.below(Distance));
@@ -38,7 +35,6 @@ public class BlockDynamicUtil {
             }
         }
 
-        // Rückgabe false, wenn der Block nicht gefunden wird
         return false;
     }
 
