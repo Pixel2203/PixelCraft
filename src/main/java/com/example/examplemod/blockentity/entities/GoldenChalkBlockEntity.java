@@ -135,14 +135,13 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             case RitualStates.ACTIVE -> activeRitualTick();
         }
         ticker = 0;
-        Vec3 spawnParticlePosition = ModUtils.calcCenterOfBlock(getBlockPos().above());
+
+
+        // Spawns Particles
+        var spawnParticlePosition = getBlockPos().above();
         Random random = new Random();
         int amountOfParticles = random.nextInt(1,4);
-        for(int i = 0; i < amountOfParticles; i++){
-            float offsetX = random.nextInt(0,4) * 0.1f;
-            float offsetZ = random.nextInt(0,4) * 0.1f;
-            ((ServerLevel)getLevel()).sendParticles(ParticleTypes.FLAME,spawnParticlePosition.x + offsetX,spawnParticlePosition.y,spawnParticlePosition.z + offsetZ,1,0,0,0,0);
-        }
+        ModUtils.sendParticles((ServerLevel) getLevel(), ParticleTypes.FLAME, spawnParticlePosition,1f, amountOfParticles,0.4f,0,0.4f,0);
 
         setChanged();
     }
@@ -254,7 +253,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             return;
         }
         List<ItemEntity> foundEntities = ((GoldenChalkBlock)this.getBlockState().getBlock()).getItemEntitesInRangeFromBlockPos(this.level,this.getBlockPos(),3);
-        if(foundEntities.size() == 0){
+        if(foundEntities.isEmpty()){
             this.currentRitualState = RitualStates.COLLECTED;
             return;
         }
