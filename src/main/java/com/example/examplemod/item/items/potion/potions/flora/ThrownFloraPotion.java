@@ -1,5 +1,7 @@
 package com.example.examplemod.item.items.potion.potions.flora;
 
+import com.example.examplemod.api.BlockInfo;
+import com.example.examplemod.api.ModUtils;
 import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.item.items.potion.CustomThrownPotion;
 import net.minecraft.core.BlockPos;
@@ -10,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,12 +42,28 @@ public class ThrownFloraPotion extends CustomThrownPotion {
         if(Objects.isNull(potionBounds)){
             return;
         }
-        int boundRow = potionBounds[0];
-        int boundColumn = potionBounds[1];
+        int inflateX = potionBounds[0];
+        int inflateY = potionBounds[1];
+        int inflateZ = potionBounds[2];
         BlockPos blockHitPos = hitResult.getBlockPos();
         Random probabilityGenerator = new Random();
         Level level = level();
-           for(int row = -boundRow; row <= boundRow; row++){
+        AABB boundingBox = new AABB(blockHitPos);
+
+        ModUtils.getBlocksInBoundingBox(level,  boundingBox.inflate(inflateX,inflateY,inflateZ))
+                .stream()
+                .filter(blockInfo -> blockInfo.blockState().is(Blocks.GRASS_BLOCK))
+                .map(BlockInfo::blockPos)
+                .map(BlockPos::above)
+                .filter(blockPos -> level.getBlockState(blockPos).is(Blocks.AIR))
+                .filter(blockPos -> probabilityGenerator.nextInt(3) < 2)
+                .forEach(blockPos -> {
+                    int flowerIndex = probabilityGenerator.nextInt(FLOWERS_TO_PLACE.size());
+                    var flowerToPlace = FLOWERS_TO_PLACE.get(flowerIndex).defaultBlockState();
+                    level.setBlockAndUpdate(blockPos, flowerToPlace);
+                });
+        /*
+        for(int row = -boundRow; row <= boundRow; row++){
                for(int column = -boundColumn; column <= boundColumn;column++){
                    if(probabilityGenerator.nextInt(3) <2){
                        continue;
@@ -62,6 +81,8 @@ public class ThrownFloraPotion extends CustomThrownPotion {
                    }
                }
            }
+
+         */
         super.onHitBlock(hitResult);
     }
     private int[] getPotionBounds(){
