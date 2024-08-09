@@ -28,7 +28,8 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
         this.tag(TagFactory.RITUAL_INGREDIENT)
                 .add(Items.GREEN_DYE)
-                .add(Items.BLAZE_ROD);
+                .add(Items.BLAZE_ROD)
+                .add(Items.GLOWSTONE_DUST);
         this.tag(TagFactory.KETTLE_ALLOWED_FLUID_ITEMS)
                 .add(Items.WATER_BUCKET)
                 .add(Items.POTION);
