@@ -60,29 +60,6 @@ public class SoulCrystalItem extends BlockItem {
         }
         return InteractionResultHolder.pass(player.getItemInHand(hand));
     }
-
-//    public InteractionResult place(BlockPlaceContext context) {
-//        if (context.getPlayer().isCrouching()) {
-//            IntegerProperty ENERGY = IntegerProperty.create("energy", 0, 4);
-//            ItemStack crystal = context.getPlayer().getItemInHand(context.getHand());
-//            CompoundTag nbt = crystal.hasTag() ? crystal.getTag() : new CompoundTag();
-//            int charge = (int)(Math.random() * 5);
-//            Level level = context.getLevel();
-//            BlockPos pos = context.getClickedPos();
-//            BlockState newState = this.getBlock().defaultBlockState().setValue(ENERGY, charge);
-//
-//            if (!level.isClientSide()) {
-//                InteractionResult result = super.place(context);
-//                if (result.consumesAction()) {
-//                }
-//                if (newState.getBlock() instanceof CrystalBlock) {
-//                    level.setBlock(pos, newState, 3);
-//                }
-//                return result;
-//            }
-//        }
-//        return InteractionResult.FAIL;
-//    }
     @Override
     public InteractionResult place(BlockPlaceContext context) {
         if (context.getPlayer().isCrouching()) {
