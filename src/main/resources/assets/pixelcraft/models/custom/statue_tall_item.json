@@ -1,7 +1,7 @@
 {
   "credit": "By PlayTics",
   "textures": {
-    "1": "pixelcraft:block/campfire_fire_void",
+    "1": "minecraft:block/soul_campfire_fire",
     "2": "minecraft:block/blast_furnace_top"
   },
   "elements": [
