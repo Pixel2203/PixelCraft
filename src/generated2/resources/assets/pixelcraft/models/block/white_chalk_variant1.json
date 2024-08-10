@@ -1,0 +1,7 @@
+{
+  "parent": "pixelcraft:block/chalk_template",
+  "textures": {
+    "1": "pixelcraft:block/white_chalk_variant1",
+    "particle": "pixelcraft:block/white_chalk_variant1"
+  }
+}

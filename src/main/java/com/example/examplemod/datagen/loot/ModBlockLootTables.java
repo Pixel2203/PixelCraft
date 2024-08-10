@@ -29,7 +29,11 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropOther(BlockRegistry.StatueStoneBase.get(), () -> ItemRegistry.STATUE_STONE.get().asItem());
 //        this.dropSelf(BlockRegistry.StatuePolishedTuffBlock.get());
         this.dropNothing(BlockRegistry.StatueStoneTop.get());
-        this.dropNothing(BlockRegistry.StatueStoneTop.get());
+        this.dropSelf(BlockRegistry.StatuePowerfulStoneBase.get());
+        this.dropNothing(BlockRegistry.StatuePowerfulStoneMiddle.get());
+        this.dropNothing(BlockRegistry.StatuePowerfulStoneTop.get());
+        this.dropSelf(BlockRegistry.CrystalBlock.get());
+
     }
 
     @Override

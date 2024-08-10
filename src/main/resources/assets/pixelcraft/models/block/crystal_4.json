@@ -1,0 +1,8 @@
+{  
+  "credit": "By PlayTics",
+  "parent": "pixelcraft:custom/crystal",
+  "textures": {
+    "0": "pixelcraft:block/crystal/crystal_block_4",
+    "particle": "pixelcraft:block/crystal/crystal_block_4"
+  }
+}

@@ -1,11 +1,7 @@
-// 1.20.1	2024-08-09T23:29:01.5452134	Loot Tables
+// 1.20.1	2024-07-29T21:28:03.7224042	Loot Tables
 4ce9c2f9a9168bc434d035396c1e18ec0a3baa27 data/pixelcraft/loot_tables/blocks/cauldron_custom.json
-639a02123f6a3b9f342f573ad7f6232ae7035c14 data/pixelcraft/loot_tables/blocks/crystal_block.json
 a3cfa884b25836c931084b5eb606e5ec30d5a2ca data/pixelcraft/loot_tables/blocks/four_leaf_clover.json
 0d0cd18ca366124d8ce3e37965a1cb59285608c0 data/pixelcraft/loot_tables/blocks/golden_chalk.json
-73454b34ac84d2e713f68616c1f7d48060f5bb29 data/pixelcraft/loot_tables/blocks/statue_powerful_stone_base.json
-96ba52110b579aa03561bb38611221c3be425abd data/pixelcraft/loot_tables/blocks/statue_powerful_stone_middle.json
-be2e5dbd9fd8f7c7c85a54e08460f2a34889785a data/pixelcraft/loot_tables/blocks/statue_powerful_stone_top.json
 fa873dc8c62c76b2b589ada0909ecb59d66261ae data/pixelcraft/loot_tables/blocks/statue_stone_base.json
 e4e42edd4a3328c655f3f856c1feb03e6d24a8f6 data/pixelcraft/loot_tables/blocks/statue_stone_top.json
 5d600ecc4085ae203c1f2aa5c3b544a95b2b6b87 data/pixelcraft/loot_tables/blocks/white_chalk.json

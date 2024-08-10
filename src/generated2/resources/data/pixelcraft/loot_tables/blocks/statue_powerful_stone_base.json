@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pixelcraft:statue_powerful_stone"
+          "name": "minecraft:air"
         }
       ],
       "rolls": 1.0

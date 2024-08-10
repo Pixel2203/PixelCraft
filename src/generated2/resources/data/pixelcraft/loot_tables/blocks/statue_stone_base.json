@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "pixelcraft:statue_powerful_stone"
+          "name": "pixelcraft:statue_stone"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "pixelcraft:blocks/statue_powerful_stone_base"
+  "random_sequence": "pixelcraft:blocks/statue_stone_base"
 }

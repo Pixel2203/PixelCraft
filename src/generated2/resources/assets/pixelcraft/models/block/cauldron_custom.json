@@ -1,0 +1,8 @@
+{
+  "parent": "pixelcraft:block/cauldron_custom_template",
+  "textures": {
+    "inside": "pixelcraft:block/cauldron_custom_inner",
+    "outside": "pixelcraft:block/cauldron_custom",
+    "particle": "pixelcraft:block/cauldron_custom"
+  }
+}
