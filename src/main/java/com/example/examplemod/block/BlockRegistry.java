@@ -39,7 +39,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> StatuePowerfulStoneBase = registerBlock("statue_powerful_stone_base", () -> Factory.StatueBlockPowerfulBase_BLK);
     public static final RegistryObject<Block> StatuePowerfulStoneMiddle = registerBlock("statue_powerful_stone_middle", () -> Factory.StatueBlockPowerfulMiddle_BLK);
     public static final RegistryObject<Block> StatuePowerfulStoneTop = registerBlock("statue_powerful_stone_top", () -> Factory.StatueBlockPowerfulTop_BLK);
-
+    public static final RegistryObject<Block> CrystalBlock = registerBlock("crystal_block", () -> Factory.CrystalBlock);
     private static <T extends Block> RegistryObject<T> registerBlockWithItem(String name, Supplier<T> block){
         RegistryObject<T> toReturn = (RegistryObject<T>) registerBlock(name, block);
         ItemRegistry.ITEMS.register(name, () ->  new BlockItem(block.get(), new Item.Properties()));
@@ -61,6 +61,7 @@ public class BlockRegistry {
     private static class Factory {
         public static final Block ZirconBlock_BLK = new Block(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK));
         public static final Block CauldronCustomBlock_BLK = new KettleBlock();
+        public static final CrystalBlock CrystalBlock = new CrystalBlock(BlockBehaviour.Properties.copy(Blocks.AMETHYST_BLOCK));
         public static final StatueBlockBase StatueBlock_BLK = new StatueBlockBase(BlockBehaviour.Properties.copy(Blocks.STONE), "","statue_stone_top", "statue_stone_base",false);
         public static final StatueBlockTop StatueBlockTop_BLK = new StatueBlockTop(BlockBehaviour.Properties.copy(Blocks.STONE).sound(SoundType.EMPTY), "","statue_stone_top", "statue_stone_base",false);
         public static final StatueBlockPFBase StatueBlockPowerfulBase_BLK = new StatueBlockPFBase(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE_BRICKS), "statue_powerful_stone_top","statue_powerful_stone_middle", "statue_powerful_stone_base",true);

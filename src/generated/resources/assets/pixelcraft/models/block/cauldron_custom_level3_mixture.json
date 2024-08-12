@@ -1,6 +1,0 @@
-{
-  "parent": "pixelcraft:block/cauldron_custom_template_level3",
-  "textures": {
-    "content": "pixelcraft:block/mixture_still"
-  }
-}
