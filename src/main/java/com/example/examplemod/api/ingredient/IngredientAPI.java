@@ -20,7 +20,6 @@ public class IngredientAPI {
      * @param serializedIngredients
      * @return
      */
-    @Immutable
     public static @NotNull List<Item> deserializeIngredientList(String serializedIngredients){
         return Arrays.stream(serializedIngredients.split(","))
                 .map(ResourceLocation::new)
