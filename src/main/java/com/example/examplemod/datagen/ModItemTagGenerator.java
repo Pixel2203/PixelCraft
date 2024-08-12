@@ -19,17 +19,13 @@ public class ModItemTagGenerator extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(TagFactory.KETTLE_INGREDIENT)
+        this.tag(TagFactory.INGREDIENT)
                 .add(Items.PURPLE_DYE)
                 .add(Items.GREEN_DYE)
                 .add(Items.BLAZE_ROD)
                 .add(Items.GLOWSTONE_DUST)
                 .add(Items.REDSTONE);
 
-        this.tag(TagFactory.RITUAL_INGREDIENT)
-                .add(Items.GREEN_DYE)
-                .add(Items.BLAZE_ROD)
-                .add(Items.GLOWSTONE_DUST);
         this.tag(TagFactory.KETTLE_ALLOWED_FLUID_ITEMS)
                 .add(Items.WATER_BUCKET)
                 .add(Items.POTION);

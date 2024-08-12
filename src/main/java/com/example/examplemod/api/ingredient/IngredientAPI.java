@@ -6,7 +6,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import oshi.annotation.concurrent.Immutable;
 
 import java.util.Arrays;
@@ -37,10 +36,7 @@ public class IngredientAPI {
                 .forEach(joiner::add);
         return joiner.toString();
     }
-    public static boolean isRitualIngredient(ItemStack itemStack){
-        return itemStack.is(TagFactory.RITUAL_INGREDIENT);
-    }
-    public static boolean isKettleIngredient(ItemStack itemStack){
-        return itemStack.is(TagFactory.KETTLE_INGREDIENT);
+    public static boolean hasIngredientTag(ItemStack itemStack){
+        return itemStack.is(TagFactory.INGREDIENT);
     }
 }

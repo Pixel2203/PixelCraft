@@ -90,7 +90,7 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
             if (ticker >= 40) {
                 ticker = 0;
                 isProgressing = false;
-                Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.KETTLE_RECIPES,this.ingredients);
+                Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.RecipeOrigins.KETTLE,this.ingredients);
                 if(recipeOptional.isPresent()){
                     spawnResultOfRecipeOnKettle((ModRecipe<ItemStack>) recipeOptional.get());
                     setChanged();

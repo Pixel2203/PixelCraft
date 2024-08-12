@@ -21,13 +21,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.EnumUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -46,7 +47,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     private final int tickerInterval = 20;
 
     // Name by which the Ritual can be identified
-    private String ritualID = "";
+    private ModRituals ritual;
     // Progress of the ritual (amount of ticks it already recived)
     private int ritualProgress;
     // Instance of the Ritual Class
@@ -61,36 +62,35 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
 
     /**
      * Loads the item into this entity
-     * @param nbt
      */
     @Override
-    public void load(CompoundTag nbt) {
+    public void load(@NotNull CompoundTag nbt) {
         super.load(nbt);
         CompoundTag nbtCompound = nbt.getCompound(ExampleMod.MODID);
         this.ingredients = new ArrayList<>(IngredientAPI.deserializeIngredientList(nbtCompound.getString(CustomNBTTags.RECIPE)));
         this.currentRitualState = nbtCompound.getInt(CustomNBTTags.RITUAL_STATE);
         this.isProgressing = nbtCompound.getBoolean(CustomNBTTags.IS_PROGRESSING);
-        this.ritualID =  nbtCompound.getString(CustomNBTTags.RITUAL_NAME);
         this.ritualProgress = nbtCompound.getInt(CustomNBTTags.PROGRESS);
         this.ticker = nbtCompound.getInt(CustomNBTTags.TICKER);
 
+        var ritualName = nbtCompound.getString(CustomNBTTags.RITUAL_NAME);
+        if(EnumUtils.isValidEnum(ModRituals.class, ritualName))
+            this.ritual = ModRituals.valueOf(ritualName);
+
     }
 
-    /**
-     * Saves the variables into a nbt tag
-     * @param nbt
-     */
     @Override
-    protected void saveAdditional(CompoundTag nbt) {
+    protected void saveAdditional(@NotNull CompoundTag nbt) {
         super.saveAdditional(nbt);
         CompoundTag nbtCompound = new CompoundTag();
         nbtCompound.putString(CustomNBTTags.RECIPE, IngredientAPI.serializeIngredients(this.ingredients));
         nbtCompound.putInt(CustomNBTTags.RITUAL_STATE,this.currentRitualState);
         nbtCompound.putBoolean(CustomNBTTags.IS_PROGRESSING,this.isProgressing);
-        nbtCompound.putString(CustomNBTTags.RITUAL_NAME,this.ritualID);
         nbtCompound.putInt(CustomNBTTags.PROGRESS,this.ritualProgress);
         nbtCompound.putInt(CustomNBTTags.TICKER,this.ticker);
+        nbtCompound.putString(CustomNBTTags.RITUAL_NAME,Objects.isNull(this.ritual) ? "" : this.ritual.name());
         nbt.put(ExampleMod.MODID,nbtCompound);
+
 
     }
 
@@ -145,7 +145,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
 
     private void activeRitualTick() {
         if(Objects.isNull(ritualHandler)){
-            this.ritualHandler = getRitualHandler(this.ritualID);
+            this.ritualHandler = getRitualHandler(this.ritual);
             if(Objects.isNull(ritualHandler)){
                 return;
             }
@@ -158,7 +158,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         }
     }
     private void resetToDefault() {
-        this.ritualID = "";
+        this.ritual = null;
         this.currentRitualState = RitualStates.FREE;
         this.isProgressing = false;
         this.ritualHandler = null;
@@ -169,7 +169,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     }
 
     private void handleCollectedBehaviour(){
-        Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.RITUAL_RECIPES,this.ingredients);
+        Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.RecipeOrigins.CHALK,this.ingredients);
         if(recipeOptional.isEmpty()){
             cancelRitual();
             return;
@@ -177,31 +177,31 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         ModRecipe<?> recipe = recipeOptional.get();
         switch (recipe.resultType()){
             case ITEM -> spawnRitualResultItem((ModRecipe<ItemStack>) recipe);
-            case RITUAL -> performRitual((String)recipe.result().get());
+            case RITUAL -> performRitual((ModRituals)recipe.result().get());
             default -> cancelRitual();
         }
     }
-    private void performRitual(String ritualID){
-        this.ritualID = ritualID;
+    private void performRitual(ModRituals ritual){
+        this.ritual = ritual;
         this.ritualProgress = 0;
         this.currentRitualState = RitualStates.ACTIVE;
-        this.ritualHandler = getRitualHandler(this.ritualID);
+        this.ritualHandler = getRitualHandler(this.ritual);
         setChanged();
     }
 
     // Helper Methods
-    private ModRitual getRitualHandler(String ritualID) {
+    private ModRitual getRitualHandler(ModRituals ritualIdentifier) {
         ModRitual ritual;
 
-        if(StringUtil.isNullOrEmpty(ritualID)){
+        if(Objects.isNull(ritualIdentifier)){
             return null;
         }
         if(Objects.isNull(level)){
             return null;
         }
-        switch (ritualID){
-            case ModRituals.EXTRACT_LIVE -> ritual = new ExtractLiveRitual(level, getBlockPos(), getBlockState(),this.ritualProgress);
-            case ModRituals.CHANGE_TIME_TO_DAY -> ritual = new ChangeTimeToDayRitual(level, getBlockPos(),getBlockState(),this.ritualProgress);
+        switch (ritualIdentifier){
+            case EXTRACT_LIVE -> ritual = new ExtractLiveRitual(level, getBlockPos(), getBlockState(),this.ritualProgress);
+            case CHANGE_TIME_TO_DAY -> ritual = new ChangeTimeToDayRitual(level, getBlockPos(),getBlockState(),this.ritualProgress);
             default -> ritual = null;
         }
         return ritual;
@@ -252,7 +252,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             return;
         }
         ItemEntity chosenEntity = foundEntities.get(0);
-        if(!IngredientAPI.isRitualIngredient(chosenEntity.getItem())){
+        if(!IngredientAPI.hasIngredientTag(chosenEntity.getItem())){
             cancelRitual();
             return;
         }

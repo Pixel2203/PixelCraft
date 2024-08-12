@@ -1,6 +1,5 @@
 package com.example.examplemod.block.blocks;
 
-import com.example.examplemod.api.APIHelper;
 import com.example.examplemod.api.ingredient.IngredientAPI;
 import com.example.examplemod.api.recipe.ModRecipe;
 import com.example.examplemod.api.recipe.RecipeAPI;
@@ -12,7 +11,6 @@ import com.example.examplemod.tag.TagFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -76,7 +74,7 @@ public class KettleBlock extends Block implements EntityBlock {
                 if(!isFireBelow(level,blockPos)){
                     return;
                 }
-                if (IngredientAPI.isKettleIngredient(itemEntity.getItem())) {
+                if (IngredientAPI.hasIngredientTag(itemEntity.getItem())) {
                     handleIngredientFallOnKettle(itemEntity.getItem(), kettleBlockEntity);
                     return;
                 }
@@ -99,7 +97,7 @@ public class KettleBlock extends Block implements EntityBlock {
 
             boolean hasIngredients = !blockEntity.getKettleIngredients().isEmpty();
             if(itemStackInHand.is(Items.GLASS_BOTTLE) && hasIngredients){
-                Optional<ModRecipe<?>> foundRecipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.KETTLE_RECIPES,blockEntity.getKettleIngredients());
+                Optional<ModRecipe<?>> foundRecipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.RecipeOrigins.KETTLE,blockEntity.getKettleIngredients());
                 if(foundRecipeOptional.isEmpty()){return InteractionResult.FAIL;}
                 ModRecipe<?> foundRecipe = foundRecipeOptional.get();
                 if(foundRecipe.resultType() != ResultTypes.POTION){return InteractionResult.FAIL;}
@@ -155,11 +153,11 @@ public class KettleBlock extends Block implements EntityBlock {
     }
     public static void handleIngredientFallOnKettle(ItemStack itemStack, KettleBlockEntity entity) {
 
-        if(!IngredientAPI.isKettleIngredient(itemStack)){
+        if(!IngredientAPI.hasIngredientTag(itemStack)){
             return;
         }
         acceptIngredient(itemStack, entity);
-        Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.KETTLE_RECIPES,entity.getKettleIngredients());
+        Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.RecipeOrigins.KETTLE,entity.getKettleIngredients());
         if(recipeOptional.isEmpty()){
             return;
         }
