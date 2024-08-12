@@ -27,9 +27,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItemFromTexture(ItemRegistry.PROJECTILE_BARRIER_SCROLL,"sealed_scroll");
         simpleItemFromTexture(ItemRegistry.CONFUSION_SCROLL,  "sealed_scroll");
 
-        simpleItemFromTexture(ItemRegistry.PROTECTION_OF_DEATH_TALISMAN, "necklace");
-        simpleItemFromTexture(ItemRegistry.HUNGER_REGENERATION_TALISMAN,"necklace");
-        simpleItemFromTexture(ItemRegistry.PROTECTION_OF_FREEZING_TALISMAN,"necklace");
+        simpleItemFromTexture(ItemRegistry.PROTECTION_OF_DEATH_TALISMAN, "necklace_1");
+        simpleItemFromTexture(ItemRegistry.HUNGER_REGENERATION_TALISMAN,"necklace_3");
+        simpleItemFromTexture(ItemRegistry.PROTECTION_OF_FREEZING_TALISMAN,"necklace_4");
 
         simplePotion(ItemRegistry.POTION_FLORA,"potion_overlay_2",true);
         simplePotion(ItemRegistry.POTION_FREEZE,"potion_overlay_3",true);

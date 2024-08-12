@@ -38,6 +38,6 @@ public class ScrollItem extends Item {
 
     @Override
     public boolean isFoil(ItemStack p_41453_) {
-        return true;
+        return false;
     }
 }
