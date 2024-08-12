@@ -2,6 +2,8 @@ package com.example.examplemod.item.items.potion;
 
 import com.example.examplemod.api.translation.CustomTranslatable;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -36,6 +38,7 @@ public abstract class CustomSplashPotionItem extends SplashPotionItem {
         thrownPotion.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
         level.addFreshEntity(thrownPotion);
         itemstack.shrink(1);
+        level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         return InteractionResultHolder.success(itemstack);
 
 
