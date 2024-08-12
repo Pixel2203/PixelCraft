@@ -2,7 +2,6 @@ package com.example.examplemod.item.items;
 
 import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.api.translation.CustomTranslatable;
-import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.block.blocks.CrystalBlock;
 import com.example.examplemod.entity.entities.SoulEntity;
 import net.minecraft.core.BlockPos;
@@ -23,7 +22,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -34,8 +32,11 @@ import java.util.List;
 
 public class SoulCrystalItem extends BlockItem {
     private static final Logger log = LoggerFactory.getLogger(SoulCrystalItem.class);
-    private final float maxCharge;
-    public SoulCrystalItem(Block block, Properties properties, float maxCharge) {
+
+//    IntegerProperty chargedBlock = IntegerProperty.create("chargedBlock", 0, 100);
+
+    private final int maxCharge;
+    public SoulCrystalItem(Block block, Properties properties, int maxCharge) {
         super(block, properties);
         this.maxCharge = maxCharge;
     }
@@ -63,13 +64,9 @@ public class SoulCrystalItem extends BlockItem {
     @Override
     public InteractionResult place(BlockPlaceContext context) {
         if (context.getPlayer().isCrouching()) {
-            IntegerProperty ENERGY = IntegerProperty.create("energy", 0, 4);
             ItemStack crystal = context.getPlayer().getItemInHand(context.getHand());
             CompoundTag nbt = crystal.hasTag() ? crystal.getTag() : new CompoundTag();
-            float nbtValue = nbt.getFloat(CustomNBTTags.ENERGY_CHARGE);
-//            int charge = (int)(Math.random() * 5);
-//            int charge = nbt.getInt(CustomNBTTags.ENERGY_CHARGE);
-            int charge = (int) Math.min(4, Math.floor(nbtValue * 5));
+            int nbtValue = nbt.getInt(CustomNBTTags.ENERGY_CHARGE);
             Level level = context.getLevel();
             BlockPos pos = context.getClickedPos();
             BlockState existingState = level.getBlockState(pos);
@@ -78,7 +75,10 @@ public class SoulCrystalItem extends BlockItem {
                 return InteractionResult.FAIL;
             }
 
-            BlockState newState = this.getBlock().defaultBlockState().setValue(ENERGY, charge);
+            BlockState newState = this.getBlock().defaultBlockState();
+            if (newState.hasProperty(CrystalBlock.CHARGED_BLOCK)) {
+                newState = newState.setValue(CrystalBlock.CHARGED_BLOCK, nbtValue);
+            }
 
             if (newState.hasProperty(BlockStateProperties.FACING)) {
                 Direction playerFacing = context.getNearestLookingDirection().getOpposite();
@@ -105,15 +105,15 @@ public class SoulCrystalItem extends BlockItem {
 
         ItemStack crystal = player.getItemInHand(hand);
         CompoundTag nbt = crystal.hasTag() ? crystal.getTag() : new CompoundTag();
-        float chargedInItem = nbt.getFloat(CustomNBTTags.ENERGY_CHARGE);
-        //float retrievedFromSoul = soulEntity.retrieveEnergyFromSoul(player.getOnPos());
-        float retrieved = Math.min(entity.getRadius(), 0.05f);
+        int chargedInItem = nbt.getInt(CustomNBTTags.ENERGY_CHARGE);
+        //int retrievedFromSoul = soulEntity.retrieveEnergyFromSoul(player.getOnPos());
+        int retrieved = Math.min((int) (entity.getRadius() * 100), 5);
         entity.setRadius(entity.getRadius() - retrieved);
         if(entity.getRadius() == 0){
             entity.discard();
         }
-        float nextEnergyLevel= Math.min(maxCharge, chargedInItem + retrieved);
-        nbt.putFloat(CustomNBTTags.ENERGY_CHARGE, nextEnergyLevel);
+        int nextEnergyLevel= Math.min(maxCharge, chargedInItem + retrieved);
+        nbt.putInt(CustomNBTTags.ENERGY_CHARGE, nextEnergyLevel);
         crystal.setTag(nbt);
         return InteractionResultHolder.success(crystal);
     }
@@ -121,7 +121,7 @@ public class SoulCrystalItem extends BlockItem {
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> components, TooltipFlag flag) {
         CompoundTag nbt = itemStack.hasTag() ? itemStack.getTag() : new CompoundTag();
         components.add(Component.translatable(CustomTranslatable.SOUL_CRYSTAL_INFO));
-        components.add(Component.literal("%s / %s".formatted(nbt.getFloat(CustomNBTTags.ENERGY_CHARGE), maxCharge)));
+        components.add(Component.literal("%s / %s".formatted(nbt.getInt(CustomNBTTags.ENERGY_CHARGE), maxCharge)));
         super.appendHoverText(itemStack, level, components, flag);
     }
 }

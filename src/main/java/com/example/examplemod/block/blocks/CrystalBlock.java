@@ -1,6 +1,7 @@
 package com.example.examplemod.block.blocks;
 
 import com.example.examplemod.api.BlockDynamicUtil;
+import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.block.template.TurnableBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,17 +27,19 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CrystalBlock extends TurnableBlock {
     public static final IntegerProperty ENERGY = IntegerProperty.create("energy", 0,4);
-    private float chargedEnergy;
-    private float maxCharge;
+//    IntegerProperty charged = IntegerProperty.create("charged", 0, 100);
+public static final IntegerProperty CHARGED_BLOCK = IntegerProperty.create("charged_block", 0, 100);
+
+    private int maxCharge;
     protected static final VoxelShape SHAPE = Block.box(6.0D, 0.0D, 6.0D, 11.0D, 8.0D, 11.0D);
 
     public CrystalBlock(BlockBehaviour.Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(ENERGY, 0).setValue(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(ENERGY, 0).setValue(FACING, Direction.NORTH).setValue(CHARGED_BLOCK, 0));
     }
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(ENERGY, FACING);
+        builder.add(ENERGY, FACING, CHARGED_BLOCK);
     }
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -52,7 +55,14 @@ public class CrystalBlock extends TurnableBlock {
 
     @Override
     public void onPlace(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState1, boolean b) {
+        if (!level.isClientSide) {
         System.out.println(blockState.getValue(ENERGY));
+        int chargeValue = blockState.getValue(CHARGED_BLOCK);
+        int energyValue = Math.min(4, chargeValue / 25);
+//        blockState.setValue(ENERGY, energyValue);
+        BlockState newState = blockState.setValue(ENERGY, energyValue);
+        level.setBlock(blockPos, newState, 3);
+        }
     }
 
     @Override
@@ -86,13 +96,18 @@ public class CrystalBlock extends TurnableBlock {
             Comparable<?> value = blockState.getValue(property);
             nbt.putString(property.getName(), value.toString());
         }
+        nbt.putInt(CustomNBTTags.ENERGY_CHARGE, blockState.getValue(CHARGED_BLOCK));
 
         // Füge das NBT Tag dem ItemStack hinzu
         itemStack.setTag(nbt);
 
         // Droppe das Item mit den NBT-Tags
-        ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), itemStack);
-        level.addFreshEntity(itemEntity);
+//        ItemEntity itemEntity = new ItemEntity(level, pos.getX()+ 0.5, pos.getY(), pos.getZ()+0.5, itemStack);
+//        level.addFreshEntity(itemEntity);
+
+        ItemEntity itementity = new ItemEntity(level, (double)pos.getX() + 0.5f, (double)pos.getY(), (double)pos.getZ() + 0.5f, itemStack);
+        itementity.setDefaultPickUpDelay();
+        level.addFreshEntity(itementity);
     }
 
 }
