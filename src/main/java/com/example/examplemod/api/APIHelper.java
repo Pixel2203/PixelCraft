@@ -1,6 +1,5 @@
 package com.example.examplemod.api;
 
-import com.example.examplemod.api.ingredient.ModIngredient;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -12,22 +11,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class APIHelper {
-    public static String getNextRecipeString(String currentRecipe, @NotNull ModIngredient ingredient){
-        if(StringUtil.isNullOrEmpty(currentRecipe)){
-            currentRecipe = ingredient.id();
-        }else {
-            currentRecipe +=  "," +ingredient.id();
-        }
-        return currentRecipe;
-    }
+
     public static void spawnItemEntity(Level level, double x, double y , double z, ItemStack itemStack, Vec3 deltaMovement){
         ItemEntity itemEntity = new ItemEntity(level,x ,y,z,itemStack);
         itemEntity.setDeltaMovement(deltaMovement);

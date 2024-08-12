@@ -2,7 +2,7 @@ package com.example.examplemod.blockentity.entities;
 
 import com.example.examplemod.api.APIHelper;
 import com.example.examplemod.api.ModUtils;
-import com.example.examplemod.api.ingredient.ModIngredient;
+import com.example.examplemod.api.ingredient.IngredientAPI;
 import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.api.recipe.ModRecipe;
 import com.example.examplemod.api.recipe.RecipeAPI;
@@ -15,18 +15,17 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.StringUtil;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 public class KettleBlockEntity extends BlockEntity implements ITickableBlockEntity {
-    private String kettleIngredientsSerialized;
+    private List<Item> ingredients = new ArrayList<>();
     private boolean isProgressing;
     private int ticker;
 
@@ -39,7 +38,7 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
     public void load(CompoundTag nbt) {
         super.load(nbt);
         CompoundTag nbtCompound = nbt.getCompound(ExampleMod.MODID);
-        this.kettleIngredientsSerialized = nbtCompound.getString(CustomNBTTags.RECIPE);
+        this.ingredients = IngredientAPI.deserializeIngredientList(nbtCompound.getString(CustomNBTTags.RECIPE));
         this.isProgressing = nbtCompound.getBoolean(CustomNBTTags.IS_PROGRESSING);
         this.ticker = nbtCompound.getInt(CustomNBTTags.TICKER);
     }
@@ -47,27 +46,26 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
     @Override
     protected void saveAdditional(CompoundTag nbt) {
         super.saveAdditional(nbt);
-        if(this.kettleIngredientsSerialized != null){
-            CompoundTag nbtCompound = new CompoundTag();
-            nbtCompound.putString(CustomNBTTags.RECIPE, this.kettleIngredientsSerialized);
-            nbtCompound.putBoolean(CustomNBTTags.IS_PROGRESSING, this.isProgressing);
-            nbtCompound.putInt(CustomNBTTags.TICKER, this.ticker);
-            nbt.put(ExampleMod.MODID,nbtCompound);
-        }
+        CompoundTag nbtCompound = new CompoundTag();
+        nbtCompound.putString(CustomNBTTags.RECIPE, IngredientAPI.serializeIngredients(ingredients));
+        nbtCompound.putBoolean(CustomNBTTags.IS_PROGRESSING, this.isProgressing);
+        nbtCompound.putInt(CustomNBTTags.TICKER, this.ticker);
+        nbt.put(ExampleMod.MODID,nbtCompound);
+
 
     }
-    public void add(ModIngredient ingredient){
-        this.kettleIngredientsSerialized = APIHelper.getNextRecipeString(this.kettleIngredientsSerialized,ingredient);
+    public void add(Item item){
+        ingredients.add(item);
         setChanged();
     }
     public void resetContent(){
-        this.kettleIngredientsSerialized = null;
+        this.ingredients.clear();
     }
-    public String getSerializedKettleRecipe(){
-        return this.kettleIngredientsSerialized;
+    public List<Item> getKettleIngredients(){
+        return this.ingredients;
     }
     public void startBrewing(){
-        if(StringUtil.isNullOrEmpty(this.kettleIngredientsSerialized)){
+        if(ingredients.isEmpty()){
             return;
         }
         this.isProgressing = true;
@@ -92,7 +90,7 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
             if (ticker >= 40) {
                 ticker = 0;
                 isProgressing = false;
-                Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.KETTLE_RECIPES,this.kettleIngredientsSerialized);
+                Optional<ModRecipe<?>> recipeOptional = RecipeAPI.getRecipeBySerializedIngredients(RecipeAPI.RecipeOrigins.KETTLE,this.ingredients);
                 if(recipeOptional.isPresent()){
                     spawnResultOfRecipeOnKettle((ModRecipe<ItemStack>) recipeOptional.get());
                     setChanged();

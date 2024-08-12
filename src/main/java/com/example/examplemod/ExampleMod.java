@@ -70,7 +70,6 @@ public class ExampleMod
         EntityRegistry.ENTITIES.register(modEventBus);
         // Register Ritual Recipes
         RecipeAPI.register();
-        IngredientAPI.register();
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().register(ModEventHandler.class);
