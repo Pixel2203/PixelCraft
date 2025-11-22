@@ -119,7 +119,7 @@ public class SoulEntity extends GeneralSoulEntity {
 
 
         if(airBlocks.isEmpty()){
-            // Can not spawn particles becuase no air block is nearby
+            // Can not spawn particles because no air block is nearby
             return;
         }
         BlockPos spawnPos = airBlocks.get(random.nextInt(airBlocks.size())).blockPos();

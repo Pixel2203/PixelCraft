@@ -2,6 +2,7 @@ package com.example.examplemod.event;
 
 import com.example.examplemod.api.APIHelper;
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.capabilities.PlayerSoulEnergy;
 import com.example.examplemod.capabilities.PlayerSoulEnergyProvider;
 import com.example.examplemod.entity.EntityRegistry;
@@ -12,15 +13,19 @@ import com.example.examplemod.event.entity.Renderers;
 import com.example.examplemod.entity.entities.SoulEntity;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.talisman.ProtectionOfDeathTalisman;
+import com.example.examplemod.item.items.talisman.SoulboundTalisman;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -37,7 +42,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.theillusivec4.curios.api.CuriosApi;
 
+import java.util.Objects;
 import java.util.Random;
+import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = ExampleMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class EventHandler {
@@ -47,6 +54,18 @@ public class EventHandler {
     public static void onEntityDamageEvent(LivingHurtEvent event){
         LivingEntity entity = event.getEntity();
         float currentEntityHealth = entity.getHealth();
+        // Soulbound Talisman
+        if(APIHelper.hasCurioEquipped(entity, ItemRegistry.SOULBOUND_TALISMAN.get())) {
+            CuriosApi.getCuriosInventory(entity).ifPresent(itemHandler -> {
+                itemHandler.findFirstCurio(ItemRegistry.SOULBOUND_TALISMAN.get()).ifPresent(slotResult -> {
+                    SoulboundTalisman soulboundTalisman = (SoulboundTalisman) slotResult.stack().getItem();
+                    soulboundTalisman.triggerEffect(event, slotResult.stack());
+                });
+            });
+
+            return;
+        }
+
         // Protection of Death Talisman
         if(currentEntityHealth - event.getAmount() < 0.5){
             if(APIHelper.hasCurioEquipped(entity, ItemRegistry.PROTECTION_OF_DEATH_TALISMAN.get())){
@@ -55,29 +74,21 @@ public class EventHandler {
                     protectionOfDeathTalisman.triggerEffect(event);
 
                 }));
-                return;
             }
-
-
-
-
         }
     }
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event){
         Entity entity = event.getEntity();
-        if(event.getEntity().level().isClientSide()){
-            return;
-        }
-        if(event.getEntity().getType() != EntityRegistry.SOUL_ENTITY.get() && !entity.level().isClientSide()){
-            Random random = new Random();
-            ServerLevel level = (ServerLevel) entity.level();
-            Vec3 entityDeathPosition = entity.position();
-            SoulEntity soulEntity = new SoulEntity(EntityRegistry.SOUL_ENTITY.get(),level);
-            soulEntity.setEnergy(random.nextFloat(0.8f));
-            soulEntity.setPos(entityDeathPosition.x, entityDeathPosition.y, entityDeathPosition.z);
-            level.addFreshEntity(soulEntity);
-        }
+        if(event.getEntity().level().isClientSide()) return;
+        if(event.getEntity().getType() == EntityRegistry.SOUL_ENTITY.get()) return;
+        Random random = new Random();
+        ServerLevel level = (ServerLevel) entity.level();
+        Vec3 entityDeathPosition = entity.position();
+        SoulEntity soulEntity = new SoulEntity(EntityRegistry.SOUL_ENTITY.get(),level);
+        soulEntity.setEnergy(random.nextFloat(0.8f));
+        soulEntity.setPos(entityDeathPosition.x, entityDeathPosition.y, entityDeathPosition.z);
+        level.addFreshEntity(soulEntity);
     }
 
 

@@ -21,7 +21,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.GOLDEN_CHALK);
         simpleItem(ItemRegistry.WHITE_CHALK);
         simpleItem(ItemRegistry.ZIRCON);
-        simpleItemFromTexture(ItemRegistry.SOUL_CRYSTAL, "zircon");
+        //simpleItemFromTexture(ItemRegistry.SOUL_CRYSTAL, "zircon");
 
         simpleItemFromTexture(ItemRegistry.HEALING_SCROLL, "sealed_scroll");
         simpleItemFromTexture(ItemRegistry.PROJECTILE_BARRIER_SCROLL,"sealed_scroll");
@@ -30,10 +30,16 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItemFromTexture(ItemRegistry.PROTECTION_OF_DEATH_TALISMAN, "necklace_1");
         simpleItemFromTexture(ItemRegistry.HUNGER_REGENERATION_TALISMAN,"necklace_3");
         simpleItemFromTexture(ItemRegistry.PROTECTION_OF_FREEZING_TALISMAN,"necklace_4");
+        simpleItemFromTexture(ItemRegistry.SOULBOUND_TALISMAN, "necklace_7");
 
         simplePotion(ItemRegistry.POTION_FLORA,"potion_overlay_2",true);
         simplePotion(ItemRegistry.POTION_FREEZE,"potion_overlay_3",true);
         simplePotion(ItemRegistry.POTION_HUNGER_REGENERATION,"potion_overlay_4",true);
+
+        simpleTextureForPredicate("item/crystals/crystal_1", "crystals/crystal_1");
+        simpleTextureForPredicate("item/crystals/crystal_2", "crystals/crystal_2");
+        simpleTextureForPredicate("item/crystals/crystal_3", "crystals/crystal_3");
+        simpleTextureForPredicate("item/crystals/crystal_4", "crystals/crystal_4");
     }
     private ItemModelBuilder simpleItem(RegistryObject<Item> item){
         return withExistingParent(item.getId().getPath(),
@@ -51,6 +57,12 @@ public class ModItemModelProvider extends ItemModelProvider {
                 new ResourceLocation("item/generated"))
                     .texture("layer0", new ResourceLocation("minecraft", "item/" + baseTexture ))
                     .texture("layer1", new ResourceLocation(ExampleMod.MODID,"item/" + textureName));
+    }
+
+    private ItemModelBuilder simpleTextureForPredicate(String state, String texture){
+        return withExistingParent(state,
+                new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(ExampleMod.MODID, "item/" + texture));
     }
 
 }

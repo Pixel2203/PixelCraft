@@ -32,4 +32,7 @@ public interface CustomNBTTags {
     String ENERGY_CHARGE = ExampleMod.MODID + "_energy_charge";
     String ALREADY_GENERATED = ExampleMod.MODID + "_already_generated";
 
+    // Souldbound
+    String BOUND_TO = ExampleMod.MODID + "_bound_to";
+
 }

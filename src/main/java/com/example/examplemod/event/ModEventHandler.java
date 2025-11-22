@@ -1,15 +1,19 @@
 package com.example.examplemod.event;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.capabilities.PlayerSoulEnergy;
 import com.example.examplemod.capabilities.PlayerSoulEnergyProvider;
 import com.example.examplemod.datagen.ModLootTableProvider;
+import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.particle.ParticleFactory;
 import com.example.examplemod.particle.custom.CustomBubbleProvider;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -20,6 +24,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,6 +44,27 @@ public class ModEventHandler {
 
         LogUtils.getLogger().info("RegisterParticleProvider has been registered!!");
     }
+
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        // z.B. in deiner ModClientEvents Klasse, bei ClientSetup
+        ItemProperties.register(ItemRegistry.SOUL_CRYSTAL.get(), new ResourceLocation(CustomNBTTags.ENERGY_CHARGE),
+                (stack, level, entity, seed) -> {
+                    if(!stack.hasTag()) return 0f;
+                    CompoundTag tag = stack.getTag();
+                    if(tag.contains(CustomNBTTags.ENERGY_CHARGE)) {
+                        double charge = tag.getDouble(CustomNBTTags.ENERGY_CHARGE);
+                        if(charge >= 0.7) return 4f;
+                        if(charge >= 0.4) return 3f;
+                        if(charge >= 0.2) return 2f;
+                        if(charge >= 0.1) return 1f;
+                    }
+                    return 0f;
+                }
+        );
+
+    }
+
 
 
 

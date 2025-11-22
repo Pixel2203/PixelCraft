@@ -3,6 +3,7 @@ package com.example.examplemod.item.items;
 import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.api.translation.CustomTranslatable;
 import com.example.examplemod.entity.entities.SoulEntity;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -15,12 +16,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class SoulCrystalItem extends Item {
     private static final Logger log = LoggerFactory.getLogger(SoulCrystalItem.class);

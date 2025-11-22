@@ -1,8 +1,5 @@
 package com.example.examplemod.item.items;
 
-import com.example.examplemod.capabilities.PlayerSoulEnergyProvider;
-import com.example.examplemod.networking.NetworkMessages;
-import com.example.examplemod.networking.packets.ExampleC2SPacket;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
