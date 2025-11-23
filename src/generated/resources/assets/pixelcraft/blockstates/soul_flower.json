@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "night_active=false": {
+      "model": "pixelcraft:block/soul_flower_day"
+    },
+    "night_active=true": {
+      "model": "pixelcraft:block/soul_flower_night"
+    }
+  }
+}

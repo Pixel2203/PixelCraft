@@ -32,6 +32,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropNothing(BlockRegistry.StatuePowerfulStoneMiddle.get());
         this.dropNothing(BlockRegistry.StatuePowerfulStoneBase.get());
         this.dropNothing(BlockRegistry.StatuePowerfulStoneTop.get());
+        this.dropNothing(BlockRegistry.SoulFlower.get());
+        this.dropNothing(BlockRegistry.FogBlock.get());
     }
 
     @Override

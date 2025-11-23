@@ -2,11 +2,14 @@ package com.example.examplemod.datagen;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.block.blocks.SoulFlower;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
@@ -27,13 +30,21 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 
 
-
         registerBlockStateWithBlock(BlockRegistry.LeafCloverBlock,
                 new ConfiguredModel(models()
                         .cross(BlockRegistry.LeafCloverBlock.getId().getPath(),
                                 new ResourceLocation(ExampleMod.MODID,"block/" + BlockRegistry.LeafCloverBlock.getId().getPath()))
                         .renderType(new ResourceLocation("cutout")))
         );
+
+        registerBooleanBlockState(BlockRegistry.SoulFlower, SoulFlower.NIGHT_ACTIVE,
+                Map.of(
+                        true, new ConfiguredModel[]{ new ConfiguredModel(models().cross("soul_flower_night", modLoc("block/soul_flower_night")).renderType(new ResourceLocation("cutout"))) },
+                        false,new ConfiguredModel[]{ new ConfiguredModel(models().cross("soul_flower_day",   modLoc("block/soul_flower_day")).renderType(new ResourceLocation("cutout"))) }
+                )
+        );
+
+
 
         registerBlockStateWithBlock(BlockRegistry.GoldenChalkBlock,
                 new ConfiguredModel(chalkBlock(BlockRegistry.GoldenChalkBlock.getId().getPath())));
@@ -59,10 +70,28 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ResourceLocation(ExampleMod.MODID,"cauldron_custom_template"),
                 Map.of("outside", "cauldron_custom" , "inside","cauldron_custom_inner", "particle", "cauldron_custom"));
 
+        simpleBlock(BlockRegistry.FogBlock.get(),
+                new ConfiguredModel(models().cubeAll("fog_light", modLoc("block/fog_1"))),
+                new ConfiguredModel(models().cubeAll("fog_medium", modLoc("block/fog_2"))),
+                new ConfiguredModel(models().cubeAll("fog_strong", modLoc("block/fog_3"))),
+                new ConfiguredModel(models().cubeAll("fog_extreme", modLoc("block/fog_4"))));
+
     }
     private VariantBlockStateBuilder registerBlockStateWithBlock(RegistryObject<Block> blockRegistryObject, ConfiguredModel ... models){
         return getVariantBuilder(blockRegistryObject.get()).partialState().setModels(models);
     }
+
+    private void registerBooleanBlockState(RegistryObject<Block> blockRegistryObject, Property<Boolean> property,
+                                           Map<Boolean, ConfiguredModel[]> stateModels) {
+        VariantBlockStateBuilder builder = getVariantBuilder(blockRegistryObject.get());
+
+        stateModels.forEach((value, models) -> {
+            builder.partialState()
+                    .with(property, value)
+                    .setModels(models);
+        });
+    }
+
 
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject){
@@ -104,4 +133,5 @@ public class ModBlockStateProvider extends BlockStateProvider {
         final String contentTexture = mixture ? boiling ? "mixture_boiling" : "mixture_still" : "water_default";
         simpleCustomBlock(name, new ResourceLocation(ExampleMod.MODID, "block/" + templateName), Map.of("content", contentTexture) );
     }
+
 }

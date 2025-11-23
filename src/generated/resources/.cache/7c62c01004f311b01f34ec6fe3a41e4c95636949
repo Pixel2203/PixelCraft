@@ -1,6 +1,8 @@
-// 1.20.1	2025-11-21T14:38:37.597086	Block States: pixelcraft
+// 1.20.1	2025-11-23T15:32:28.457989	Block States: pixelcraft
+dc9eb27b9142545646c38844e312fdaedaa534f0 assets/pixelcraft/blockstates/fog_block.json
 2b6e483706b75a17d4754c910301a6370aef065b assets/pixelcraft/blockstates/four_leaf_clover.json
 464d8861c42c4ff4dc480df5adf5070a3b988941 assets/pixelcraft/blockstates/golden_chalk.json
+1e4939d282aa7abfee7e39e69c7162a98aa11a52 assets/pixelcraft/blockstates/soul_flower.json
 89bd698be7079020b0f5cfcced4571c3b6971fe4 assets/pixelcraft/blockstates/white_chalk.json
 bb99ed036b2eaee8cb171e90c4b4327725b4776b assets/pixelcraft/blockstates/zircon_block.json
 8aa6bb0660abb652788cd8f6c5e1af973747da30 assets/pixelcraft/models/block/cauldron_custom.json
@@ -11,8 +13,14 @@ d0923f25ddf7ea76dafc5045b86b3f3db8e352ca assets/pixelcraft/models/block/cauldron
 c19d568bbda2f403e0e412013ffa4050350bfd90 assets/pixelcraft/models/block/cauldron_custom_level3_default.json
 d91de79dd3b409d05d334446834ff7a2b86b37f5 assets/pixelcraft/models/block/cauldron_custom_level3_mixture.json
 75fd254d71e7d74a2d0147812b7f0532b918be4b assets/pixelcraft/models/block/cauldron_custom_level3_mixture_boiling.json
+d39884fdfaa0233eca2bf44df3f4dabe642e12b0 assets/pixelcraft/models/block/fog_extreme.json
+9abedca69b0a69b21eebe2fb6c27f304da91d3e6 assets/pixelcraft/models/block/fog_light.json
+5bcf97fd89175ff462f7df0ef899a53e0d39d875 assets/pixelcraft/models/block/fog_medium.json
+01178cd9dd3c3f028690d0db77098734abceef98 assets/pixelcraft/models/block/fog_strong.json
 8c808caf565a87e650995be6c7772b866ac0b410 assets/pixelcraft/models/block/four_leaf_clover.json
 ed21b2393706404fd48ea1186158f0f1fb57da6b assets/pixelcraft/models/block/golden_chalk.json
+fcb7c0cc0cf8331b9451fb963d113da7b753a60b assets/pixelcraft/models/block/soul_flower_day.json
+bf52c86ed1de33331b6affbc75f507554be01934 assets/pixelcraft/models/block/soul_flower_night.json
 b52751a28ace85779b77f46a7752fac217e129d8 assets/pixelcraft/models/block/white_chalk_variant1.json
 7c7fe3f72b56cb826f87729a2fc6c3eff4b31bc9 assets/pixelcraft/models/block/white_chalk_variant2.json
 a8f08394eb0bb8457f144a240ecbf78c6412cd06 assets/pixelcraft/models/block/white_chalk_variant3.json

@@ -39,6 +39,9 @@ public class BlockRegistry {
     public static final RegistryObject<Block> StatuePowerfulStoneBase = registerBlock("statue_powerful_stone_base", () -> Factory.StatueBlockPowerfulBase_BLK);
     public static final RegistryObject<Block> StatuePowerfulStoneMiddle = registerBlock("statue_powerful_stone_middle", () -> Factory.StatueBlockPowerfulMiddle_BLK);
     public static final RegistryObject<Block> StatuePowerfulStoneTop = registerBlock("statue_powerful_stone_top", () -> Factory.StatueBlockPowerfulTop_BLK);
+    public static final RegistryObject<Block> SoulFlower = registerBlockWithItem("soul_flower", () -> Factory.SOULFLOWER_BLK);
+    public static final RegistryObject<Block> FogBlock = registerBlock("fog_block", () -> Factory.FOG_BLK);
+
 
     private static <T extends Block> RegistryObject<T> registerBlockWithItem(String name, Supplier<T> block){
         RegistryObject<T> toReturn = (RegistryObject<T>) registerBlock(name, block);
@@ -69,5 +72,7 @@ public class BlockRegistry {
         public static final ChalkBlock GoldenChalkBlock_BLK = new GoldenChalkBlock();
         public static final ChalkBlock WhiteChalkBlock_BLK = new ChalkBlock();
         public static final FlowerBlock LeafCloverBlock_BLK = new FlowerBlock(() -> MobEffects.DIG_SPEED,5, BlockBehaviour.Properties.copy(Blocks.RED_TULIP));
+        public static final Block SOULFLOWER_BLK = new SoulFlower();
+        public static final Block FOG_BLK = new FogBlock();
     }
 }

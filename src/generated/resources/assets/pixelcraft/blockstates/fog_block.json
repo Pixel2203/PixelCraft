@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "pixelcraft:block/fog_light"
+      },
+      {
+        "model": "pixelcraft:block/fog_medium"
+      },
+      {
+        "model": "pixelcraft:block/fog_strong"
+      },
+      {
+        "model": "pixelcraft:block/fog_extreme"
+      }
+    ]
+  }
+}
