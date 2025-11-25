@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -49,7 +50,9 @@ public class SoulEntity extends GeneralSoulEntity {
     private Integer ticker;
     private final Random random = new Random();
 
-
+    public static AttributeSupplier.Builder createAttributes(){
+        return LivingEntity.createLivingAttributes().add(Attributes.MOVEMENT_SPEED, 0.05D);
+    }
 
 
     public SoulEntity(EntityType<? extends LivingEntity> p_20966_, Level p_20967_) {

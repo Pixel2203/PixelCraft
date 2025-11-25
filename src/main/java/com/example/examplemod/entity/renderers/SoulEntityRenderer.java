@@ -1,21 +1,15 @@
 package com.example.examplemod.entity.renderers;
 
 import com.example.examplemod.ExampleMod;
-import com.example.examplemod.api.ModUtils;
-import com.example.examplemod.entity.entities.ScrollEntity;
 import com.example.examplemod.entity.entities.SoulEntity;
-import com.example.examplemod.entity.models.ScrollEntityModel;
 import com.example.examplemod.entity.models.SoulEntityModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

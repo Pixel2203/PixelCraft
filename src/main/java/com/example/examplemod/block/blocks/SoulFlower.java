@@ -3,11 +3,12 @@ package com.example.examplemod.block.blocks;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.entities.SoulFlowerBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
+import com.example.examplemod.entity.EntityRegistry;
+import com.example.examplemod.entity.entities.SoulWispEntity;
+import lombok.extern.slf4j.Slf4j;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
@@ -22,8 +23,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Supplier;
+import java.util.Objects;
 
+@Slf4j
 public class SoulFlower extends BushBlock implements EntityBlock {
 
     public static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D);
@@ -53,14 +55,30 @@ public class SoulFlower extends BushBlock implements EntityBlock {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos blockPos, RandomSource p_222957_) {
         boolean isNightTransformed = state.getValue(NIGHT_ACTIVE);
-        if(level.isNight() && !isNightTransformed) {
-            level.setBlockAndUpdate(blockPos, state.setValue(NIGHT_ACTIVE, true));
-        }else if(!level.isNight() && isNightTransformed) {
-            level.setBlockAndUpdate(blockPos, state.setValue(NIGHT_ACTIVE, false));
+        if(level.isNight() && isNightTransformed) {
+
         }
-        if(level.getBlockEntity(blockPos) instanceof SoulFlowerBlockEntity soulFlowerBlockEntity) {
-            soulFlowerBlockEntity.nightActivationStatusChanged();
+
+        if(level.isNight()) {
+            if(isNightTransformed) {
+                this.spawnSoulFragment(level, blockPos);
+            }else {
+                level.setBlockAndUpdate(blockPos, state.setValue(NIGHT_ACTIVE, true));
+                if(level.getBlockEntity(blockPos) instanceof SoulFlowerBlockEntity soulFlowerBlockEntity) {
+                    soulFlowerBlockEntity.nightActivationStatusChanged();
+                }
+            }
+        }else {
+            if(isNightTransformed) {
+                level.setBlockAndUpdate(blockPos, state.setValue(NIGHT_ACTIVE, false));
+                if(level.getBlockEntity(blockPos) instanceof SoulFlowerBlockEntity soulFlowerBlockEntity) {
+                    soulFlowerBlockEntity.nightActivationStatusChanged();
+                }
+            }
         }
+
+
+
 
         super.randomTick(state, level, blockPos, p_222957_);
 
@@ -82,4 +100,28 @@ public class SoulFlower extends BushBlock implements EntityBlock {
         return ITickableBlockEntity.getTickerHelper(p_153212_);
     }
 
+    @Override
+    public void onRemove(BlockState blockState, Level level, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
+        if(level.isClientSide()) return;
+        BlockEntity blockEntity = level.getBlockEntity(p_60517_);
+        if(blockEntity instanceof SoulFlowerBlockEntity soulFlowerBlockEntity) {
+            soulFlowerBlockEntity.notifyFogBlocksAboutFlowerRemoval();
+        }
+        super.onRemove(blockState, level, p_60517_, p_60518_, p_60519_);
+    }
+
+    private void spawnSoulFragment(ServerLevel level, BlockPos pos) {
+        SoulWispEntity wisp = EntityRegistry.SOUL_WISP_ENTITY.get().create(level);
+        if(Objects.isNull(wisp)) {
+            log.error("Could not create soul wisp entity!");
+            return;
+        }
+
+        double spawnX = pos.getX() + 0.5 + level.random.nextDouble() * 5.0 ;
+        double spawnY = pos.getY() + 1.5 + level.random.nextDouble() * 5.0 ;
+        double spawnZ = pos.getZ() + 0.5 + level.random.nextDouble() * 5.0 ;
+        wisp.moveTo(spawnX, spawnY, spawnZ, level.random.nextFloat() * 360.0F, 0.0F);
+        wisp.setTargetFlowerPos(pos);
+        level.addFreshEntity(wisp);
+    }
 }

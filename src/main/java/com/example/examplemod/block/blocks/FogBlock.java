@@ -7,11 +7,14 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FogBlock extends Block {
+    public static BooleanProperty sourceStillExists = BooleanProperty.create("source_still_exists");
 
     public FogBlock() {
         super(Properties.of()
@@ -19,6 +22,12 @@ public class FogBlock extends Block {
                 .noCollission()
                 .air()
         );
+        this.registerDefaultState(this.stateDefinition.any().setValue(FogBlock.sourceStillExists, false));
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
+        stateBuilder.add(FogBlock.sourceStillExists);
     }
 
     // Überschreibe diese Methode, um sicherzustellen, dass das Rendering die Rückseite sieht
@@ -52,7 +61,8 @@ public class FogBlock extends Block {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos blockPos, RandomSource p_222957_) {
         super.randomTick(state, level, blockPos, p_222957_);
-        if(level.isNight()) return;
-        level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+        if(level.isDay() || !state.getValue(FogBlock.sourceStillExists)) {
+            level.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState());
+        }
     }
 }
