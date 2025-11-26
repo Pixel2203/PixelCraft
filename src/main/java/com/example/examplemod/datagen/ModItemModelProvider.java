@@ -1,14 +1,19 @@
 package com.example.examplemod.datagen;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
+import oshi.util.tuples.Pair;
+
+import java.util.Locale;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
@@ -21,6 +26,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.GOLDEN_CHALK);
         simpleItem(ItemRegistry.WHITE_CHALK);
         simpleItem(ItemRegistry.ZIRCON);
+
         //simpleItemFromTexture(ItemRegistry.SOUL_CRYSTAL, "zircon");
 
         simpleItemFromTexture(ItemRegistry.HEALING_SCROLL, "sealed_scroll");
@@ -40,6 +46,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleTextureForPredicate("item/crystals/crystal_2", "crystals/crystal_2");
         simpleTextureForPredicate("item/crystals/crystal_3", "crystals/crystal_3");
         simpleTextureForPredicate("item/crystals/crystal_4", "crystals/crystal_4");
+
+        this.generateVials(VialType.values());
     }
     private ItemModelBuilder simpleItem(RegistryObject<Item> item){
         return withExistingParent(item.getId().getPath(),
@@ -58,11 +66,36 @@ public class ModItemModelProvider extends ItemModelProvider {
                     .texture("layer0", new ResourceLocation("minecraft", "item/" + baseTexture ))
                     .texture("layer1", new ResourceLocation(ExampleMod.MODID,"item/" + textureName));
     }
+    private ItemModelBuilder simpleVial(String vialName){
+        return withExistingParent("item/vials/" + vialName,
+                new ResourceLocation("item/generated"))
+                .texture("layer0", modLoc("item/vial"))
+                .texture("layer1", modLoc("item/vials/" + vialName));
+    }
 
     private ItemModelBuilder simpleTextureForPredicate(String state, String texture){
         return withExistingParent(state,
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(ExampleMod.MODID, "item/" + texture));
+    }
+
+    private ItemModelBuilder generateVials(VialType ... types) {
+        simpleItem(ItemRegistry.VIAL);
+        var modelFile = this.getBuilder(ItemRegistry.VIAL.getId().getPath())
+                .parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
+                .texture("layer0", modLoc("item/"+ItemRegistry.VIAL.getId().getPath()));
+
+        for (VialType type : types) {
+            String vialName = type.toString().toLowerCase(Locale.ROOT);
+            modelFile.override()
+                    .predicate(modLoc("type"), type.ordinal())
+                    .model(new ModelFile.UncheckedModelFile(modLoc("item/vials/" + vialName )))
+                    .end();
+
+            this.simpleVial(vialName);
+        }
+        return modelFile;
+
     }
 
 }

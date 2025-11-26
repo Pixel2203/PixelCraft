@@ -41,7 +41,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> STATUE_STONE = ITEMS.register("statue_stone", () -> new MultiBlockBlockItem(BlockRegistry.StatueStoneBase.get(), new Item.Properties(), 1));
     public static final RegistryObject<Item> STATUE_POWERFUL_STONE = ITEMS.register("statue_powerful_stone", () -> new MultiBlockBlockItem(BlockRegistry.StatuePowerfulStoneBase.get(), new Item.Properties(), 2));
     public static final RegistryObject<Item> SOULBOUND_TALISMAN = ITEMS.register("soulbound_talisman", SoulboundTalisman::new);
-
+    public static final RegistryObject<Item> VIAL = ITEMS.register("vial", Vial::new);
 
     public static void registerItems(IEventBus eventBus){
         ITEMS.register(eventBus);

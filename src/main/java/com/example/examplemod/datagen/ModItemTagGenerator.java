@@ -29,5 +29,6 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(TagFactory.KETTLE_ALLOWED_FLUID_ITEMS)
                 .add(Items.WATER_BUCKET)
                 .add(Items.POTION);
+
     }
 }

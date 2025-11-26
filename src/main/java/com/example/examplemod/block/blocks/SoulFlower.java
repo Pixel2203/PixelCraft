@@ -1,5 +1,8 @@
 package com.example.examplemod.block.blocks;
 
+import com.example.examplemod.api.vial.IVialable;
+import com.example.examplemod.api.vial.VialResult;
+import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.entities.SoulFlowerBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
@@ -8,6 +11,8 @@ import com.example.examplemod.entity.entities.SoulWispEntity;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -19,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
@@ -26,11 +32,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 @Slf4j
-public class SoulFlower extends BushBlock implements EntityBlock {
+public class SoulFlower extends BushBlock implements EntityBlock, IVialable {
 
     public static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 14.0D, 13.0D);
     public static final BooleanProperty NIGHT_ACTIVE = BooleanProperty.create("night_active");
-
+    public static final IntegerProperty DEW_COUNT = IntegerProperty.create("dew_count",0,3);
     public SoulFlower() {
         super(BlockBehaviour.Properties.copy(Blocks.POPPY).lightLevel(value -> {
             if(value.getValue(NIGHT_ACTIVE)) {
@@ -39,7 +45,7 @@ public class SoulFlower extends BushBlock implements EntityBlock {
             return 0;
         }
         ));
-        this.registerDefaultState(this.stateDefinition.any().setValue(NIGHT_ACTIVE, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(NIGHT_ACTIVE, false).setValue(DEW_COUNT, 0));
     }
 
     @Override
@@ -61,7 +67,10 @@ public class SoulFlower extends BushBlock implements EntityBlock {
 
         if(level.isNight()) {
             if(isNightTransformed) {
-                this.spawnSoulFragment(level, blockPos);
+                if(state.getValue(DEW_COUNT) < 3) {
+                    this.spawnSoulFragment(level, blockPos);
+                }
+
             }else {
                 level.setBlockAndUpdate(blockPos, state.setValue(NIGHT_ACTIVE, true));
                 if(level.getBlockEntity(blockPos) instanceof SoulFlowerBlockEntity soulFlowerBlockEntity) {
@@ -88,6 +97,7 @@ public class SoulFlower extends BushBlock implements EntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> stateBuilder) {
         stateBuilder.add(NIGHT_ACTIVE);
+        stateBuilder.add(DEW_COUNT);
     }
 
     @Override
@@ -103,6 +113,7 @@ public class SoulFlower extends BushBlock implements EntityBlock {
     @Override
     public void onRemove(BlockState blockState, Level level, BlockPos p_60517_, BlockState p_60518_, boolean p_60519_) {
         if(level.isClientSide()) return;
+        if(p_60518_.is(this)) return;
         BlockEntity blockEntity = level.getBlockEntity(p_60517_);
         if(blockEntity instanceof SoulFlowerBlockEntity soulFlowerBlockEntity) {
             soulFlowerBlockEntity.notifyFogBlocksAboutFlowerRemoval();
@@ -123,5 +134,21 @@ public class SoulFlower extends BushBlock implements EntityBlock {
         wisp.moveTo(spawnX, spawnY, spawnZ, level.random.nextFloat() * 360.0F, 0.0F);
         wisp.setTargetFlowerPos(pos);
         level.addFreshEntity(wisp);
+    }
+
+    @Override
+    public VialResult tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
+        if(level.isDay()) return VialResult.failed();
+        int dewCount = blockState.getValue(DEW_COUNT);
+        if(dewCount == 0) return VialResult.failed();
+        level.setBlockAndUpdate(blockPos, blockState.setValue(DEW_COUNT, --dewCount));;
+        return VialResult.success(VialType.SOUL_DEW);
+    }
+
+    public void collectSoulFragment(ServerLevel level, BlockState blockState, BlockPos pos) {
+        int dewCount = blockState.getValue(DEW_COUNT);
+        if(dewCount == 3) return;
+        level.setBlockAndUpdate(pos, blockState.setValue(DEW_COUNT,  ++dewCount));
+        level.playSound(null, pos, SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.NEUTRAL, 1.0F, 1.0F);
     }
 }

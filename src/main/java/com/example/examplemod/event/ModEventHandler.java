@@ -2,6 +2,7 @@ package com.example.examplemod.event;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.nbt.CustomNBTTags;
+import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.capabilities.PlayerSoulEnergy;
 import com.example.examplemod.capabilities.PlayerSoulEnergyProvider;
 import com.example.examplemod.datagen.ModLootTableProvider;
@@ -63,6 +64,17 @@ public class ModEventHandler {
                         if(charge >= 0.1) return 1f;
                     }
                     return 0f;
+                }
+        );
+
+        ItemProperties.register(ItemRegistry.VIAL.get(), new ResourceLocation(ExampleMod.MODID + ":type"),
+                (stack, p_174677_, p_174678_, p_174679_) -> {
+                    CompoundTag tag = stack.getOrCreateTag();
+                    if(!tag.contains(ExampleMod.MODID)) return -1f;
+                    if(!tag.getCompound(ExampleMod.MODID).contains("type")) return -1f;
+                    String type = tag.getCompound(ExampleMod.MODID).getString("type");
+                    VialType vialType = VialType.valueOf(type);
+                    return vialType.ordinal();
                 }
         );
 

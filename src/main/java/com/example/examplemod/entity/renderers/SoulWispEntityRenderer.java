@@ -18,7 +18,7 @@ public class SoulWispEntityRenderer extends EntityRenderer<SoulWispEntity> {
 
     public static final ResourceLocation TEXTURE_1 = new ResourceLocation(ExampleMod.MODID, "textures/entity/souls/soul_1.png");
     public static final ResourceLocation TEXTURE_2 = new ResourceLocation(ExampleMod.MODID, "textures/entity/souls/soul_2.png");
-    private static final float SIZE = 1F;
+    private static final float SIZE = 0.3F;
     public SoulWispEntityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
     }

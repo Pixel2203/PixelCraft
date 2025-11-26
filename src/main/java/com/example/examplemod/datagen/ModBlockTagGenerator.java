@@ -17,6 +17,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider p_256380_) {
+    protected void addTags(HolderLookup.Provider provider) {
+        this.tag(TagFactory.VIALABLE_BLOCKS)
+                .add(BlockRegistry.SoulFlower.get());
     }
 }

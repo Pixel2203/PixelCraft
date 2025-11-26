@@ -1,6 +1,9 @@
 package com.example.examplemod.entity.entities;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.api.ModUtils;
+import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.block.blocks.SoulFlower;
 import com.example.examplemod.blockentity.entities.SoulFlowerBlockEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -20,7 +23,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 public class SoulWispEntity extends LivingEntity {
@@ -31,9 +35,15 @@ public class SoulWispEntity extends LivingEntity {
 
     @Setter
     private BlockPos targetFlowerPos; // Position der SoulFlower
-
-    @Getter
     private int textureIndex;
+
+
+    private Vec3 desiredPosition;
+    private int movementTicker;
+    private int wanderTicker;
+    private int ticksToReachPosition;
+    private Vec3 movementVector;
+
     public SoulWispEntity(EntityType<? extends LivingEntity> p_20966_, Level p_20967_) {
         super(p_20966_, p_20967_);
         if(p_20967_.isClientSide()) return;
@@ -65,17 +75,19 @@ public class SoulWispEntity extends LivingEntity {
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         CompoundTag nbt = tag.getCompound(ExampleMod.MODID);
+        if(nbt.contains("TargetFlowerPos")) this.targetFlowerPos = ModUtils.blockPosFromTag( nbt.getCompound("TargetFlowerPos"));
         if(nbt.contains("TextureIndex")) {
             this.entityData.set(TEXTURE_INDEX, nbt.getInt("TextureIndex"));
             this.textureIndex = nbt.getInt("TextureIndex");
         }
-        if(nbt.contains("WanderAroundTime")) {
-            this.wanderAroundTimeInTicks = nbt.getInt("WanderAroundTime");
-        }
-        if(nbt.contains("TargetFlowerPos")) {
-            CompoundTag flowerPosTag = nbt.getCompound("TargetFlowerPos");
-            this.targetFlowerPos = new BlockPos(flowerPosTag.getInt("x"),  flowerPosTag.getInt("y"), flowerPosTag.getInt("z"));
-        }
+
+
+        if(nbt.contains("WanderAroundTime")) this.wanderAroundTimeInTicks = nbt.getInt("WanderAroundTime");
+        if(nbt.contains("MovementTicker")) this.movementTicker = nbt.getInt("MovementTicker");
+        if(nbt.contains("WanderTicker")) this.wanderTicker = nbt.getInt("WanderTicker");
+        if(nbt.contains("TicksToReachPosition")) this.ticksToReachPosition = nbt.getInt("TicksToReachPosition");
+        if(nbt.contains("MovementVector")) this.movementVector = ModUtils.vec3FromTag(nbt.getCompound("MovementVector"));
+        if(nbt.contains("DesiredPosition")) this.desiredPosition = ModUtils.vec3FromTag(nbt.getCompound("DesiredPosition"));
 
     }
 
@@ -83,29 +95,23 @@ public class SoulWispEntity extends LivingEntity {
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         CompoundTag wispData = new CompoundTag();
-        if (this.targetFlowerPos != null) {
-            CompoundTag flowerPosTag = new CompoundTag();
-            flowerPosTag.putInt("x", this.targetFlowerPos.getX());
-            flowerPosTag.putInt("y", this.targetFlowerPos.getY());
-            flowerPosTag.putInt("z", this.targetFlowerPos.getZ());
-            wispData.put("TargetFlowerPos", flowerPosTag);
-        }
+        if (this.targetFlowerPos != null) wispData.put("TargetFlowerPos", ModUtils.vec3ToTag(this.targetFlowerPos));
         wispData.putInt("TextureIndex", this.entityData.get(TEXTURE_INDEX));
         wispData.putInt("WanderAroundTime", this.wanderAroundTimeInTicks);
+        wispData.putInt("MovementTicker", this.movementTicker);
+        wispData.putInt("WanderTicker", this.wanderTicker);
+        wispData.putInt("TicksToReachPosition", this.ticksToReachPosition);
+        if(this.movementVector != null) wispData.put("MovementVector", ModUtils.vec3ToTag(movementVector));
+        if(this.desiredPosition != null) wispData.put("DesiredPosition", ModUtils.vec3ToTag(this.desiredPosition));
         tag.put(ExampleMod.MODID, wispData);
 
     }
 
-    private Vec3 desiredPosition;
-    private int movementTicker;
-    private int wanderTicker;
-    private int ticksToReachPosition;
-    private Vec3 movementVector;
     @Override
     public void tick() {
         super.tick();
         if(this.level().isClientSide) return;
-        if(this.targetFlowerPos == null) {
+        if(this.targetFlowerPos == null || !this.level().getBlockState(this.targetFlowerPos).is(BlockRegistry.SoulFlower.get())) {
             this.discard();
             return;
         }
@@ -121,8 +127,10 @@ public class SoulWispEntity extends LivingEntity {
             this.moveToFlower();
             this.movementTicker++;
             if(this.movementTicker > this.ticksToReachPosition) {
+                SoulFlower flowerBlock = (SoulFlower) this.level().getBlockState(this.targetFlowerPos).getBlock();
+                flowerBlock.collectSoulFragment((ServerLevel) this.level(), this.level().getBlockState(this.targetFlowerPos), this.targetFlowerPos);
                 this.discard();
-                this.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
+
             }
         }
 
@@ -174,9 +182,9 @@ public class SoulWispEntity extends LivingEntity {
         return this.targetFlowerPos.getCenter().add(xOffset, yOffset, zOffset);
     }
 
-
-
-
+    public int getTextureIndex() {
+        return this.entityData.get(TEXTURE_INDEX);
+    }
 
     @Override
     public @NotNull HumanoidArm getMainArm() {

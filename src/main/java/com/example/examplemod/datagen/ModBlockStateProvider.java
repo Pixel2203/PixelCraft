@@ -37,13 +37,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         .renderType(new ResourceLocation("cutout")))
         );
 
-        registerBooleanBlockState(BlockRegistry.SoulFlower, SoulFlower.NIGHT_ACTIVE,
-                Map.of(
-                        true, new ConfiguredModel[]{ new ConfiguredModel(models().cross("soul_flower_night", modLoc("block/soul_flower_night")).renderType(new ResourceLocation("cutout"))) },
-                        false,new ConfiguredModel[]{ new ConfiguredModel(models().cross("soul_flower_day",   modLoc("block/soul_flower_day")).renderType(new ResourceLocation("cutout"))) }
-                )
-        );
-
+        this.registerSoulFlowerStates();
 
 
         registerBlockStateWithBlock(BlockRegistry.GoldenChalkBlock,
@@ -90,6 +84,45 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .with(property, value)
                     .setModels(models);
         });
+    }
+
+    // ModBlockStateProvider.java
+
+    private void registerSoulFlowerStates() {
+
+        // 1. Definiere die benötigten Modelle einmal
+        ModelBuilder<BlockModelBuilder> soulFlowerDayModel =
+                models().cross("soul_flower_day", modLoc("block/soul_flower_day")).renderType(new ResourceLocation("cutout"));
+        ModelBuilder<BlockModelBuilder> soulFlowerNightModel =
+                models().cross("soul_flower_night", modLoc("block/soul_flower_night")).renderType(new ResourceLocation("cutout"));
+        ModelBuilder<BlockModelBuilder> soulFlowerDewModel =
+                models().cross("soul_flower_dew", modLoc("block/soul_flower_dew")).renderType(new ResourceLocation("cutout"));
+
+        // 2. Erstelle den Builder für die SoulFlower
+        VariantBlockStateBuilder builder = getVariantBuilder(BlockRegistry.SoulFlower.get());
+
+        // 3. Iteriere über alle DEW_COUNT Werte (0 bis 3)
+        for (int dewCount = 0; dewCount <= 3; dewCount++) {
+
+            // ZUSTAND A: Tag (NIGHT_ACTIVE=false)
+            builder.partialState()
+                    .with(SoulFlower.NIGHT_ACTIVE, false)
+                    .with(SoulFlower.DEW_COUNT, dewCount)
+                    // Immer das Tag-Modell verwenden, unabhängig vom Tau-Zähler
+                    .setModels(new ConfiguredModel(soulFlowerDayModel));
+
+            // ZUSTAND B: Nacht (NIGHT_ACTIVE=true)
+            builder.partialState()
+                    .with(SoulFlower.NIGHT_ACTIVE, true)
+                    .with(SoulFlower.DEW_COUNT, dewCount)
+                    .setModels(
+                            // Wenn dewCount 0 ist, verwende das leere Nacht-Modell
+                            dewCount == 0
+                                    ? new ConfiguredModel(soulFlowerNightModel)
+                                    // Wenn dewCount > 0 ist, verwende das Tau-Modell
+                                    : new ConfiguredModel(soulFlowerDewModel)
+                    );
+        }
     }
 
 

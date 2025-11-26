@@ -10,6 +10,7 @@ import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.event.ModEventHandler;
 import com.example.examplemod.networking.NetworkMessages;
 import com.example.examplemod.particle.ParticleFactory;
+import com.example.examplemod.sound.SoundRegistry;
 import com.example.examplemod.tab.TabRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -68,6 +69,7 @@ public class ExampleMod
         ParticleFactory.registerParticles(modEventBus);
         MobEffectRegistry.register(modEventBus);
         EntityRegistry.ENTITIES.register(modEventBus);
+        SoundRegistry.register(modEventBus);
         // Register Ritual Recipes
         RecipeAPI.register();
         // Register ourselves for server and other game events we are interested in

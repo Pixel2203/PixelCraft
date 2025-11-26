@@ -10,11 +10,13 @@
   "item.pixelcraft.projectile_barrier_scroll": "§dProtection of Projectiles",
   "item.pixelcraft.confusion_scroll": "§dScroll of Confusion",
   "item.pixelcraft.soul_crystal": "Soul Crystal",
+  "item.pixelcraft.vial": "Vial",
+  "item.pixelcraft.vials.soul_dew": "Soul Dew",
   "creativetab.example_tab": "Example Tab",
 
   "block.pixelcraft.example_block": "Example Block",
   "block.pixelcraft.zircon_block": "Block of Zircon",
-
+  "block.pixelcraft.soul_flower": "Soul Flower",
 
   "entity.pixelcraft.example": "Example Entity",
 

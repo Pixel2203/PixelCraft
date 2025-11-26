@@ -2,6 +2,7 @@ package com.example.examplemod.api;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
@@ -74,5 +75,33 @@ public class ModUtils {
             }
         }
         return list;
+    }
+
+    public static CompoundTag vec3ToTag(Vec3 vec3){
+        CompoundTag tag = new CompoundTag();
+        tag.putDouble("X", vec3.x);
+        tag.putDouble("Y", vec3.y);
+        tag.putDouble("Z", vec3.z);
+        return tag;
+    }
+    public static CompoundTag vec3ToTag(BlockPos vec3){
+        CompoundTag tag = new CompoundTag();
+        tag.putDouble("X", vec3.getX());
+        tag.putDouble("Y", vec3.getY());
+        tag.putDouble("Z", vec3.getZ());
+        return tag;
+    }
+
+    public static Vec3 vec3FromTag(CompoundTag tag){
+        if(!tag.contains("X") || !tag.contains("Y") || !tag.contains("Z")) return Vec3.ZERO;
+        double x = tag.getDouble("X");
+        double y = tag.getDouble("Y");
+        double z = tag.getDouble("Z");
+        return new Vec3(x, y, z);
+    }
+
+    public static BlockPos blockPosFromTag(CompoundTag tag){
+        Vec3 vec3 = vec3FromTag(tag);
+        return new BlockPos((int)vec3.x, (int)vec3.y, (int)vec3.z);
     }
 }
