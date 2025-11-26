@@ -41,7 +41,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> StatuePowerfulStoneTop = registerBlock("statue_powerful_stone_top", () -> Factory.StatueBlockPowerfulTop_BLK);
     public static final RegistryObject<Block> SoulFlower = registerBlockWithItem("soul_flower", () -> Factory.SOULFLOWER_BLK);
     public static final RegistryObject<Block> FogBlock = registerBlock("fog_block", () -> Factory.FOG_BLK);
-
+    public static final RegistryObject<Block> LimestoneBlock = registerBlockWithItem("limestone_ore", () -> Factory.LIMESTONE_ORE_BLK);
 
     private static <T extends Block> RegistryObject<T> registerBlockWithItem(String name, Supplier<T> block){
         RegistryObject<T> toReturn = (RegistryObject<T>) registerBlock(name, block);
@@ -74,5 +74,7 @@ public class BlockRegistry {
         public static final FlowerBlock LeafCloverBlock_BLK = new FlowerBlock(() -> MobEffects.DIG_SPEED,5, BlockBehaviour.Properties.copy(Blocks.RED_TULIP));
         public static final Block SOULFLOWER_BLK = new SoulFlower();
         public static final Block FOG_BLK = new FogBlock();
+        public static final Block LIMESTONE_ORE_BLK = new Block(BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops());
+
     }
 }

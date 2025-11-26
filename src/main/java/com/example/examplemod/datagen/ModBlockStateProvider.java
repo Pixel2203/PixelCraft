@@ -27,7 +27,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         blockWithItem(BlockRegistry.ZirconBlock);
-
+        blockWithItem(BlockRegistry.LimestoneBlock);
 
 
         registerBlockStateWithBlock(BlockRegistry.LeafCloverBlock,

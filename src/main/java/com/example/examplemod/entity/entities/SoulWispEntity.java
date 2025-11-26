@@ -15,22 +15,24 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 public class SoulWispEntity extends LivingEntity {
     public static final EntityDataAccessor<Integer> TEXTURE_INDEX = SynchedEntityData.defineId(SoulWispEntity.class, EntityDataSerializers.INT);
-
-    private final float MOVEMENT_SPEED = 0.125f;
     private Integer wanderAroundTimeInTicks;
 
     @Setter
@@ -110,6 +112,7 @@ public class SoulWispEntity extends LivingEntity {
     @Override
     public void tick() {
         super.tick();
+        this.noPhysics = true;
         if(this.level().isClientSide) return;
         if(this.targetFlowerPos == null || !this.level().getBlockState(this.targetFlowerPos).is(BlockRegistry.SoulFlower.get())) {
             this.discard();
@@ -145,7 +148,7 @@ public class SoulWispEntity extends LivingEntity {
             this.ticksToReachPosition = ticksToReachPos;
             this.movementTicker = 0;
             Vec3 diffVec = this.desiredPosition.subtract(this.position());
-            this.movementVector = diffVec.normalize().scale(MOVEMENT_SPEED);
+            this.movementVector = diffVec.normalize().scale(this.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
         }
         this.handleMovement();
     }
@@ -156,7 +159,7 @@ public class SoulWispEntity extends LivingEntity {
             this.ticksToReachPosition = this.calculateTimeToReachPosition(this.desiredPosition);
             this.movementTicker = 0;
             Vec3 diffVec = this.desiredPosition.subtract(this.position());
-            this.movementVector = diffVec.normalize().scale(MOVEMENT_SPEED);
+            this.movementVector = diffVec.normalize().scale(this.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
         }
         this.handleMovement();
     }
@@ -171,7 +174,7 @@ public class SoulWispEntity extends LivingEntity {
 
     private int calculateTimeToReachPosition(Vec3 desiredPos) {
         double distance = this.position().distanceTo(desiredPos);
-        return (int) (distance / MOVEMENT_SPEED);
+        return (int) (distance / this.getAttribute(Attributes.MOVEMENT_SPEED).getValue());
     }
 
     private Vec3 calculateRandomTravelPosition() {
@@ -220,4 +223,50 @@ public class SoulWispEntity extends LivingEntity {
     public boolean canBeCollidedWith() {
         return false;
     }
+
+    @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    protected void doPush(Entity p_20971_) {
+
+    }
+
+    @Override
+    protected void pushEntities() {
+
+    }
+
+    @Override
+    public boolean isPushedByFluid(FluidType type) {
+        return false;
+    }
+
+    @Override
+    public boolean hurt(DamageSource p_21016_, float p_21017_) {
+        return false;
+    }
+
+    @Override
+    public boolean isInvulnerable() {
+        return true;
+    }
+
+    @Override
+    public boolean isInWall() {
+        return false;
+    }
+
+    @Override
+    public boolean isColliding(BlockPos p_20040_, BlockState p_20041_) {
+        return false;
+    }
+
+    @Override
+    public EntityDimensions getDimensions(Pose p_21047_) {
+        return EntityDimensions.fixed(0,0);
+    }
+
 }

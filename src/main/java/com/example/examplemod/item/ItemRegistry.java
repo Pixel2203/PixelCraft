@@ -13,6 +13,7 @@ import com.example.examplemod.item.items.potion.potions.flora.FloraSplashPotionI
 import com.example.examplemod.item.items.potion.potions.freezing.FreezingSplashPotionItem;
 import com.example.examplemod.item.items.potion.potions.hungerregeneration.HungerRegenerationSplashPotionItem;
 import com.example.examplemod.item.items.talisman.SoulboundTalisman;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -42,6 +43,7 @@ public class ItemRegistry {
     public static final RegistryObject<Item> STATUE_POWERFUL_STONE = ITEMS.register("statue_powerful_stone", () -> new MultiBlockBlockItem(BlockRegistry.StatuePowerfulStoneBase.get(), new Item.Properties(), 2));
     public static final RegistryObject<Item> SOULBOUND_TALISMAN = ITEMS.register("soulbound_talisman", SoulboundTalisman::new);
     public static final RegistryObject<Item> VIAL = ITEMS.register("vial", Vial::new);
+    public static final RegistryObject<Item> LIMESTONE = ITEMS.register("limestone", () -> new Item(new Item.Properties().stacksTo(64)));
 
     public static void registerItems(IEventBus eventBus){
         ITEMS.register(eventBus);

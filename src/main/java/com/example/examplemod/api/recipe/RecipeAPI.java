@@ -57,7 +57,7 @@ public class RecipeAPI {
         public static ModRecipe<?> CHANGE_TIME_TO_DAY = registerRecipe(RecipeOrigins.CHALK,ResultTypes.RITUAL, Lazy.of(() -> ModRituals.CHANGE_TIME_TO_DAY), Items.REDSTONE, Items.GREEN_DYE, Items.BLAZE_ROD);
         public static ModRecipe<?> DIAMOND_RECIPE = registerRecipe(RecipeOrigins.KETTLE,ResultTypes.ITEM, ModResults.DIAMONDS_5, Items.BLAZE_ROD, Items.GLOWSTONE_DUST);
         public static ModRecipe<?> FLORA_POTION_RECIPE = registerRecipe(RecipeOrigins.KETTLE,ResultTypes.POTION, ModResults.FLORA_POTION_LEVEL3, Items.GLOWSTONE_DUST, Items.GLOWSTONE_DUST, Items.BLAZE_ROD);
-
+        //public static ModRecipe<?> SOUL_INFUSED_CHALK = registerRecipe(RecipeOrigins.KETTLE, ResultTypes.ITEM, ModResults.SOUL_INFUSED_CHALK, Items )
         private static <T> ModRecipe<T> registerRecipe(RecipeOrigins origin,ResultTypes type, Lazy<T> result, Item... ingredients){
             var recipe = new ModRecipe<T>(type, result, ImmutableList.copyOf(ingredients));
             RECIPES.put(origin.name(), recipe);

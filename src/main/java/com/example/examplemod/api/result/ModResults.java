@@ -1,5 +1,6 @@
 package com.example.examplemod.api.result;
 
+import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.potion.potions.flora.FloraSplashPotionItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -11,5 +12,5 @@ public interface ModResults {
     Lazy<ItemStack> FLORA_POTION_LEVEL1 = Lazy.of(() -> FloraSplashPotionItem.createFloraPotion(1,1));
     Lazy<ItemStack> FLORA_POTION_LEVEL2 = Lazy.of(() -> FloraSplashPotionItem.createFloraPotion(2,1));
     Lazy<ItemStack> FLORA_POTION_LEVEL3 = Lazy.of(() -> FloraSplashPotionItem.createFloraPotion(3,1));
-
+    Lazy<ItemStack> SOUL_INFUSED_CHALK = Lazy.of(() -> new ItemStack(ItemRegistry.GOLDEN_CHALK.get()));
 }

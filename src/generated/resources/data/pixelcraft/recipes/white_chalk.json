@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": {
+      "item": "pixelcraft:limestone"
+    }
+  },
+  "pattern": [
+    " L ",
+    "L  ",
+    "   "
+  ],
+  "result": {
+    "item": "pixelcraft:white_chalk"
+  },
+  "show_notification": true
+}

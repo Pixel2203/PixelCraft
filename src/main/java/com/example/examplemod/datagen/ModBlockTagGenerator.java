@@ -5,6 +5,8 @@ import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.tag.TagFactory;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockTags;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -20,5 +22,11 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(TagFactory.VIALABLE_BLOCKS)
                 .add(BlockRegistry.SoulFlower.get());
+
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(BlockRegistry.LimestoneBlock.get());
+
+        this.tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(BlockRegistry.LimestoneBlock.get());
     }
 }

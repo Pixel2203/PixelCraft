@@ -17,6 +17,12 @@ public class ModRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
-        //ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.)
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.WHITE_CHALK.get())
+                .define('L', ItemRegistry.LIMESTONE.get())
+                .pattern(" L ")
+                .pattern("L  ")
+                .pattern("   ")
+                .unlockedBy("has_limestone", has(ItemRegistry.LIMESTONE.get()))
+                .save(pWriter);
     }
 }

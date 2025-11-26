@@ -1,2 +1,4 @@
-// 1.20.1	2025-11-25T12:57:37.289221	Tags for minecraft:block mod id pixelcraft
+// 1.20.1	2025-11-26T09:33:12.989232	Tags for minecraft:block mod id pixelcraft
+f19825cc0f93a24acbbaf233dc66171e4ca1d786 data/minecraft/tags/blocks/mineable/pickaxe.json
+f19825cc0f93a24acbbaf233dc66171e4ca1d786 data/minecraft/tags/blocks/needs_stone_tool.json
 8e018cd871f9d46ca309884ce6721bf7ad9ea644 data/pixelcraft/tags/blocks/vialable_blocks.json
