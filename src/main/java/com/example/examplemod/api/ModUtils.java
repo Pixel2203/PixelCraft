@@ -1,5 +1,6 @@
 package com.example.examplemod.api;
 
+import com.example.examplemod.tag.TagFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
@@ -103,5 +104,9 @@ public class ModUtils {
     public static BlockPos blockPosFromTag(CompoundTag tag){
         Vec3 vec3 = vec3FromTag(tag);
         return new BlockPos((int)vec3.x, (int)vec3.y, (int)vec3.z);
+    }
+
+    public static boolean isIngredient(ItemStack itemStack){
+        return itemStack.is(TagFactory.INGREDIENT);
     }
 }

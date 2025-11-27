@@ -4,6 +4,7 @@ import com.example.examplemod.ExampleMod;
 import com.example.examplemod.entity.EntityRegistry;
 import com.example.examplemod.entity.renderers.ScrollEntityRenderer;
 import com.example.examplemod.entity.renderers.SoulEntityRenderer;
+import com.example.examplemod.entity.renderers.SoulLightEntityRenderer;
 import com.example.examplemod.entity.renderers.SoulWispEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -19,6 +20,7 @@ public class Renderers {
         event.registerEntityRenderer(EntityRegistry.SCROLL_ENTITY.get(), ScrollEntityRenderer::new);
         event.registerEntityRenderer(EntityRegistry.SOUL_ENTITY.get(), SoulEntityRenderer::new);
         event.registerEntityRenderer(EntityRegistry.SOUL_WISP_ENTITY.get(), SoulWispEntityRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.SOUL_LIGHT_ENTITY.get(), SoulLightEntityRenderer::new);
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.examplemod.datagen;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.tag.TagFactory;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -20,11 +21,10 @@ public class ModItemTagGenerator extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(TagFactory.INGREDIENT)
-                .add(Items.PURPLE_DYE)
-                .add(Items.GREEN_DYE)
-                .add(Items.BLAZE_ROD)
                 .add(Items.GLOWSTONE_DUST)
-                .add(Items.REDSTONE);
+                .add(Items.REDSTONE)
+                .add(ItemRegistry.VIAL.get())
+                .add(ItemRegistry.WHITE_CHALK.get());
 
         this.tag(TagFactory.KETTLE_ALLOWED_FLUID_ITEMS)
                 .add(Items.WATER_BUCKET)

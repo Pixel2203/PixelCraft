@@ -92,11 +92,6 @@ public class UntouchableEntity extends LivingEntity {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource p_20122_) {
-        return true;
-    }
-
-    @Override
     public boolean displayFireAnimation() {
         return false;
     }

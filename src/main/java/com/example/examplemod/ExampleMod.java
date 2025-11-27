@@ -1,7 +1,7 @@
 package com.example.examplemod;
 
-import com.example.examplemod.api.ingredient.IngredientAPI;
-import com.example.examplemod.api.recipe.RecipeAPI;
+import com.example.examplemod.api.recipe.ModRecipeRegistry;
+import com.example.examplemod.api.recipe.ModRecipes;
 import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.effect.MobEffectRegistry;
@@ -17,7 +17,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -30,7 +29,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -71,7 +69,7 @@ public class ExampleMod
         EntityRegistry.ENTITIES.register(modEventBus);
         SoundRegistry.register(modEventBus);
         // Register Ritual Recipes
-        RecipeAPI.register();
+
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().register(ModEventHandler.class);
@@ -89,6 +87,7 @@ public class ExampleMod
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         NetworkMessages.registerChannel();
+        ModRecipes.register();
     }
 
     // Add the example block item to the building blocks tab

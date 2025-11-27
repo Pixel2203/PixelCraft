@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "pixelcraft:block/invisible_light"
+    }
+  }
+}

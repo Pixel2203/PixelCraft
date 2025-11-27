@@ -1,7 +1,8 @@
-// 1.20.1	2025-11-26T09:03:07.274405	Block States: pixelcraft
+// 1.20.1	2025-11-27T15:00:24.073707	Block States: pixelcraft
 dc9eb27b9142545646c38844e312fdaedaa534f0 assets/pixelcraft/blockstates/fog_block.json
 2b6e483706b75a17d4754c910301a6370aef065b assets/pixelcraft/blockstates/four_leaf_clover.json
 464d8861c42c4ff4dc480df5adf5070a3b988941 assets/pixelcraft/blockstates/golden_chalk.json
+e937ba6bc971090739f1d91b17a8f8f67eeae597 assets/pixelcraft/blockstates/invisible_light.json
 4fe587512af0798872a69f95671b0b5b38a6f166 assets/pixelcraft/blockstates/limestone_ore.json
 ff42f304b01da51563637dbb4ba987bb5b2aac4f assets/pixelcraft/blockstates/soul_flower.json
 89bd698be7079020b0f5cfcced4571c3b6971fe4 assets/pixelcraft/blockstates/white_chalk.json
@@ -20,6 +21,7 @@ d39884fdfaa0233eca2bf44df3f4dabe642e12b0 assets/pixelcraft/models/block/fog_extr
 01178cd9dd3c3f028690d0db77098734abceef98 assets/pixelcraft/models/block/fog_strong.json
 8c808caf565a87e650995be6c7772b866ac0b410 assets/pixelcraft/models/block/four_leaf_clover.json
 ed21b2393706404fd48ea1186158f0f1fb57da6b assets/pixelcraft/models/block/golden_chalk.json
+db5ae1e0e246360befd67cc157b3b94905d67dcc assets/pixelcraft/models/block/invisible_light.json
 10cd3ea9070011d69b1ffcea5cd9411ae5cf930e assets/pixelcraft/models/block/limestone_ore.json
 fcb7c0cc0cf8331b9451fb963d113da7b753a60b assets/pixelcraft/models/block/soul_flower_day.json
 85eb1b50c4770dc3a50078f3a05ff21c0e791946 assets/pixelcraft/models/block/soul_flower_dew.json

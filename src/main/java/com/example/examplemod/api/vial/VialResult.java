@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public record VialResult(boolean vialSuccess, @Nullable VialType extracted) {
+public record VialResult(boolean vialSuccess, VialType extracted) {
 
     public static VialResult failed() {
         return new VialResult(false, null);

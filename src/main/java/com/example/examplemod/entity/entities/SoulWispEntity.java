@@ -37,7 +37,6 @@ public class SoulWispEntity extends LivingEntity {
 
     @Setter
     private BlockPos targetFlowerPos; // Position der SoulFlower
-    private int textureIndex;
 
 
     private Vec3 desiredPosition;
@@ -51,7 +50,6 @@ public class SoulWispEntity extends LivingEntity {
         if(p_20967_.isClientSide()) return;
         int id = this.level().random.nextInt(1,3);
         this.entityData.set(TEXTURE_INDEX, id);
-        this.textureIndex = id;
         log.debug("Created SoulWispEntity with textureId {}", id);
     }
 
@@ -80,7 +78,6 @@ public class SoulWispEntity extends LivingEntity {
         if(nbt.contains("TargetFlowerPos")) this.targetFlowerPos = ModUtils.blockPosFromTag( nbt.getCompound("TargetFlowerPos"));
         if(nbt.contains("TextureIndex")) {
             this.entityData.set(TEXTURE_INDEX, nbt.getInt("TextureIndex"));
-            this.textureIndex = nbt.getInt("TextureIndex");
         }
 
 

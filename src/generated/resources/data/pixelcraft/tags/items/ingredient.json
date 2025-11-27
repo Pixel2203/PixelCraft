@@ -1,9 +1,8 @@
 {
   "values": [
-    "minecraft:purple_dye",
-    "minecraft:green_dye",
-    "minecraft:blaze_rod",
     "minecraft:glowstone_dust",
-    "minecraft:redstone"
+    "minecraft:redstone",
+    "pixelcraft:vial",
+    "pixelcraft:white_chalk"
   ]
 }

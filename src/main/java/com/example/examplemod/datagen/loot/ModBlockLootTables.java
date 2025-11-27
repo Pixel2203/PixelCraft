@@ -35,6 +35,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropNothing(BlockRegistry.SoulFlower.get());
         this.dropNothing(BlockRegistry.FogBlock.get());
         this.dropOther(BlockRegistry.LimestoneBlock.get(),  () -> ItemRegistry.LIMESTONE.get().asItem());
+        this.dropNothing(BlockRegistry.InvisibleLightBlock.get());
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.example.examplemod.tab;
 
+import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
+import com.example.examplemod.item.items.Vial;
 import com.example.examplemod.item.items.potion.CustomSplashPotionItem;
 import com.example.examplemod.item.items.potion.potions.flora.FloraSplashPotionItem;
 import com.example.examplemod.item.items.potion.potions.freezing.FreezingSplashPotionItem;
@@ -30,5 +32,10 @@ public class TabFactory {
                         output.accept(HungerRegenerationSplashPotionItem.createHungerRegenerationPotion(2,1,200,1));
                         output.accept(HungerRegenerationSplashPotionItem.createHungerRegenerationPotion(3,1,300,2));
                         output.accept(FreezingSplashPotionItem.createFreezePotion(1,200,0));
+
+                        for(VialType vialType : VialType.values()) {
+                            output.accept(Vial.createVialWithType(vialType));
+                        }
+
                     }).build();
 }

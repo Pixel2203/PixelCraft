@@ -4,6 +4,7 @@ import com.example.examplemod.ExampleMod;
 import com.example.examplemod.entity.EntityRegistry;
 import com.example.examplemod.entity.entities.ScrollEntity;
 import com.example.examplemod.entity.entities.SoulEntity;
+import com.example.examplemod.entity.entities.SoulLightEntity;
 import com.example.examplemod.entity.entities.SoulWispEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -19,6 +20,7 @@ public class Attributes {
         event.put(EntityRegistry.SCROLL_ENTITY.get(), ScrollEntity.createAttributes().build());
         event.put(EntityRegistry.SOUL_ENTITY.get(), SoulEntity.createAttributes().build());
         event.put(EntityRegistry.SOUL_WISP_ENTITY.get(), SoulWispEntity.createAttributes().build());
+        event.put(EntityRegistry.SOUL_LIGHT_ENTITY.get(), SoulLightEntity.createAttributes().build());
     }
 
 

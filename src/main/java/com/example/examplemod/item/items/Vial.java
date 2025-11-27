@@ -4,6 +4,7 @@ import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.vial.IVialable;
 import com.example.examplemod.api.vial.VialResult;
 import com.example.examplemod.api.vial.VialType;
+import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.sound.SoundRegistry;
 import com.example.examplemod.tag.TagFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
@@ -31,22 +33,36 @@ public class Vial extends Item {
     public InteractionResult useOn(UseOnContext context) {
         if(context.getLevel().isClientSide()) return super.useOn(context);
         ItemStack vialStack = context.getItemInHand();
-        if(this.hasContent(vialStack)) return InteractionResult.PASS;
+        if(this.hasContent(vialStack)) return InteractionResult.FAIL;
         BlockPos clickedPos = context.getClickedPos();
         BlockState clickedBlockState = context.getLevel().getBlockState(clickedPos);
-        if(!clickedBlockState.is(TagFactory.VIALABLE_BLOCKS)) return InteractionResult.PASS;
-        if(!(clickedBlockState.getBlock() instanceof IVialable vialable)) {
-            log.error("Block {} with Tag {} on it, does not implement IVialable", clickedBlockState.getBlock().getName(), TagFactory.VIALABLE_BLOCKS);
-            return InteractionResult.PASS;
+        if(!clickedBlockState.is(TagFactory.VIALABLE_BLOCKS)) return InteractionResult.FAIL;
+
+        return this.tapBlock(
+                (ServerLevel) context.getLevel(),
+                clickedBlockState,
+                clickedPos,
+                (ServerPlayer) context.getPlayer(),
+                vialStack);
+    }
+
+    private InteractionResult tapBlock(ServerLevel level, BlockState blockState, BlockPos blockPos, ServerPlayer player, ItemStack itemInHand) {
+        if(!(blockState.getBlock() instanceof IVialable vialable)) {
+            log.error("Block {} with Tag {} on it, does not implement IVialable",
+                    blockState.getBlock().getName(), TagFactory.VIALABLE_BLOCKS);
+            return InteractionResult.FAIL;
         }
-        VialResult tapResult = vialable.tap((ServerLevel) context.getLevel(), clickedBlockState, clickedPos);
-        if(!tapResult.vialSuccess()) return InteractionResult.PASS;
+        VialResult tapResult = vialable.tap(level, blockState, blockPos);
+
+        if(!tapResult.vialSuccess()) return InteractionResult.FAIL;
 
         ItemStack filledVial = new ItemStack(this);
         this.saveVialTypeNbt(filledVial, tapResult.extracted());
-        context.getPlayer().addItem(filledVial);
-        vialStack.shrink(1);
-        context.getPlayer().playNotifySound(SoundRegistry.VIAL_FILL_SOUND.get(), SoundSource.NEUTRAL,1f,1f);
+
+        player.addItem(filledVial);
+        itemInHand.shrink(1);
+        player.playNotifySound(SoundRegistry.VIAL_FILL_SOUND.get(), SoundSource.NEUTRAL,1f,1f);
+
         return InteractionResult.SUCCESS;
     }
 
@@ -81,5 +97,15 @@ public class Vial extends Item {
         tag = tag.getCompound(ExampleMod.MODID);
         if(!tag.contains("type")) return super.getMaxStackSize(stack);
         return 1;
+    }
+
+    public static ItemStack createVialWithType(VialType type) {
+        ItemStack vial = new ItemStack(ItemRegistry.VIAL.get());
+        CompoundTag vialTag = vial.getOrCreateTag();
+        CompoundTag modCompound = new CompoundTag();
+        modCompound.putString("type", type.name());
+        vialTag.put(ExampleMod.MODID, modCompound);
+        vial.setTag(vialTag);
+        return vial;
     }
 }
