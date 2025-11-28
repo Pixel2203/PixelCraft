@@ -1,0 +1,14 @@
+{
+  "type": "pixelcraft:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:entities/zombie"
+    },
+    {
+      "chance": 0.125,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "pixelcraft:soul_fragment"
+}

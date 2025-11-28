@@ -8,6 +8,7 @@ import com.example.examplemod.effect.MobEffectRegistry;
 import com.example.examplemod.entity.EntityRegistry;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.event.ModEventHandler;
+import com.example.examplemod.loot.ModLootModifiers;
 import com.example.examplemod.networking.NetworkMessages;
 import com.example.examplemod.particle.ParticleFactory;
 import com.example.examplemod.sound.SoundRegistry;
@@ -68,7 +69,7 @@ public class ExampleMod
         MobEffectRegistry.register(modEventBus);
         EntityRegistry.ENTITIES.register(modEventBus);
         SoundRegistry.register(modEventBus);
-        // Register Ritual Recipes
+        ModLootModifiers.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);

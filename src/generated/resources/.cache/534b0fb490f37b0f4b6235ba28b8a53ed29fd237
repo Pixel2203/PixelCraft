@@ -1,10 +1,12 @@
-// 1.20.1	2025-11-26T09:00:54.724265	Item Models: pixelcraft
+// 1.20.1	2025-11-28T13:15:53.337171	Item Models: pixelcraft
 4cb827fecf058d4326004263b95bd25cf40543b7 assets/pixelcraft/models/item/blizzard_sword.json
 4c8e6c8ab96944f201f7d167ea30a775e228e317 assets/pixelcraft/models/item/confusion_scroll.json
 7f1bee8054698fdc2f038089b5fe9ece12f00b68 assets/pixelcraft/models/item/crystals/crystal_1.json
 f737bdbb4be77ac2cfb78a5e28bd05c952f1a387 assets/pixelcraft/models/item/crystals/crystal_2.json
 a8747d238609bf4e5f91c8328fdc6449db0b024c assets/pixelcraft/models/item/crystals/crystal_3.json
 af031a741d067bd42d9f4ad1b38ac1881d5c477c assets/pixelcraft/models/item/crystals/crystal_4.json
+666382c4618acd264954a436a01d0fa038d756b8 assets/pixelcraft/models/item/glimmer_gras_seed.json
+d949c621178dcde0fd328d2d1cba54ed0f186d07 assets/pixelcraft/models/item/glimmer_leaf.json
 c6e04b34808925e4329267b47e223fbe1f803002 assets/pixelcraft/models/item/golden_chalk.json
 4c8e6c8ab96944f201f7d167ea30a775e228e317 assets/pixelcraft/models/item/healing_scroll.json
 c856631f822e4a3d5fabf5b2db05513cde08eb38 assets/pixelcraft/models/item/hunger_regeneration_talisman.json
@@ -15,6 +17,7 @@ c856631f822e4a3d5fabf5b2db05513cde08eb38 assets/pixelcraft/models/item/hunger_re
 4c8e6c8ab96944f201f7d167ea30a775e228e317 assets/pixelcraft/models/item/projectile_barrier_scroll.json
 f377df21702f08052bc31c8ed7c98bb43c2884c3 assets/pixelcraft/models/item/protection_of_death_talisman.json
 17ee779a92d569f080d831b74f559545f843b386 assets/pixelcraft/models/item/protection_of_freezing_talisman.json
+7828b334868ad58bb53919d601f9fd8fe239bfc7 assets/pixelcraft/models/item/soul_fragment.json
 3f5e81b1c9364d12369422e85df4e071f471f775 assets/pixelcraft/models/item/soulbound_talisman.json
 9507dba9d50fe4f903eae3efb7a30ada97ab596e assets/pixelcraft/models/item/vial.json
 499af367557b4a635e6441c91aed1754f79b7f41 assets/pixelcraft/models/item/vials/soul_dew.json

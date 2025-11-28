@@ -10,10 +10,9 @@ import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FlowerBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -43,6 +42,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> FogBlock = registerBlock("fog_block", () -> Factory.FOG_BLK);
     public static final RegistryObject<Block> LimestoneBlock = registerBlockWithItem("limestone_ore", () -> Factory.LIMESTONE_ORE_BLK);
     public static final RegistryObject<Block> InvisibleLightBlock = registerBlock("invisible_light", () -> Factory.INVISIBLE_LIGHT_BLK);
+    public static final RegistryObject<Block> GlimmerGrasBlock  = registerBlock("glimmer_gras", () -> Factory.GLIMMERGRAS_BLK);
 
     private static <T extends Block> RegistryObject<T> registerBlockWithItem(String name, Supplier<T> block){
         RegistryObject<T> toReturn = (RegistryObject<T>) registerBlock(name, block);
@@ -77,5 +77,6 @@ public class BlockRegistry {
         public static final Block FOG_BLK = new FogBlock();
         public static final Block LIMESTONE_ORE_BLK = new Block(BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops());
         public static final Block INVISIBLE_LIGHT_BLK = new InvisibleLightBlock();
+        public static final Block GLIMMERGRAS_BLK = new GlimmerGras();
     }
 }

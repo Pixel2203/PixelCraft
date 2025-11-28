@@ -28,5 +28,6 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(BlockRegistry.LimestoneBlock.get());
+
     }
 }

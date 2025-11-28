@@ -15,6 +15,8 @@ import com.example.examplemod.item.items.potion.potions.hungerregeneration.Hunge
 import com.example.examplemod.item.items.talisman.SoulboundTalisman;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tiers;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -44,7 +46,9 @@ public class ItemRegistry {
     public static final RegistryObject<Item> SOULBOUND_TALISMAN = ITEMS.register("soulbound_talisman", SoulboundTalisman::new);
     public static final RegistryObject<Item> VIAL = ITEMS.register("vial", Vial::new);
     public static final RegistryObject<Item> LIMESTONE = ITEMS.register("limestone", () -> new Item(new Item.Properties().stacksTo(64)));
-
+    public static final RegistryObject<Item> GLIMMER_GRAS_SEED = ITEMS.register("glimmer_gras_seed", () -> new ItemNameBlockItem(BlockRegistry.GlimmerGrasBlock.get(),new Item.Properties()));
+    public static final RegistryObject<Item> SOUL_FRAGMENT = ITEMS.register("soul_fragment", () -> new Item(new Item.Properties().stacksTo(64)));
+    public static final RegistryObject<Item> GLIMMER_LEAF = ITEMS.register("glimmer_leaf", () -> new Item(new Item.Properties().stacksTo(64)));
     public static void registerItems(IEventBus eventBus){
         ITEMS.register(eventBus);
     }

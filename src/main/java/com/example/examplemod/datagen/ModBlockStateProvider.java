@@ -2,6 +2,7 @@ package com.example.examplemod.datagen;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.block.blocks.GlimmerGras;
 import com.example.examplemod.block.blocks.SoulFlower;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.Map;
 
@@ -29,13 +31,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         blockWithItem(BlockRegistry.ZirconBlock);
         blockWithItem(BlockRegistry.LimestoneBlock);
         simpleBlock(BlockRegistry.InvisibleLightBlock.get(), new ConfiguredModel(models().cubeAll(BlockRegistry.InvisibleLightBlock.getId().getPath(), modLoc("block/invisible_light")).renderType("minecraft:translucent")));
-
-        registerBlockStateWithBlock(BlockRegistry.LeafCloverBlock,
-                new ConfiguredModel(models()
-                        .cross(BlockRegistry.LeafCloverBlock.getId().getPath(),
-                                new ResourceLocation(ExampleMod.MODID,"block/" + BlockRegistry.LeafCloverBlock.getId().getPath()))
-                        .renderType(new ResourceLocation("cutout")))
-        );
+        this.simpleCrossBlockWithItem(BlockRegistry.LeafCloverBlock);
 
         this.registerSoulFlowerStates();
 
@@ -70,6 +66,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ConfiguredModel(models().cubeAll("fog_strong", modLoc("block/fog_3"))),
                 new ConfiguredModel(models().cubeAll("fog_extreme", modLoc("block/fog_4"))));
 
+
+        registerIntegerBlockState(BlockRegistry.GlimmerGrasBlock, GlimmerGras.AGE, Map.of(
+                0, new ConfiguredModel[]{ new ConfiguredModel(models().cross("glimmer_gras_0", modLoc("block/" + "glimmer_gras_0")).renderType(mcLoc("cutout"))) },
+                1, new ConfiguredModel[]{ new ConfiguredModel(models().cross("glimmer_gras_1", modLoc("block/" + "glimmer_gras_1")).renderType(mcLoc("cutout"))) },
+                2, new ConfiguredModel[]{ new ConfiguredModel(models().cross("glimmer_gras_2", modLoc("block/" + "glimmer_gras_2")).renderType(mcLoc("cutout"))) }
+        ));
+
     }
     private VariantBlockStateBuilder registerBlockStateWithBlock(RegistryObject<Block> blockRegistryObject, ConfiguredModel ... models){
         return getVariantBuilder(blockRegistryObject.get()).partialState().setModels(models);
@@ -85,54 +88,49 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .setModels(models);
         });
     }
+    private void registerIntegerBlockState(RegistryObject<Block> blockRegistryObject, Property<Integer> property,
+                                           Map<Integer, ConfiguredModel[]> stateModels) {
+        VariantBlockStateBuilder builder = getVariantBuilder(blockRegistryObject.get());
+
+        stateModels.forEach((value, models) -> {
+            builder.partialState()
+                    .with(property, value)
+                    .setModels(models);
+        });
+         }
 
     // ModBlockStateProvider.java
 
     private void registerSoulFlowerStates() {
+        String blockName = BlockRegistry.SoulFlower.getId().getPath();
+        ModelBuilder<BlockModelBuilder> dayModel = models().cross(blockName + "_day", modLoc("block/soul_flower_day")).renderType(mcLoc("cutout"));
+        ModelBuilder<BlockModelBuilder> nightModel = models().cross(blockName + "_night", modLoc("block/soul_flower_night")).renderType(mcLoc("cutout"));
+        ModelBuilder<BlockModelBuilder> dewModel = models().cross(blockName + "_dew", modLoc("block/soul_flower_dew")).renderType(mcLoc("cutout"));
 
-        // 1. Definiere die benötigten Modelle einmal
-        ModelBuilder<BlockModelBuilder> soulFlowerDayModel =
-                models().cross("soul_flower_day", modLoc("block/soul_flower_day")).renderType(new ResourceLocation("cutout"));
-        ModelBuilder<BlockModelBuilder> soulFlowerNightModel =
-                models().cross("soul_flower_night", modLoc("block/soul_flower_night")).renderType(new ResourceLocation("cutout"));
-        ModelBuilder<BlockModelBuilder> soulFlowerDewModel =
-                models().cross("soul_flower_dew", modLoc("block/soul_flower_dew")).renderType(new ResourceLocation("cutout"));
-
-        // 2. Erstelle den Builder für die SoulFlower
         VariantBlockStateBuilder builder = getVariantBuilder(BlockRegistry.SoulFlower.get());
 
-        // 3. Iteriere über alle DEW_COUNT Werte (0 bis 3)
-        for (int dewCount = 0; dewCount <= 3; dewCount++) {
-
-            // ZUSTAND A: Tag (NIGHT_ACTIVE=false)
+        for (int dew = 0; dew <= 3; dew++) {
+            // Tag
             builder.partialState()
                     .with(SoulFlower.NIGHT_ACTIVE, false)
-                    .with(SoulFlower.DEW_COUNT, dewCount)
-                    // Immer das Tag-Modell verwenden, unabhängig vom Tau-Zähler
-                    .setModels(new ConfiguredModel(soulFlowerDayModel));
+                    .with(SoulFlower.DEW_COUNT, dew)
+                    .setModels(new ConfiguredModel(dayModel));
 
-            // ZUSTAND B: Nacht (NIGHT_ACTIVE=true)
+            // Nacht
             builder.partialState()
                     .with(SoulFlower.NIGHT_ACTIVE, true)
-                    .with(SoulFlower.DEW_COUNT, dewCount)
-                    .setModels(
-                            // Wenn dewCount 0 ist, verwende das leere Nacht-Modell
-                            dewCount == 0
-                                    ? new ConfiguredModel(soulFlowerNightModel)
-                                    // Wenn dewCount > 0 ist, verwende das Tau-Modell
-                                    : new ConfiguredModel(soulFlowerDewModel)
-                    );
+                    .with(SoulFlower.DEW_COUNT, dew)
+                    .setModels(dew == 0 ? new ConfiguredModel(nightModel) : new ConfiguredModel(dewModel));
         }
+        this.itemModels().withExistingParent(blockName , "item/generated").texture("layer0", new ResourceLocation(ExampleMod.MODID, "block/" + blockName+"_day"));
+
     }
+
 
 
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject){
         simpleBlockWithItem(blockRegistryObject.get(), cubeAll(blockRegistryObject.get()));
-    }
-
-    private ModelBuilder<BlockModelBuilder> chalkBlock(RegistryObject<Block> block, String name) {
-        return simpleCustomBlock(block.getId().getPath(), CHALK_TEMPLATE, Map.of("1", name));
     }
 
     private ModelBuilder<BlockModelBuilder> chalkBlock(String variantName) {
@@ -145,7 +143,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 new ResourceLocation(ExampleMod.MODID, "item/" + block.getId().getPath()));
         return  simpleCustomBlock(block.getId().getPath(), parent,textures);
     }
-    private  ModelBuilder<BlockModelBuilder> simpleCustomBlock(String name , ResourceLocation parent, Map<String, String> textures){
+    private ModelBuilder<BlockModelBuilder> simpleCustomBlock(String name , ResourceLocation parent, Map<String, String> textures){
         ModelBuilder<BlockModelBuilder> builder = models().withExistingParent(name, parent );
         textures.keySet().forEach(key -> {
             builder.texture(key, new ResourceLocation(ExampleMod.MODID, "block/" + textures.get(key)));
@@ -167,4 +165,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleCustomBlock(name, new ResourceLocation(ExampleMod.MODID, "block/" + templateName), Map.of("content", contentTexture) );
     }
 
+    private void simpleCrossBlockWithItem(RegistryObject<Block> block) {
+        String blockName = block.getId().getPath();
+        registerBlockStateWithBlock(block, new ConfiguredModel(models().cross(blockName, modLoc("block/" + blockName)).renderType(mcLoc("cutout"))));
+        this.simpleBlockItem(block, blockName);
+    }
+
+    private void simpleBlockItem(RegistryObject<Block> block, String textureName) {
+        this.itemModels().withExistingParent(block.getId().getPath() , "item/generated").texture("layer0", modLoc("block/" + textureName));
+
+    }
 }

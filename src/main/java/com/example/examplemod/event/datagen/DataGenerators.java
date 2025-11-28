@@ -38,5 +38,8 @@ public class DataGenerators {
 
         // Sounds
         generator.addProvider(event.includeServer(), new ModSoundProvider(packOutput, existingFileHelper));
+
+        // Loot
+        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(packOutput));
     }
 }

@@ -1,0 +1,5 @@
+// 1.20.1	2025-11-28T12:29:45.139815	Global Loot Modifiers : pixelcraft
+d172e9244ca10e5848d5583410ff67295a28cdee data/forge/loot_modifiers/global_loot_modifiers.json
+fe8f3c1028df663c4e28abaf325e30e306957b47 data/pixelcraft/loot_modifiers/glimmer_gras_seed_from_gras.json
+45b729d079de00641732327908e669c9063e63c3 data/pixelcraft/loot_modifiers/soul_fragment_from_skeleton.json
+6612d8c293b064a145339824f00d58945ec32283 data/pixelcraft/loot_modifiers/soul_fragment_from_zombie.json
