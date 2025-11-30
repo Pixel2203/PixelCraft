@@ -47,8 +47,7 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
 
 
     @Getter
-    @Nullable
-    private VialType content;
+    private VialType content = VialType.WATER;
 
     private final BowlCrafting craftingLogic;
     private final BowlInteraction interactionLogic;
@@ -163,12 +162,7 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
             itemHandler.deserializeNBT(modCompound.getCompound("inventory"));
         }
         if(modCompound.contains("content")) {
-            if(modCompound.getString("content").equals("null")) {
-                this.content = null;
-            }else {
-                this.content = VialType.valueOf(Objects.requireNonNull(modCompound.getString("content")));
-            }
-
+            this.content = VialType.valueOf(Objects.requireNonNull(modCompound.getString("content")));
         }
         super.load(p_155245_);
 
@@ -183,9 +177,6 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
                 modCompound.putString("content", this.content.name());
                 tag.put(ExampleMod.MODID, modCompound);
                 isContentDirty = false;
-            }else {
-                modCompound.putString("content", "null");
-                tag.put(ExampleMod.MODID, modCompound);
             }
 
         }
@@ -198,8 +189,6 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
             CompoundTag modCompound = tag.getCompound(ExampleMod.MODID);
             if(modCompound.contains("content")) {
                 this.content = VialType.valueOf(modCompound.getString("content"));
-            }else {
-                this.content = null;
             }
         }
 
@@ -222,11 +211,11 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
     }
 
     public boolean isWater() {
-        return Objects.isNull(this.content);
+        return this.getContent() == VialType.WATER;
     }
     private boolean isContentDirty = true;
 
-    public void setContent(@Nullable VialType content) {
+    public void setContent(@NotNull VialType content) {
         this.content = content;
         isContentDirty = true;
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);

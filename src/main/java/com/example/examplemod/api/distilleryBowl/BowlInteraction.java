@@ -24,7 +24,7 @@ public class BowlInteraction extends BlockEntityLogic<DistilleryBowlBlockEntity>
         return getVialResult().map(vialType -> {
             DistilleryBowl bowl = (DistilleryBowl) blockState.getBlock();
             bowl.empty(level, blockState, blockPos);
-            blockEntity.setContent(null);
+            blockEntity.setContent(VialType.WATER);
             return VialResult.success(vialType);
         }).orElse(VialResult.failed());
     }
