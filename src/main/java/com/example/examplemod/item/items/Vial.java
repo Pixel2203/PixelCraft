@@ -8,6 +8,7 @@ import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.sound.SoundRegistry;
 import com.example.examplemod.tag.TagFactory;
 import lombok.extern.slf4j.Slf4j;
+import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,13 +22,28 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Locale;
+import java.util.Optional;
 
 @Slf4j
 public class Vial extends Item {
 
+
+
     public Vial() {
         super(new Item.Properties());
     }
+
+    public static ItemColor itemColor = new ItemColor() {
+        @Override
+        public int getColor(ItemStack itemStack, int tintIndex) {
+            if(tintIndex == 1) {
+                CompoundTag vialTag = itemStack.getOrCreateTag();
+                return Optional.of(vialTag.getCompound(ExampleMod.MODID)).map(t -> t.getInt("color")).orElse(0);
+            }
+            return 0xFFFFFFFF;
+
+        }
+    };
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
@@ -78,6 +94,7 @@ public class Vial extends Item {
         CompoundTag nbt = vial.getOrCreateTag();
         CompoundTag vialTag = new CompoundTag();
         vialTag.putString("type", vialType.name());
+        vialTag.putInt("color",vialType.getHexColor());
         nbt.put(ExampleMod.MODID, vialTag);
     }
 
@@ -104,6 +121,7 @@ public class Vial extends Item {
         CompoundTag vialTag = vial.getOrCreateTag();
         CompoundTag modCompound = new CompoundTag();
         modCompound.putString("type", type.name());
+        modCompound.putInt("color", type.getHexColor());
         vialTag.put(ExampleMod.MODID, modCompound);
         vial.setTag(vialTag);
         return vial;

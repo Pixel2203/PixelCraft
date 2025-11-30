@@ -1,5 +1,6 @@
-// 1.20.1	2025-11-28T09:37:27.946001	Loot Tables
+// 1.20.1	2025-11-30T13:44:49.469767	Loot Tables
 4ce9c2f9a9168bc434d035396c1e18ec0a3baa27 data/pixelcraft/loot_tables/blocks/cauldron_custom.json
+6580b86daf1d7d9b505a128e7f1f2fc3d78c6f65 data/pixelcraft/loot_tables/blocks/distillery_bowl.json
 e867ee75f8ded61ea4a7e841b6ae2cb318e10334 data/pixelcraft/loot_tables/blocks/fog_block.json
 a3cfa884b25836c931084b5eb606e5ec30d5a2ca data/pixelcraft/loot_tables/blocks/four_leaf_clover.json
 f95454600aead201c174dbdee1009756550f7dbc data/pixelcraft/loot_tables/blocks/glimmer_gras.json

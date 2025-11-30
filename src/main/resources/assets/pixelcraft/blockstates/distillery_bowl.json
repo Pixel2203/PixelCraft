@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=false": {
+      "model": "pixelcraft:block/distillery_bowl_empty"
+    },
+    "filled=true": {
+      "model": "pixelcraft:block/distillery_bowl_water"
+    }
+  }
+}

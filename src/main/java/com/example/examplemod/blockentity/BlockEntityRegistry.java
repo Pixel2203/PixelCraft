@@ -2,6 +2,7 @@ package com.example.examplemod.blockentity;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
 import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
 import com.example.examplemod.blockentity.entities.KettleBlockEntity;
 import com.example.examplemod.blockentity.entities.SoulFlowerBlockEntity;
@@ -17,6 +18,7 @@ public class BlockEntityRegistry {
     public static final RegistryObject<BlockEntityType<KettleBlockEntity>> KETTLE_BLOCK_ENTITY = BLOCK_ENTITTES.register("kettle_block_entity", () -> Factory.KettleBlockEntity);
     public static final RegistryObject<BlockEntityType<GoldenChalkBlockEntity>> GOLDEN_CHALK_BLOCK_ENTITY = BLOCK_ENTITTES.register("golden_chalk_block_entity", () -> Factory.GoldenChalkBlockEntity);
     public static final RegistryObject<BlockEntityType<SoulFlowerBlockEntity>> SOUL_FLOWER_BLOCK_ENTITY = BLOCK_ENTITTES.register("soul_flower_block_entity", () -> Factory.SoulFlowerBlockEntity);
+    public static final RegistryObject<BlockEntityType<DistilleryBowlBlockEntity>> DISTILLERY_BOWL_BLOCK_ENTITY = BLOCK_ENTITTES.register("distillery_bowl_block_entity", () -> Factory.DistilleryBowlBlockEntitys);
 
     public static void registerBlockEntityTypes(IEventBus eventBus){
         BLOCK_ENTITTES.register(eventBus);
@@ -27,5 +29,7 @@ public class BlockEntityRegistry {
         public static BlockEntityType<KettleBlockEntity> KettleBlockEntity = BlockEntityType.Builder.of(KettleBlockEntity::new, BlockRegistry.CauldronCustomBlock.get()).build(null);
         public static BlockEntityType<GoldenChalkBlockEntity> GoldenChalkBlockEntity = BlockEntityType.Builder.of(GoldenChalkBlockEntity::new, BlockRegistry.GoldenChalkBlock.get()).build(null);
         public static BlockEntityType<SoulFlowerBlockEntity> SoulFlowerBlockEntity = BlockEntityType.Builder.of(SoulFlowerBlockEntity::new, BlockRegistry.SoulFlower.get()).build(null);
+        public static BlockEntityType<DistilleryBowlBlockEntity> DistilleryBowlBlockEntitys = BlockEntityType.Builder.of(DistilleryBowlBlockEntity::new, BlockRegistry.DistilleryBowlBlock.get()).build(null);
     }
+
 }

@@ -49,7 +49,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleTextureForPredicate("item/crystals/crystal_3", "crystals/crystal_3");
         simpleTextureForPredicate("item/crystals/crystal_4", "crystals/crystal_4");
 
-        this.generateVials(VialType.values());
     }
     private ItemModelBuilder simpleItem(RegistryObject<Item> item){
         return withExistingParent(item.getId().getPath(),
@@ -68,12 +67,6 @@ public class ModItemModelProvider extends ItemModelProvider {
                     .texture("layer0", new ResourceLocation("minecraft", "item/" + baseTexture ))
                     .texture("layer1", new ResourceLocation(ExampleMod.MODID,"item/" + textureName));
     }
-    private ItemModelBuilder simpleVial(String vialName){
-        return withExistingParent("item/vials/" + vialName,
-                new ResourceLocation("item/generated"))
-                .texture("layer0", modLoc("item/vial"))
-                .texture("layer1", modLoc("item/vials/" + vialName));
-    }
 
     private ItemModelBuilder simpleTextureForPredicate(String state, String texture){
         return withExistingParent(state,
@@ -81,23 +74,7 @@ public class ModItemModelProvider extends ItemModelProvider {
                 new ResourceLocation(ExampleMod.MODID, "item/" + texture));
     }
 
-    private ItemModelBuilder generateVials(VialType ... types) {
-        simpleItem(ItemRegistry.VIAL);
-        var modelFile = this.getBuilder(ItemRegistry.VIAL.getId().getPath())
-                .parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
-                .texture("layer0", modLoc("item/"+ItemRegistry.VIAL.getId().getPath()));
 
-        for (VialType type : types) {
-            String vialName = type.toString().toLowerCase(Locale.ROOT);
-            modelFile.override()
-                    .predicate(modLoc("type"), type.ordinal())
-                    .model(new ModelFile.UncheckedModelFile(modLoc("item/vials/" + vialName )))
-                    .end();
 
-            this.simpleVial(vialName);
-        }
-        return modelFile;
-
-    }
 
 }

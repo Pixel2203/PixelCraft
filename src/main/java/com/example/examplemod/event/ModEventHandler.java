@@ -54,11 +54,9 @@ public class ModEventHandler {
         ItemProperties.register(ItemRegistry.VIAL.get(), new ResourceLocation(ExampleMod.MODID + ":type"),
                 (stack, p_174677_, p_174678_, p_174679_) -> {
                     CompoundTag tag = stack.getOrCreateTag();
-                    if(!tag.contains(ExampleMod.MODID)) return -1f;
-                    if(!tag.getCompound(ExampleMod.MODID).contains("type")) return -1f;
-                    String type = tag.getCompound(ExampleMod.MODID).getString("type");
-                    VialType vialType = VialType.valueOf(type);
-                    return vialType.ordinal();
+                    if(!tag.contains(ExampleMod.MODID)) return 0f;
+                    if(!tag.getCompound(ExampleMod.MODID).contains("type")) return 0f;
+                    return 1;
                 }
         );
 

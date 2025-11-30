@@ -1,0 +1,12 @@
+{
+  "parent": "item/generated",
+
+  "textures": {
+    "layer0": "pixelcraft:item/vial"
+  },
+
+  "overrides": [
+    { "predicate": { "pixelcraft:type": 0 }, "model": "pixelcraft:item/vial_empty" },
+    { "predicate": { "pixelcraft:type": 1 }, "model": "pixelcraft:item/vial_filled" }
+  ]
+}

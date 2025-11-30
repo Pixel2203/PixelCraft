@@ -2,6 +2,6 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "pixelcraft:item/vial",
-    "layer1": "pixelcraft:item/vials/soul_dew"
+    "layer1": "pixelcraft:item/vial_content"
   }
 }

@@ -21,7 +21,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(TagFactory.VIALABLE_BLOCKS)
-                .add(BlockRegistry.SoulFlower.get());
+                .add(BlockRegistry.SoulFlower.get())
+                .add(BlockRegistry.DistilleryBowlBlock.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(BlockRegistry.LimestoneBlock.get());

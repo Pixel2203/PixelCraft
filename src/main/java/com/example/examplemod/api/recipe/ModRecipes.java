@@ -20,9 +20,16 @@ public class ModRecipes {
                 new ItemStack(ItemRegistry.GOLDEN_CHALK.get()),
                 Vial.createVialWithType(VialType.SOUL_DEW),
                 new ItemStack(ItemRegistry.WHITE_CHALK.get()));
+
+        simpleBowlRecipe(new ItemStack(ItemRegistry.GLIMMER_LEAF.get()), VialType.SHIMMER_ESSENCE);
+
     }
 
     private static void simpleItemRecipe(RecipeOrigin origin, ItemStack result, ItemStack ... ingredients) {
         ModRecipeRegistry.register(origin, ResultTypes.ITEM, () -> result, ingredients);
+    }
+
+    private static void simpleBowlRecipe(ItemStack herbIngredient, VialType result) {
+        ModRecipeRegistry.register(RecipeOrigin.BOWL, ResultTypes.VIAL, () -> result, herbIngredient);
     }
 }

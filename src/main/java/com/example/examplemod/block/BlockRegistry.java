@@ -43,6 +43,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> LimestoneBlock = registerBlockWithItem("limestone_ore", () -> Factory.LIMESTONE_ORE_BLK);
     public static final RegistryObject<Block> InvisibleLightBlock = registerBlock("invisible_light", () -> Factory.INVISIBLE_LIGHT_BLK);
     public static final RegistryObject<Block> GlimmerGrasBlock  = registerBlock("glimmer_gras", () -> Factory.GLIMMERGRAS_BLK);
+    public static final RegistryObject<Block> DistilleryBowlBlock = registerBlockWithItem("distillery_bowl", () -> Factory.Distillery_Bowl_BLK);
 
     private static <T extends Block> RegistryObject<T> registerBlockWithItem(String name, Supplier<T> block){
         RegistryObject<T> toReturn = (RegistryObject<T>) registerBlock(name, block);
@@ -78,5 +79,6 @@ public class BlockRegistry {
         public static final Block LIMESTONE_ORE_BLK = new Block(BlockBehaviour.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops());
         public static final Block INVISIBLE_LIGHT_BLK = new InvisibleLightBlock();
         public static final Block GLIMMERGRAS_BLK = new GlimmerGras();
+        public static final Block Distillery_Bowl_BLK = new DistilleryBowl();
     }
 }

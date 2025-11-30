@@ -1,0 +1,6 @@
+{
+  "parent": "pixelcraft:block/distillery_bowl_filled_template",
+  "textures": {
+    "water_texture": "minecraft:block/water_still"
+  }
+}

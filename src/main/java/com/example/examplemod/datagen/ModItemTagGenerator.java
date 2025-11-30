@@ -30,5 +30,7 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(Items.WATER_BUCKET)
                 .add(Items.POTION);
 
+        this.tag(TagFactory.BOWL_INGREDIENT)
+                .add(ItemRegistry.GLIMMER_LEAF.get());
     }
 }

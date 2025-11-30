@@ -21,15 +21,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class KettleInteractionLogic extends KettleLogic implements KettleInteraction{
+public class KettleInteractionLogic extends BlockEntityLogic<KettleBlockEntity> implements KettleInteraction{
     public KettleInteractionLogic(KettleBlockEntity kettleBlockEntity) {
         super(kettleBlockEntity);
     }
 
     public void fallOn(Entity entity) {
-        if(this.kettleBlockEntity.isBrewing()) return;
-        if(!kettleBlockEntity.getKettleBlock().isFireBelow(this.getServerLevel(),kettleBlockEntity.getBlockPos())) return;
-        if(kettleBlockEntity.getBlockState().getValue(KettleBlock.fluid_level) < KettleBlock.NEEDED_FLUID_LEVEL_TO_BREW) return;
+        if(this.blockEntity.isBrewing()) return;
+        if(!blockEntity.getKettleBlock().isFireBelow(this.getServerLevel(), blockEntity.getBlockPos())) return;
+        if(blockEntity.getBlockState().getValue(KettleBlock.fluid_level) < KettleBlock.NEEDED_FLUID_LEVEL_TO_BREW) return;
         if(!(entity instanceof ItemEntity itemEntity)) return;
 
         ItemStack fellItem = itemEntity.getItem();
@@ -42,7 +42,7 @@ public class KettleInteractionLogic extends KettleLogic implements KettleInterac
      */
     public InteractionResult onBottle(ServerPlayer player){
 
-        Optional<ModRecipe<?>> searchResult = kettleBlockEntity.getRecipe();
+        Optional<ModRecipe<?>> searchResult = blockEntity.getRecipe();
         if(searchResult.isEmpty()) return InteractionResult.FAIL;
         ModRecipe<?> foundRecipe = searchResult.get();
         if(foundRecipe.getResultType() != ResultTypes.POTION){return InteractionResult.FAIL;}
@@ -52,9 +52,9 @@ public class KettleInteractionLogic extends KettleLogic implements KettleInterac
 
     private void handleIngredientFallOnKettle(ItemStack itemStack) {
         acceptIngredient(itemStack);
-        Optional<ModRecipe<?>> recipeOptional = RecipeMatcher.findMatchingRecipe(RecipeOrigin.KETTLE, kettleBlockEntity.getKettleContent());
+        Optional<ModRecipe<?>> recipeOptional = RecipeMatcher.findMatchingRecipe(RecipeOrigin.KETTLE, blockEntity.getKettleContent());
         if(recipeOptional.isEmpty()) return;
-        if(recipeOptional.get().getResultType() == ResultTypes.ITEM) kettleBlockEntity.startBrewing();
+        if(recipeOptional.get().getResultType() == ResultTypes.ITEM) blockEntity.startBrewing();
     }
 
     /**
@@ -62,10 +62,10 @@ public class KettleInteractionLogic extends KettleLogic implements KettleInterac
      * @param itemStack - ItemStack which will be consumed and therefore be shrunk by 1
      */
     private void acceptIngredient(ItemStack itemStack){
-        KettleBlock block = kettleBlockEntity.getKettleBlock();
-        BlockState blockState = kettleBlockEntity.getBlockState();
-        BlockPos blockPos = kettleBlockEntity.getBlockPos();
-        kettleBlockEntity.add(itemStack.copy());
+        KettleBlock block = blockEntity.getKettleBlock();
+        BlockState blockState = blockEntity.getBlockState();
+        BlockPos blockPos = blockEntity.getBlockPos();
+        blockEntity.add(itemStack.copy());
 
         itemStack.shrink(1);
         this.getServerLevel().playSound(null, blockPos, SoundEvents.PLAYER_SPLASH, SoundSource.BLOCKS,0.25f,1f);
@@ -82,8 +82,8 @@ public class KettleInteractionLogic extends KettleLogic implements KettleInterac
         emptyBottleItemStack.shrink(1);
         player.addItem(foundRecipe.getResult().get().copy());
 
-        BlockState blockState = kettleBlockEntity.getBlockState();
-        BlockPos blockPos = kettleBlockEntity.getBlockPos();
+        BlockState blockState = blockEntity.getBlockState();
+        BlockPos blockPos = blockEntity.getBlockPos();
         KettleBlock kettleBlock = (KettleBlock) blockState.getBlock();
         kettleBlock.reduceFluidLevel(this.getServerLevel(), blockState, blockPos, 1);
         return InteractionResult.SUCCESS;
