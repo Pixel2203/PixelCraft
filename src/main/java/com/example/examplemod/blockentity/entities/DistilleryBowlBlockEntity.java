@@ -3,15 +3,15 @@ package com.example.examplemod.blockentity.entities;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.distilleryBowl.BowlCrafting;
 import com.example.examplemod.api.distilleryBowl.BowlInteraction;
+import com.example.examplemod.api.distilleryBowl.BowlInteractionLogic;
 import com.example.examplemod.api.vial.IVialable;
 import com.example.examplemod.api.vial.VialResult;
 import com.example.examplemod.api.vial.VialType;
-import com.example.examplemod.block.blocks.DistilleryBowl;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.menus.DistilleryBowlMenu;
+import joptsimple.internal.Strings;
 import lombok.Getter;
-import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -21,6 +21,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -39,7 +40,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableBlockEntity, MenuProvider, IVialable {
+public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableBlockEntity, MenuProvider, IVialable, BowlInteraction {
     @Getter
     private final ItemStackHandler itemHandler = new ItemStackHandler(1);
     private final ContainerData data;
@@ -47,15 +48,16 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
 
 
     @Getter
-    private VialType content = VialType.WATER;
+    @Nullable
+    private VialType content;
 
     private final BowlCrafting craftingLogic;
-    private final BowlInteraction interactionLogic;
+    private final BowlInteractionLogic interactionLogic;
 
     public DistilleryBowlBlockEntity(BlockPos p_155229_, BlockState p_155230_) {
         super(BlockEntityRegistry.DISTILLERY_BOWL_BLOCK_ENTITY.get(), p_155229_, p_155230_);
         this.craftingLogic = new BowlCrafting(this);
-        this.interactionLogic = new BowlInteraction(this);
+        this.interactionLogic = new BowlInteractionLogic(this);
         this.data = new ContainerData() {
 
             @Override
@@ -138,6 +140,43 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
         return new DistilleryBowlMenu(id, inventory, this, this.data);
     }
 
+
+
+
+    /**
+     *
+     * @return Returns the current bowl fluid color - water is befind returned as default
+     */
+    public int getColor() {
+        if(Objects.nonNull(this.content)) {
+            return this.content.getHexColor();
+        }
+        return 0x3F76E4;
+    }
+
+    @Override
+    public VialResult tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
+        return this.interactionLogic.tap(level, blockState, blockPos);
+    }
+
+    public boolean isWater() {
+        return this.getContent() == VialType.WATER;
+    }
+
+
+    public void setContent(@Nullable VialType content) {
+        this.content = content;
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+    }
+    public boolean hasContent() {
+        return this.content != null;
+    }
+
+
+
+
+
+
     @Override
     protected void saveAdditional(CompoundTag compoundTag) {
         CompoundTag modCompound = new CompoundTag();
@@ -170,69 +209,29 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
 
     @Override
     public CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        if(isContentDirty) {
-            CompoundTag modCompound = new CompoundTag();
-            if(Objects.nonNull(this.content)) {
-                modCompound.putString("content", this.content.name());
-                tag.put(ExampleMod.MODID, modCompound);
-                isContentDirty = false;
-            }
-
-        }
+        CompoundTag tag = new CompoundTag();
+        if(Objects.nonNull(this.content)) tag.putString("content", this.content.name());
+        else tag.putString("content", Strings.EMPTY);
         return tag;
     }
     @Override
     public void handleUpdateTag(CompoundTag tag) {
-        super.handleUpdateTag(tag);
-        if(tag.contains(ExampleMod.MODID)) {
-            CompoundTag modCompound = tag.getCompound(ExampleMod.MODID);
-            if(modCompound.contains("content")) {
-                this.content = VialType.valueOf(modCompound.getString("content"));
-            }
-        }
-
+        this.content = tag.getString("content").isBlank() ?
+                null : VialType.valueOf(tag.getString("content"));
     }
-
-    /**
-     *
-     * @return Returns the current bowl fluid color - water is befind returned as default
-     */
-    public int getColor() {
-        if(Objects.nonNull(this.content)) {
-            return this.content.getHexColor();
-        }
-        return 0x3F76E4;
-    }
-
     @Override
-    public VialResult tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
-        return this.interactionLogic.tap(level, blockState, blockPos);
-    }
-
-    public boolean isWater() {
-        return this.getContent() == VialType.WATER;
-    }
-    private boolean isContentDirty = true;
-
-    public void setContent(@NotNull VialType content) {
-        this.content = content;
-        isContentDirty = true;
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        if(Objects.isNull(pkt.getTag())) return;
+        handleUpdateTag(pkt.getTag());
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
     }
-
     @Override
     public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        var before = this.getContent();
-        super.onDataPacket(net, pkt);
-        boolean hasContentChanged = before !=  this.getContent();
-        if(hasContentChanged) {
-            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-        }
+    public BowlInteractionLogic getInteractionLogic() {
+        return this.interactionLogic;
     }
 }

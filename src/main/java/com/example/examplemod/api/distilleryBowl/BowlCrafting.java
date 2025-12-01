@@ -5,7 +5,6 @@ import com.example.examplemod.api.recipe.ModRecipe;
 import com.example.examplemod.api.recipe.RecipeMatcher;
 import com.example.examplemod.api.recipe.RecipeOrigin;
 import com.example.examplemod.api.vial.VialType;
-import com.example.examplemod.block.blocks.DistilleryBowl;
 import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
 import com.example.examplemod.tag.TagFactory;
 import lombok.Getter;
@@ -71,7 +70,6 @@ public class BowlCrafting extends BlockEntityLogic<DistilleryBowlBlockEntity> {
 
     public boolean hasRecipe() {
         boolean hasCraftingItem = blockEntity.getItemHandler().getStackInSlot(INPUT_SLOT).is(TagFactory.BOWL_INGREDIENT);
-        DistilleryBowl bowl = (DistilleryBowl) blockEntity.getBlockState().getBlock();
-        return hasCraftingItem && bowl.isFilled(blockEntity.getBlockState()) && blockEntity.isWater();
+        return hasCraftingItem && blockEntity.isWater();
     }
 }

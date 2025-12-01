@@ -1,14 +1,13 @@
 package com.example.examplemod;
 
-import com.example.examplemod.api.recipe.ModRecipeRegistry;
 import com.example.examplemod.api.recipe.ModRecipes;
 import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.block.blocks.DistilleryBowl;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.effect.MobEffectRegistry;
 import com.example.examplemod.entity.EntityRegistry;
-import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.event.ModEventHandler;
+import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;
 import com.example.examplemod.loot.ModLootModifiers;
 import com.example.examplemod.menus.ModMenuTypes;
@@ -19,23 +18,16 @@ import com.example.examplemod.sound.SoundRegistry;
 import com.example.examplemod.tab.TabRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.block.BlockColor;
-import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.IEventListener;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -43,7 +35,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -125,7 +116,6 @@ public class ExampleMod
         {
             ItemBlockRenderTypes.setRenderLayer(BlockRegistry.WhiteChalkBlock.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(BlockRegistry.GoldenChalkBlock.get(), RenderType.translucent());
-
 
             MenuScreens.register(ModMenuTypes.DISTILLERY_BOWL_MENU.get(), DistilleryBowlScreen::new);
             // Some client setup code

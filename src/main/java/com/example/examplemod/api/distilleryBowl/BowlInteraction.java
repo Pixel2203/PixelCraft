@@ -1,42 +1,13 @@
 package com.example.examplemod.api.distilleryBowl;
 
-import com.example.examplemod.api.kettle.BlockEntityLogic;
-import com.example.examplemod.api.vial.IVialable;
-import com.example.examplemod.api.vial.VialResult;
-import com.example.examplemod.api.vial.VialType;
-import com.example.examplemod.block.blocks.DistilleryBowl;
-import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 
-import java.util.Optional;
+public interface BowlInteraction {
 
-public class BowlInteraction extends BlockEntityLogic<DistilleryBowlBlockEntity> implements IVialable {
+    BowlInteractionLogic getInteractionLogic();
 
-    public BowlInteraction(DistilleryBowlBlockEntity blockEntity) {
-        super(blockEntity);
+    default InteractionResult use(Player player) {
+        return getInteractionLogic().use(player);
     }
-
-    @Override
-    public VialResult tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
-        if(!canUseVial(blockState)) return VialResult.failed();
-        return getVialResult().map(vialType -> {
-            DistilleryBowl bowl = (DistilleryBowl) blockState.getBlock();
-            bowl.empty(level, blockState, blockPos);
-            blockEntity.setContent(VialType.WATER);
-            return VialResult.success(vialType);
-        }).orElse(VialResult.failed());
-    }
-
-    private boolean canUseVial(BlockState blockState) {
-        DistilleryBowl bowl = (DistilleryBowl) blockState.getBlock();
-        return bowl.isFilled(blockState) && !blockEntity.isWater();
-    }
-
-    private Optional<VialType> getVialResult() {
-        return Optional.ofNullable(blockEntity.getContent());
-    }
-
-
 }

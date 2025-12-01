@@ -1,25 +1,21 @@
 package com.example.examplemod.block.blocks;
 
+import com.example.examplemod.api.distilleryBowl.BowlInteraction;
 import com.example.examplemod.api.vial.IVialable;
 import com.example.examplemod.api.vial.VialResult;
 import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
-import com.example.examplemod.item.ItemRegistry;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -32,7 +28,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 @Slf4j
@@ -41,7 +36,7 @@ public class DistilleryBowl extends Block implements EntityBlock, IVialable {
     public static final BooleanProperty isFilled = BooleanProperty.create("filled");
 
     public static BlockColor bowlBlockColor = (state, tintGetter, blockPos, tintIndex) -> {
-        if(((DistilleryBowl)state.getBlock()).isFilled(state)) {
+        if(state.getValue(isFilled)) {
             if(tintGetter != null && tintGetter.getBlockEntity(blockPos) instanceof DistilleryBowlBlockEntity distilleryBowlBlockEntity) {
                 return distilleryBowlBlockEntity.getColor();
             }
@@ -50,7 +45,7 @@ public class DistilleryBowl extends Block implements EntityBlock, IVialable {
     };
 
     public DistilleryBowl() {
-        super(BlockBehaviour.Properties.of());
+        super(BlockBehaviour.Properties.of().noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(isFilled, Boolean.FALSE));
     }
 
@@ -68,41 +63,12 @@ public class DistilleryBowl extends Block implements EntityBlock, IVialable {
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult p_60508_) {
         if(level.isClientSide()) return super.use(blockState, level, blockPos, player, hand, p_60508_);
         if(hand != InteractionHand.MAIN_HAND) return InteractionResult.FAIL;
-        ItemStack itemStack = player.getItemInHand(hand);
-        if(itemStack.is(Items.POTION)) {
-            if(isFilled(blockState)) return InteractionResult.FAIL;
-            if(!player.isCreative()){
-                itemStack.shrink(1);
-            }
-            this.fill((ServerLevel) level, blockState, blockPos);
-            return InteractionResult.SUCCESS;
-        }
 
-        if(itemStack.is(Items.AIR)) {
-            BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if(blockEntity instanceof DistilleryBowlBlockEntity distilleryBowlBlockEntity) {
-                NetworkHooks.openScreen((ServerPlayer) player, distilleryBowlBlockEntity, blockPos);
-                return InteractionResult.SUCCESS;
-            }
-        }
-
-        if(itemStack.is(ItemRegistry.VIAL.get())) {
-            return InteractionResult.PASS;
+        if(level.getBlockEntity(blockPos) instanceof BowlInteraction bowlInteraction) {
+            return bowlInteraction.use(player);
         }
 
         return InteractionResult.FAIL;
-    }
-
-    public void empty(ServerLevel level, BlockState blockState, BlockPos blockPos) {
-        level.setBlockAndUpdate(blockPos, blockState.setValue(isFilled, Boolean.FALSE));
-    }
-
-    public boolean isFilled(BlockState blockState) {
-        return blockState.getValue(isFilled);
-    }
-
-    public void fill(ServerLevel level, BlockState blockState, BlockPos blockPos) {
-        level.setBlockAndUpdate(blockPos, blockState.setValue(isFilled, true));
     }
 
     @Override
