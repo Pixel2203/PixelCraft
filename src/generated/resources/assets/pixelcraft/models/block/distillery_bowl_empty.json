@@ -1,0 +1,4 @@
+{
+  "parent": "pixelcraft:block/templates/distillery_bowl/distillery_bowl_empty_template",
+  "render_type": "minecraft:translucent"
+}

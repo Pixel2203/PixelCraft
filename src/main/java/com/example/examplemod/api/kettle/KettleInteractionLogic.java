@@ -54,7 +54,7 @@ public class KettleInteractionLogic extends BlockEntityLogic<KettleBlockEntity> 
         acceptIngredient(itemStack);
         Optional<ModRecipe<?>> recipeOptional = RecipeMatcher.findMatchingRecipe(RecipeOrigin.KETTLE, blockEntity.getKettleContent());
         if(recipeOptional.isEmpty()) return;
-        if(recipeOptional.get().getResultType() == ResultTypes.ITEM) blockEntity.startBrewing();
+        blockEntity.startBrewing();
     }
 
     /**

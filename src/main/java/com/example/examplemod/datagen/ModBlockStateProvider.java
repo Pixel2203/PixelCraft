@@ -2,26 +2,26 @@ package com.example.examplemod.datagen;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.block.blocks.DistilleryBowl;
 import com.example.examplemod.block.blocks.GlimmerGras;
 import com.example.examplemod.block.blocks.SoulFlower;
-import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.Map;
 
 
 public class ModBlockStateProvider extends BlockStateProvider {
-    private static final ResourceLocation CHALK_TEMPLATE = new ResourceLocation(ExampleMod.MODID, "chalk_template");
+    private static final ResourceLocation CHALK_TEMPLATE = new ResourceLocation(ExampleMod.MODID, "block/templates/chalk_template");
 
+    private static final String DISTILLERY_BOWL_TEMPLATE_PATH = "block/templates/distillery_bowl/";
+    private static final String CAULDRON_TEMPLATE_PATH = "block/templates/cauldron_custom/";
+    private static final String RUNE_PAGE_HOLDER_TEMPLATE_PATH = "block/templates/rune_page_holder/";
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, ExampleMod.MODID, exFileHelper);
     }
@@ -57,7 +57,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         simpleItemWithCustomBlock(
                 BlockRegistry.CauldronCustomBlock,
-                new ResourceLocation(ExampleMod.MODID,"cauldron_custom_template"),
+                new ResourceLocation(ExampleMod.MODID,CAULDRON_TEMPLATE_PATH + "cauldron_custom_template"),
                 Map.of("outside", "cauldron_custom" , "inside","cauldron_custom_inner", "particle", "cauldron_custom"));
 
         simpleBlock(BlockRegistry.FogBlock.get(),
@@ -72,6 +72,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 1, new ConfiguredModel[]{ new ConfiguredModel(models().cross("glimmer_gras_1", modLoc("block/" + "glimmer_gras_1")).renderType(mcLoc("cutout"))) },
                 2, new ConfiguredModel[]{ new ConfiguredModel(models().cross("glimmer_gras_2", modLoc("block/" + "glimmer_gras_2")).renderType(mcLoc("cutout"))) }
         ));
+
+        registerBooleanBlockState(BlockRegistry.DistilleryBowlBlock, DistilleryBowl.isFilled, Map.of(
+                false, new ConfiguredModel[] {
+                        new ConfiguredModel(models().withExistingParent("distillery_bowl_empty", modLoc(DISTILLERY_BOWL_TEMPLATE_PATH +"distillery_bowl_empty_template")).renderType(mcLoc("translucent")))
+                },
+                true, new ConfiguredModel[] {
+                        new ConfiguredModel(models().withExistingParent( "distillery_bowl_water", modLoc(DISTILLERY_BOWL_TEMPLATE_PATH + "distillery_bowl_filled_template")).renderType(mcLoc("translucent")).texture("water_texture", mcLoc("block/water_still")))
+                }
+        ));
+
+
+
 
     }
     private VariantBlockStateBuilder registerBlockStateWithBlock(RegistryObject<Block> blockRegistryObject, ConfiguredModel ... models){
@@ -162,7 +174,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         name += mixture ? "_mixture" : "_default";
         if(boiling){name += "_boiling";}
         final String contentTexture = mixture ? boiling ? "mixture_boiling" : "mixture_still" : "water_default";
-        simpleCustomBlock(name, new ResourceLocation(ExampleMod.MODID, "block/" + templateName), Map.of("content", contentTexture) );
+        simpleCustomBlock(name, new ResourceLocation(ExampleMod.MODID, CAULDRON_TEMPLATE_PATH + templateName), Map.of("content", contentTexture) );
     }
 
     private void simpleCrossBlockWithItem(RegistryObject<Block> block) {

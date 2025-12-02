@@ -3,8 +3,10 @@ package com.example.examplemod.event;
 import com.example.examplemod.api.APIHelper;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.nbt.CustomNBTTags;
+import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.capabilities.PlayerSoulEnergy;
 import com.example.examplemod.capabilities.PlayerSoulEnergyProvider;
+import com.example.examplemod.effect.MobEffectRegistry;
 import com.example.examplemod.entity.EntityRegistry;
 import com.example.examplemod.entity.entities.SoulEntity;
 import com.example.examplemod.entity.models.SoulEntityModel;
@@ -20,20 +22,29 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodData;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
+import net.minecraftforge.client.event.ViewportEvent;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -118,7 +129,49 @@ public class EventHandler {
         event.register(PlayerSoulEnergy.class);
     }
 
+    @SubscribeEvent
+    public static void onFogRender(ViewportEvent.RenderFog event){
+        BlockPos pos = event.getCamera().getBlockPosition();
+        if (event.getCamera().getEntity().level().getBlockState(pos).is(BlockRegistry.FogBlock.get())) {
+            event.setNearPlaneDistance(0.1F);
+            event.setFarPlaneDistance(4.0F); // Sicht stark reduziert
+            event.setCanceled(true);
+        }
+    }
 
+    @SubscribeEvent
+    public static void onFoodConsume(LivingEntityUseItemEvent.Finish event){
+        if(!(event.getEntity() instanceof Player p)) return;
+        MobEffectInstance effect = p.getEffect(MobEffectRegistry.GLUTTONY.get());
+        if(Objects.isNull(effect)) return;
+
+        ItemStack item = event.getItem();
+        FoodProperties properties = item.getFoodProperties(p);
+        if(properties == null) return;
+        int nutrition = properties.getNutrition();
+        float saturation = properties.getSaturationModifier();
+        FoodData foodData = p.getFoodData();
+
+        for(int i = 0; i < effect.getAmplifier() + 1; i++){
+            foodData.eat(nutrition, saturation);
+        }
+
+    }
+
+    @SubscribeEvent
+    public static void onTargetChange(LivingChangeTargetEvent event) {
+        LivingEntity target = event.getNewTarget();
+        LivingEntity attacker = event.getEntity();
+
+        if (!(attacker.getType() == EntityType.ZOMBIE || attacker.getType() == EntityType.SKELETON)) return; // Nur Untote
+        if (!(target instanceof Player player)) return;
+
+        // Prüfen, ob Ziel den Effekt hat
+        if (player.hasEffect(MobEffectRegistry.CRYPTLIGHT.get())) {
+            // Ziel darf nicht angegriffen werden
+            event.setCanceled(true);
+        }
+    }
 
 
 }

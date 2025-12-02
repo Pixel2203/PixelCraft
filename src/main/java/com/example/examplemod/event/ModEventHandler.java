@@ -2,17 +2,21 @@ package com.example.examplemod.event;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.nbt.CustomNBTTags;
+import com.example.examplemod.api.runes.RuneType;
 import com.example.examplemod.api.vial.VialType;
+import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.particle.ParticleFactory;
 import com.example.examplemod.particle.custom.CustomBubbleProvider;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -60,7 +64,18 @@ public class ModEventHandler {
                 }
         );
 
+        ItemProperties.register(ItemRegistry.WOODEN_RUNE.get(), new ResourceLocation(ExampleMod.MODID + ":rune_type"),
+                (stack, p_174677_, p_174678_, p_174679_) -> {
+                    CompoundTag tag = stack.getOrCreateTag();
+                    if(!tag.contains(ExampleMod.MODID)) return -1f;
+                    if(!tag.getCompound(ExampleMod.MODID).contains("runeType")) return -1f;
+                    String runeType = tag.getCompound(ExampleMod.MODID).getString("runeType");
+                    return RuneType.valueOf(runeType).ordinal();
+                }
+        );
+
     }
+
 
 
 

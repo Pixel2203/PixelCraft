@@ -1,8 +1,10 @@
 package com.example.examplemod.tab;
 
+import com.example.examplemod.api.runes.RuneType;
 import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;
+import com.example.examplemod.item.items.WoodenRune;
 import com.example.examplemod.item.items.potion.CustomSplashPotionItem;
 import com.example.examplemod.item.items.potion.potions.flora.FloraSplashPotionItem;
 import com.example.examplemod.item.items.potion.potions.freezing.FreezingSplashPotionItem;
@@ -25,16 +27,20 @@ public class TabFactory {
                                 .forEach(output::accept);
                         output.accept(ItemRegistry.STATUE_STONE.get());
                         output.accept(ItemRegistry.STATUE_POWERFUL_STONE.get());
-                        output.accept(FloraSplashPotionItem.createFloraPotion(1,1));
-                        output.accept(FloraSplashPotionItem.createFloraPotion(2,1));
-                        output.accept(FloraSplashPotionItem.createFloraPotion(3,1));
-                        output.accept(HungerRegenerationSplashPotionItem.createHungerRegenerationPotion(1,1,100,0));
-                        output.accept(HungerRegenerationSplashPotionItem.createHungerRegenerationPotion(2,1,200,1));
-                        output.accept(HungerRegenerationSplashPotionItem.createHungerRegenerationPotion(3,1,300,2));
+                        output.accept(FloraSplashPotionItem.create(1,1));
+                        output.accept(FloraSplashPotionItem.create(2,1));
+                        output.accept(FloraSplashPotionItem.create(3,1));
+                        output.accept(HungerRegenerationSplashPotionItem.create(1,1,100,0));
+                        output.accept(HungerRegenerationSplashPotionItem.create(2,1,200,1));
+                        output.accept(HungerRegenerationSplashPotionItem.create(3,1,300,2));
                         output.accept(FreezingSplashPotionItem.createFreezePotion(1,200,0));
 
                         for(VialType vialType : VialType.values()) {
                             output.accept(Vial.createVialWithType(vialType));
+                        }
+
+                        for(RuneType runeType : RuneType.values()) {
+                            output.accept(WoodenRune.create(runeType));
                         }
 
                     }).build();

@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "pixelcraft:item/wooden_rune_0",
+      "predicate": {
+        "pixelcraft:rune_type": 0.0
+      }
+    },
+    {
+      "model": "pixelcraft:item/wooden_rune_1",
+      "predicate": {
+        "pixelcraft:rune_type": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "pixelcraft:item/wooden_rune_base"
+  }
+}

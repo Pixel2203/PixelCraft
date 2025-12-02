@@ -1,14 +1,17 @@
 package com.example.examplemod.api.recipe;
 
+import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.result.ResultTypes;
 import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class ModRecipes {
+import java.util.List;
 
+public class ModRecipes {
 
     public static void register() {
 
@@ -21,7 +24,17 @@ public class ModRecipes {
                 Vial.createVialWithType(VialType.SOUL_DEW),
                 new ItemStack(ItemRegistry.WHITE_CHALK.get()));
 
+
         simpleBowlRecipe(new ItemStack(ItemRegistry.GLIMMER_LEAF.get()), VialType.SHIMMER_ESSENCE);
+
+        ModRecipeRegistry.registerCustom(
+                RecipeOrigin.KETTLE,
+                ResultTypes.CUSTOM,
+                CustomResultBuilders.SOUL_LIGHT_BUILDER,
+                Vial.createVialWithType(VialType.SHIMMER_ESSENCE),
+                new ItemStack(ItemRegistry.SOUL_FRAGMENT.get()),
+                new ItemStack(Items.AMETHYST_SHARD));
+
 
     }
 

@@ -1,6 +1,7 @@
 package com.example.examplemod.datagen;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.api.runes.RuneType;
 import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.data.PackOutput;
@@ -30,6 +31,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.GLIMMER_GRAS_SEED);
         simpleItem(ItemRegistry.SOUL_FRAGMENT);
         simpleItem(ItemRegistry.GLIMMER_LEAF);
+        simpleItemFromTexture(ItemRegistry.RUNE_PAGE, "rune_page_1");
 
         simpleItemFromTexture(ItemRegistry.HEALING_SCROLL, "sealed_scroll");
         simpleItemFromTexture(ItemRegistry.PROJECTILE_BARRIER_SCROLL,"sealed_scroll");
@@ -49,6 +51,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleTextureForPredicate("item/crystals/crystal_3", "crystals/crystal_3");
         simpleTextureForPredicate("item/crystals/crystal_4", "crystals/crystal_4");
 
+
+        this.generateWoodenRunePredicates();
     }
     private ItemModelBuilder simpleItem(RegistryObject<Item> item){
         return withExistingParent(item.getId().getPath(),
@@ -73,6 +77,35 @@ public class ModItemModelProvider extends ItemModelProvider {
                 new ResourceLocation("item/generated")).texture("layer0",
                 new ResourceLocation(ExampleMod.MODID, "item/" + texture));
     }
+
+    private void generateWoodenRunePredicates() {
+        String mainModel = ItemRegistry.WOODEN_RUNE.getId().getPath();
+
+        // Basis Holzrune ohne Overlay (layer0)
+        ItemModelBuilder parent = withExistingParent(mainModel,
+                new ResourceLocation("item/generated"))
+                .texture("layer0", new ResourceLocation(ExampleMod.MODID, "item/wooden_rune_base"));
+
+        // Für jede RuneType einen Override erzeugen
+        for (RuneType type : RuneType.values()) {
+            int ord = type.ordinal();
+            String modelName = mainModel + "_" + ord;
+
+            // Child Model generieren
+            withExistingParent(modelName, new ResourceLocation("item/generated"))
+                    .texture("layer0", new ResourceLocation(ExampleMod.MODID, "item/wooden_rune_base"))
+                    .texture("layer1", new ResourceLocation(ExampleMod.MODID, "item/runes/rune_" + ord));
+
+            // Predicate hinzufügen
+            parent.override()
+                    .predicate(new ResourceLocation(ExampleMod.MODID, "rune_type"), ord)
+                    .model(new ModelFile.UncheckedModelFile(ExampleMod.MODID + ":item/" + modelName));
+        }
+    }
+
+
+
+
 
 
 

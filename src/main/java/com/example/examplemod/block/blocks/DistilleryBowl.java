@@ -92,6 +92,7 @@ public class DistilleryBowl extends Block implements EntityBlock, IVialable {
             DistilleryBowlBlockEntity blockEntity = (DistilleryBowlBlockEntity)level.getBlockEntity(blockPos);
             blockEntity.drops();
         }
+        super.onRemove(blockState, level, blockPos, newState, p_60519_);
 
     }
 

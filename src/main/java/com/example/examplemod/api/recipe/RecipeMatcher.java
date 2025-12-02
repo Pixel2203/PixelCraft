@@ -1,5 +1,6 @@
 package com.example.examplemod.api.recipe;
 
+import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class RecipeMatcher {
             var offered = new ArrayList<>(provided);
 
             for(int i = 0; i < target.size(); i++) {
+                // Ignoriere Seelenfragmente
+                if(target.get(i).is(ItemRegistry.SOUL_FRAGMENT.get()) && ItemStack.isSameItem(target.get(i), provided.get(i))) continue;
                 if(!ItemStack.isSameItemSameTags(target.get(i), offered.get(i))) continue outer;
             }
 

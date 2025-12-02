@@ -1,5 +1,6 @@
 package com.example.examplemod.blockentity.entities;
 
+import com.example.examplemod.api.APIHelper;
 import com.example.examplemod.api.ModUtils;
 import com.example.examplemod.api.kettle.KettleBrewing;
 import com.example.examplemod.api.kettle.KettleBrewingLogic;
@@ -170,5 +171,11 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
     }
 
 
+    public void dropContent() {
+        List<ItemStack> items = this.getKettleContent();
+        for(ItemStack itemStack : items){
+            APIHelper.spawnItemEntity(this.getLevel(), this.getBlockPos().above().getCenter(),itemStack,Vec3.ZERO);
+        }
 
+    }
 }

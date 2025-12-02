@@ -13,7 +13,6 @@ import com.example.examplemod.item.items.potion.potions.flora.FloraSplashPotionI
 import com.example.examplemod.item.items.potion.potions.freezing.FreezingSplashPotionItem;
 import com.example.examplemod.item.items.potion.potions.hungerregeneration.HungerRegenerationSplashPotionItem;
 import com.example.examplemod.item.items.talisman.SoulboundTalisman;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.Items;
@@ -27,7 +26,7 @@ import static com.example.examplemod.ExampleMod.MODID;
 
 public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static final RegistryObject<Item> ZIRCON = ITEMS.register("zircon", ZirconItem::new);
+    public static final RegistryObject<Item> ZIRCON = ITEMS.register("zircon", SoulLightCrystal::new);
     public static final RegistryObject<Item> POTION_FLORA = ITEMS.register("potion_flora" , () -> new FloraSplashPotionItem(new Item.Properties()));
     public static final RegistryObject<Item> POTION_FREEZE = ITEMS.register("potion_freeze" , () -> new FreezingSplashPotionItem(new Item.Properties()));
     public static final RegistryObject<Item> POTION_HUNGER_REGENERATION = ITEMS.register("potion_hunger_regeneration" , () ->  new HungerRegenerationSplashPotionItem(new Item.Properties()));
@@ -47,8 +46,10 @@ public class ItemRegistry {
     public static final RegistryObject<Item> VIAL = ITEMS.register("vial", Vial::new);
     public static final RegistryObject<Item> LIMESTONE = ITEMS.register("limestone", () -> new Item(new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> GLIMMER_GRAS_SEED = ITEMS.register("glimmer_gras_seed", () -> new ItemNameBlockItem(BlockRegistry.GlimmerGrasBlock.get(),new Item.Properties()));
-    public static final RegistryObject<Item> SOUL_FRAGMENT = ITEMS.register("soul_fragment", () -> new Item(new Item.Properties().stacksTo(64)));
+    public static final RegistryObject<Item> SOUL_FRAGMENT = ITEMS.register("soul_fragment", SoulFragment::new);
     public static final RegistryObject<Item> GLIMMER_LEAF = ITEMS.register("glimmer_leaf", () -> new Item(new Item.Properties().stacksTo(64)));
+    public static final RegistryObject<Item> RUNE_PAGE = ITEMS.register("rune_page", RunePage::new);
+    public static final RegistryObject<Item> WOODEN_RUNE = ITEMS.register("wooden_rune", WoodenRune::new);
     public static void registerItems(IEventBus eventBus){
         ITEMS.register(eventBus);
     }

@@ -5,18 +5,17 @@ import com.example.examplemod.api.ModUtils;
 import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.entity.entities.generalEntities.UntouchableEntity;
 import joptsimple.internal.Strings;
-import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.StringUtil;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,14 +46,16 @@ public class SoulLightEntity extends UntouchableEntity {
         this.entityData.define(ownerDataAccessor, Strings.EMPTY);
     }
 
-    @Setter
-    private Player owner;
+    private LivingEntity owner;
     private final double idleRange = 4;
 
     private boolean isCatchingUp = false;
     private Vec3 desiredPosition;
 
     private BlockPos myLastBlockPos;
+
+    private final int MAX_LIFESPAN = 20 * 60 ;
+    private int ticksToLive = MAX_LIFESPAN;
     public SoulLightEntity(EntityType<? extends LivingEntity> p_20966_, Level p_20967_) {
         super(p_20966_, p_20967_);
         this.noPhysics = true;
@@ -64,11 +65,25 @@ public class SoulLightEntity extends UntouchableEntity {
     public void tick() {
         super.tick();
         if(this.level().isClientSide) return;
+        if(owner == null && !StringUtil.isNullOrEmpty(this.entityData.get(ownerDataAccessor))) {
+            this.owner = this.level().getPlayerByUUID(UUID.fromString(this.entityData.get(ownerDataAccessor)));
+        }
+        this.handleLifSpan();
+        this.handleLighting();
+
         if(this.owner == null) {
             return;
         }
         this.followOwner();
-        this.handleLighting();
+
+
+    }
+
+    private void handleLifSpan() {
+        this.ticksToLive--;
+        if(this.ticksToLive <= 0) {
+            this.hurt(this.damageSources().magic(), this.getHealth());
+        }
     }
 
     @Override
@@ -79,6 +94,12 @@ public class SoulLightEntity extends UntouchableEntity {
                 level().setBlockAndUpdate(this.myLastBlockPos, Blocks.AIR.defaultBlockState());
             }
         }
+    }
+
+    @Override
+    public void die(DamageSource p_21014_) {
+        super.die(p_21014_);
+        this.onRemovedFromWorld();
     }
 
     private void handleLighting() {
@@ -152,12 +173,13 @@ public class SoulLightEntity extends UntouchableEntity {
         CompoundTag modCompound = compoundTag.getCompound(ExampleMod.MODID);
         String ownerUUID = modCompound.getString("Owner");
         if(!StringUtil.isNullOrEmpty(ownerUUID)) {
-            this.owner = this.level().getPlayerByUUID(UUID.fromString(ownerUUID));
+            this.entityData.set(ownerDataAccessor, ownerUUID);
         }
 
         this.myLastBlockPos = Optional.of(ModUtils.blockPosFromTag(modCompound.getCompound("MyLastBlockPos"))).orElse(this.blockPosition());
         this.desiredPosition = Optional.ofNullable(ModUtils.vec3FromTag(modCompound.getCompound("DesiredPosition"))).orElse(this.position());
         this.isCatchingUp = Optional.of(modCompound.getBoolean("CatchingUp")).orElse(false);
+        this.ticksToLive = modCompound.getInt("TicksToLive");
 
     }
 
@@ -166,7 +188,7 @@ public class SoulLightEntity extends UntouchableEntity {
         super.addAdditionalSaveData(compoundTag);
         CompoundTag modCompound = new CompoundTag();
         if(Objects.nonNull(this.owner)) {
-            modCompound.putString("Owner", this.owner.getStringUUID());
+            modCompound.putString("Owner", this.entityData.get(ownerDataAccessor));
             modCompound.putBoolean("CatchingUp", this.isCatchingUp);
         }
 
@@ -179,6 +201,7 @@ public class SoulLightEntity extends UntouchableEntity {
             CompoundTag tag = ModUtils.vec3ToTag(this.myLastBlockPos);
             modCompound.put("MyLastBlockPos", tag);
         }
+        modCompound.putInt("TicksToLive", this.ticksToLive);
 
         compoundTag.put(ExampleMod.MODID, modCompound);
     }
@@ -187,5 +210,10 @@ public class SoulLightEntity extends UntouchableEntity {
     public boolean isNoGravity() {
         return true;
 
+    }
+
+    public void setOwner(LivingEntity owner) {
+        this.owner = owner;
+        this.entityData.set(ownerDataAccessor, owner.getStringUUID());
     }
 }

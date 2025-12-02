@@ -1,11 +1,13 @@
 package com.example.examplemod.api;
 
+import com.example.examplemod.ExampleMod;
 import com.example.examplemod.tag.TagFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
@@ -111,6 +113,14 @@ public class ModUtils {
 
     public static boolean isIngredient(ItemStack itemStack){
         return itemStack.is(TagFactory.INGREDIENT);
+    }
+
+    public static boolean isBound(ItemStack itemStack){
+        CompoundTag compoundTag = itemStack.getOrCreateTag();
+        if(!compoundTag.contains(ExampleMod.MODID)) return false;
+        CompoundTag modTag = compoundTag.getCompound(ExampleMod.MODID);
+        String boundTo = modTag.getString("boundTo");
+        return !StringUtil.isNullOrEmpty(boundTo);
     }
 
 }

@@ -42,7 +42,7 @@ public class FloraSplashPotionItem extends CustomSplashPotionItem {
         super.appendHoverText(itemStack, level, components, flag);
     }
 
-    public static ItemStack createFloraPotion(int level, int amount){
+    public static ItemStack create(int level, int amount){
         ItemStack potion = new ItemStack(ItemRegistry.POTION_FLORA.get(), amount);
         addFloraBoundsTag(potion,level);
         NBTHelper.addPotionLevelNbtData(potion,level);

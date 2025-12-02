@@ -1,5 +1,5 @@
 {
-  "parent": "pixelcraft:block/distillery_bowl_filled_template",
+  "parent": "pixelcraft:block/templates/distillery_bowl/distillery_bowl_filled_template",
   "render_type": "minecraft:translucent",
   "textures": {
     "water_texture": "minecraft:block/water_still"

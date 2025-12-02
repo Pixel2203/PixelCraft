@@ -3,6 +3,8 @@
     "minecraft:glowstone_dust",
     "minecraft:redstone",
     "pixelcraft:vial",
-    "pixelcraft:white_chalk"
+    "pixelcraft:white_chalk",
+    "pixelcraft:soul_fragment",
+    "minecraft:amethyst_shard"
   ]
 }

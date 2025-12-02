@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class ModRecipeRegistry {
 
@@ -22,6 +23,20 @@ public class ModRecipeRegistry {
     ) {
 
         var recipe = new ModRecipe<>(origin, type, List.of(ingredients),result);
+
+        RECIPES.computeIfAbsent(origin, o -> new ArrayList<>())
+                .add(recipe);
+
+        return recipe;
+    }
+
+    public static <T> ModRecipe<T> registerCustom(
+            RecipeOrigin origin,
+            ResultTypes type,
+            Function<List<ItemStack>, ItemStack> crafterFunction,
+            ItemStack... ingredients
+    ) {
+        var recipe = new ModRecipe<T>(origin, type, List.of(ingredients), null, crafterFunction);
 
         RECIPES.computeIfAbsent(origin, o -> new ArrayList<>())
                 .add(recipe);

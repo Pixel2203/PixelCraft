@@ -37,7 +37,7 @@ public class HungerRegenerationSplashPotionItem extends CustomSplashPotionItem {
         super.appendHoverText(itemStack, level, components, flag);
     }
 
-    public static ItemStack createHungerRegenerationPotion(int level,int amount, int duration, int amplifier){
+    public static ItemStack create(int level, int amount, int duration, int amplifier){
         ItemStack potion = new ItemStack(ItemRegistry.POTION_HUNGER_REGENERATION.get(),amount);
         NBTHelper.addPotionCommonNbtData(potion,duration,amplifier);
         NBTHelper.addPotionLevelNbtData(potion,level);
