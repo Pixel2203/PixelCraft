@@ -1,4 +1,4 @@
-// 1.20.1	2025-12-03T16:27:25.3786001	Registries
+// 1.20.1	2025-12-03T17:32:33.38175	Registries
 fddaa6f191a09d525e8faeb849fa0ec7012f0317 data/pixelcraft/forge/biome_modifier/add_magic_tree.json
-7fc20bc5ad1e6fb9c95fcde32c838780e4a95f46 data/pixelcraft/worldgen/configured_feature/magic_tree.json
-41bbceaa1a8ace450115169e9bda1bc52bfe71db data/pixelcraft/worldgen/placed_feature/magic_tree_placed.json
+749edae168e9782cc76d7c0207a10091aed44dab data/pixelcraft/worldgen/configured_feature/magic_tree.json
+d18ac397aac920d392e9c00a1be5292639e51d8f data/pixelcraft/worldgen/placed_feature/magic_tree_placed.json

@@ -2,6 +2,7 @@ package com.example.examplemod.worldgen;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.block.BlockRegistry;
+import com.example.examplemod.worldgen.tree.CustomTrunkPlacer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -31,9 +32,9 @@ public class ModConfiguredFeatures {
                 Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
                     BlockStateProvider.simple(BlockRegistry.MagicWood.get()),
-                    new StraightTrunkPlacer(3,2,0),
+                    new CustomTrunkPlacer(3, 2, 0),
                     BlockStateProvider.simple(Blocks.ACACIA_LEAVES),
-                    new BlobFoliagePlacer(ConstantInt.of(3), ConstantInt.of(2),3),
+                    new BlobFoliagePlacer(ConstantInt.of(3), ConstantInt.of(3),2),
                     new TwoLayersFeatureSize(1,0,2)
                 ).build()
         );

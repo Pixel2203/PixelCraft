@@ -16,6 +16,7 @@ import com.example.examplemod.particle.ParticleFactory;
 import com.example.examplemod.screen.DistilleryBowlScreen;
 import com.example.examplemod.sound.SoundRegistry;
 import com.example.examplemod.tab.TabRegistry;
+import com.example.examplemod.worldgen.tree.ModTrunkPlacer;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -78,6 +79,7 @@ public class ExampleMod
         SoundRegistry.register(modEventBus);
         ModLootModifiers.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        ModTrunkPlacer.register(modEventBus);
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().register(ModEventHandler.class);

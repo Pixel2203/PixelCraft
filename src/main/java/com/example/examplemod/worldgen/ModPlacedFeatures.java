@@ -22,6 +22,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.RarityFilter;
 
 import java.util.List;
 
@@ -36,8 +37,10 @@ public class ModPlacedFeatures {
     public static void bootstrap(BootstapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?,?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
         register(context, MAGICTREE_PLACED_KEY, configuredFeatures.getOrThrow(ModConfiguredFeatures.MAGICTREE_KEY),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(3, 0.1f, 2),
-                        BlockRegistry.MagicSapling.get()));
+                VegetationPlacements.treePlacement(
+                        RarityFilter.onAverageOnceEvery(8),
+                        BlockRegistry.MagicSapling.get()
+                ));
     }
 
 

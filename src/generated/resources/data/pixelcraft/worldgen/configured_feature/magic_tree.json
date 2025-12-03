@@ -10,8 +10,8 @@
     },
     "foliage_placer": {
       "type": "minecraft:blob_foliage_placer",
-      "height": 3,
-      "offset": 2,
+      "height": 2,
+      "offset": 3,
       "radius": 3
     },
     "foliage_provider": {
@@ -34,7 +34,7 @@
       "upper_size": 2
     },
     "trunk_placer": {
-      "type": "minecraft:straight_trunk_placer",
+      "type": "pixelcraft:core_trunk_placer",
       "base_height": 3,
       "height_rand_a": 2,
       "height_rand_b": 0

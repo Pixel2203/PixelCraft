@@ -45,7 +45,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> DistilleryBowlBlock = registerBlockWithItem("distillery_bowl", () -> Factory.Distillery_Bowl_BLK);
     public static final RegistryObject<Block> MagicSapling = registerBlockWithItem("magic_sapling", () -> Factory.MagicSaplingBlock_BLK);
     public static final RegistryObject<Block> MagicWood = registerBlockWithItem("magic_wood", () -> Factory.MagicWoodBlock_BLK);
-
+    public static final RegistryObject<Block> MagicWoodCore = registerBlockWithItem("magic_wood_core", () -> Factory.MagicWoodCoreBlock_BLK);
     private static <T extends Block> RegistryObject<T> registerBlockWithItem(String name, Supplier<T> block){
         RegistryObject<T> toReturn = (RegistryObject<T>) registerBlock(name, block);
         ItemRegistry.ITEMS.register(name, () ->  new BlockItem(block.get(), new Item.Properties()));
@@ -84,5 +84,6 @@ public class BlockRegistry {
         public static final Block MagicSaplingBlock_BLK = new SaplingBlock(new MagicTreeGrower(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
 
         public static final Block MagicWoodBlock_BLK = new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD));
+        public static final Block MagicWoodCoreBlock_BLK = new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD));
     }
 }
