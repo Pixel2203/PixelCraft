@@ -39,6 +39,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropNothing(BlockRegistry.GlimmerGrasBlock.get());
         this.dropSelf(BlockRegistry.DistilleryBowlBlock.get());
         this.dropSelf(BlockRegistry.MagicSapling.get());
+        this.dropNothing(BlockRegistry.MagicWood.get());
     }
 
     @Override

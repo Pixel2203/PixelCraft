@@ -82,6 +82,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 }
         ));
 
+        simpleBlockWithItem(BlockRegistry.MagicWood.get(), models().cubeAll("magic_wood", modLoc("block/magic_wood")));
+
 
 
 

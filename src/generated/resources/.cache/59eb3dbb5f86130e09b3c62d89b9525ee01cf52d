@@ -1,4 +1,4 @@
-// 1.20.1	2025-12-03T14:16:01.914387	Loot Tables
+// 1.20.1	2025-12-03T15:26:08.1695825	Loot Tables
 4ce9c2f9a9168bc434d035396c1e18ec0a3baa27 data/pixelcraft/loot_tables/blocks/cauldron_custom.json
 6580b86daf1d7d9b505a128e7f1f2fc3d78c6f65 data/pixelcraft/loot_tables/blocks/distillery_bowl.json
 e867ee75f8ded61ea4a7e841b6ae2cb318e10334 data/pixelcraft/loot_tables/blocks/fog_block.json
@@ -8,6 +8,7 @@ f95454600aead201c174dbdee1009756550f7dbc data/pixelcraft/loot_tables/blocks/glim
 07cc5399ef99c089f999a9894311f7509ce1f98f data/pixelcraft/loot_tables/blocks/invisible_light.json
 466ed07822a0524b625e4f9cc05eca37a60552ed data/pixelcraft/loot_tables/blocks/limestone_ore.json
 654f8b0f1839768e3c0a8c4f5167a5a8fbf6ab30 data/pixelcraft/loot_tables/blocks/magic_sapling.json
+192f3094abd576e08b79738660fb86f23348cb10 data/pixelcraft/loot_tables/blocks/magic_wood.json
 b6afc353f6bb480f5c9edc763dba0a5587a3ac0d data/pixelcraft/loot_tables/blocks/soul_flower.json
 c50c379da29f6248358096ca4d2a8298c82c3698 data/pixelcraft/loot_tables/blocks/statue_powerful_stone_base.json
 96ba52110b579aa03561bb38611221c3be425abd data/pixelcraft/loot_tables/blocks/statue_powerful_stone_middle.json
