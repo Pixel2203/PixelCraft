@@ -12,6 +12,12 @@
       "predicate": {
         "pixelcraft:rune_type": 1.0
       }
+    },
+    {
+      "model": "pixelcraft:item/wooden_rune_2",
+      "predicate": {
+        "pixelcraft:rune_type": 2.0
+      }
     }
   ],
   "textures": {

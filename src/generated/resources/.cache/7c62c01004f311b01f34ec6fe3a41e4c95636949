@@ -1,4 +1,4 @@
-// 1.20.1	2025-12-01T04:35:51.885837	Block States: pixelcraft
+// 1.20.1	2025-12-03T09:15:46.827916	Block States: pixelcraft
 d815ca1f311051177552a1dd62ea6470d93fd7fe assets/pixelcraft/blockstates/distillery_bowl.json
 dc9eb27b9142545646c38844e312fdaedaa534f0 assets/pixelcraft/blockstates/fog_block.json
 2b6e483706b75a17d4754c910301a6370aef065b assets/pixelcraft/blockstates/four_leaf_clover.json
@@ -19,10 +19,10 @@ d292e8f3ec8159711b7d99e73c3cddb71559030f assets/pixelcraft/models/block/cauldron
 b6155e48b4b7fffece65d5cfdf1be4931dd27ec4 assets/pixelcraft/models/block/cauldron_custom_level3_mixture_boiling.json
 e405e2ffc0b6ea7c5ce9a1163f760c03e8d507df assets/pixelcraft/models/block/distillery_bowl_empty.json
 552960e803d8a148088da634d357469049ec4289 assets/pixelcraft/models/block/distillery_bowl_water.json
-d39884fdfaa0233eca2bf44df3f4dabe642e12b0 assets/pixelcraft/models/block/fog_extreme.json
-9abedca69b0a69b21eebe2fb6c27f304da91d3e6 assets/pixelcraft/models/block/fog_light.json
-5bcf97fd89175ff462f7df0ef899a53e0d39d875 assets/pixelcraft/models/block/fog_medium.json
-01178cd9dd3c3f028690d0db77098734abceef98 assets/pixelcraft/models/block/fog_strong.json
+f9b2ce894211cccfa4a7ee3dfd121cef034ac83b assets/pixelcraft/models/block/fog_extreme.json
+e72d07f8042a9cc465fafdd3934ad90cb2ba67c9 assets/pixelcraft/models/block/fog_light.json
+bf73e51b378281906446ce724bd8c4e73158dbe1 assets/pixelcraft/models/block/fog_medium.json
+b3a5d23dfd47ce3a93de8bb5062a9cb1bb635a7f assets/pixelcraft/models/block/fog_strong.json
 8c808caf565a87e650995be6c7772b866ac0b410 assets/pixelcraft/models/block/four_leaf_clover.json
 55b5d00e04d213b393d99fd8530b4ead2653d2a8 assets/pixelcraft/models/block/glimmer_gras_0.json
 fc9e13b14aad877e01f07ed944f7ca01b921d007 assets/pixelcraft/models/block/glimmer_gras_1.json

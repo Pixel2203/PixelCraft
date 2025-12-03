@@ -2,6 +2,7 @@ package com.example.examplemod.tab;
 
 import com.example.examplemod.api.runes.RuneType;
 import com.example.examplemod.api.vial.VialType;
+import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;
 import com.example.examplemod.item.items.WoodenRune;

@@ -7,11 +7,10 @@ import com.example.examplemod.block.blocks.statue_blocks.PF.StatueBlockPFMiddle;
 import com.example.examplemod.block.blocks.statue_blocks.Basic.StatueBlockTop;
 import com.example.examplemod.block.blocks.statue_blocks.PF.StatueBlockPFTop;
 import com.example.examplemod.item.ItemRegistry;
+import com.example.examplemod.worldgen.tree.MagicTreeGrower;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -44,7 +43,7 @@ public class BlockRegistry {
     public static final RegistryObject<Block> InvisibleLightBlock = registerBlock("invisible_light", () -> Factory.INVISIBLE_LIGHT_BLK);
     public static final RegistryObject<Block> GlimmerGrasBlock  = registerBlock("glimmer_gras", () -> Factory.GLIMMERGRAS_BLK);
     public static final RegistryObject<Block> DistilleryBowlBlock = registerBlockWithItem("distillery_bowl", () -> Factory.Distillery_Bowl_BLK);
-
+    public static final RegistryObject<Block> MagicSapling = registerBlockWithItem("magic_sapling", () -> Factory.MagicSaplingBlock);
 
     private static <T extends Block> RegistryObject<T> registerBlockWithItem(String name, Supplier<T> block){
         RegistryObject<T> toReturn = (RegistryObject<T>) registerBlock(name, block);
@@ -81,5 +80,6 @@ public class BlockRegistry {
         public static final Block INVISIBLE_LIGHT_BLK = new InvisibleLightBlock();
         public static final Block GLIMMERGRAS_BLK = new GlimmerGras();
         public static final Block Distillery_Bowl_BLK = new DistilleryBowl();
+        public static final Block MagicSaplingBlock = new SaplingBlock(new MagicTreeGrower(),BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING));
     }
 }

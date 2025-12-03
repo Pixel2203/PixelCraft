@@ -13,8 +13,8 @@
   "item.pixelcraft.vial": "Vial",
   "item.pixelcraft.vials.soul_dew": "Soul Dew",
   "item.pixelcraft.wooden_rune": "Wooden Rune",
-  "item.pixelcraft.wooden_rune.cryptlight": "§b§l§nLight of the Crypt",
-  "item.pixelcraft.wooden_rune.gluttony": "§c§lDevourer's Mark",
+  "item.pixelcraft.wooden_rune.cryptlight": "Light of the Crypt",
+  "item.pixelcraft.wooden_rune.gluttony": "Devourer's Mark",
 
 
   "creativetab.example_tab": "Example Tab",
@@ -47,5 +47,6 @@
   "effect.pixelcraft.guardian_angle": "Guardian Angle",
   "effect.pixelcraft.freezing_protection": "Freezing Protection",
   "effect.pixelcraft.gluttony": "Gluttony",
-  "effect.pixelcraft.cryptlight": "Cryptlight"
+  "effect.pixelcraft.cryptlight": "Cryptlight",
+  "effect.pixelcraft.animal_friend": "Animal Friend"
 }

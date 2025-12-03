@@ -41,5 +41,8 @@ public class DataGenerators {
 
         // Loot
         generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(packOutput));
+
+        // Worldgen
+        generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput,lookupProvider));
     }
 }

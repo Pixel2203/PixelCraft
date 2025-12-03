@@ -61,10 +61,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 Map.of("outside", "cauldron_custom" , "inside","cauldron_custom_inner", "particle", "cauldron_custom"));
 
         simpleBlock(BlockRegistry.FogBlock.get(),
-                new ConfiguredModel(models().cubeAll("fog_light", modLoc("block/fog_1"))),
-                new ConfiguredModel(models().cubeAll("fog_medium", modLoc("block/fog_2"))),
-                new ConfiguredModel(models().cubeAll("fog_strong", modLoc("block/fog_3"))),
-                new ConfiguredModel(models().cubeAll("fog_extreme", modLoc("block/fog_4"))));
+                new ConfiguredModel(models().cubeAll("fog_light", modLoc("block/fog_1")).renderType(mcLoc("translucent"))),
+                new ConfiguredModel(models().cubeAll("fog_medium", modLoc("block/fog_2")).renderType(mcLoc("translucent"))),
+                new ConfiguredModel(models().cubeAll("fog_strong", modLoc("block/fog_3")).renderType(mcLoc("translucent"))),
+                new ConfiguredModel(models().cubeAll("fog_extreme", modLoc("block/fog_4")).renderType(mcLoc("translucent"))));
 
 
         registerIntegerBlockState(BlockRegistry.GlimmerGrasBlock, GlimmerGras.AGE, Map.of(
@@ -185,6 +185,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     private void simpleBlockItem(RegistryObject<Block> block, String textureName) {
         this.itemModels().withExistingParent(block.getId().getPath() , "item/generated").texture("layer0", modLoc("block/" + textureName));
+
+    }
+
+    private void saplingBlock(RegistryObject<Block> block) {
+        String blockName = block.getId().getPath();
+        registerBlockStateWithBlock(block, new ConfiguredModel(models().cross(blockName, modLoc("block/" + blockName)).renderType(mcLoc("cutout"))));
 
     }
 }

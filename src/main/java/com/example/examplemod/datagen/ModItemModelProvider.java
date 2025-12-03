@@ -33,14 +33,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ItemRegistry.GLIMMER_LEAF);
         simpleItemFromTexture(ItemRegistry.RUNE_PAGE, "rune_page_1");
 
-        simpleItemFromTexture(ItemRegistry.HEALING_SCROLL, "sealed_scroll");
-        simpleItemFromTexture(ItemRegistry.PROJECTILE_BARRIER_SCROLL,"sealed_scroll");
-        simpleItemFromTexture(ItemRegistry.CONFUSION_SCROLL,  "sealed_scroll");
+        simpleItemFromTexture(ItemRegistry.HEALING_SCROLL, "scrolls/sealed_scroll");
+        simpleItemFromTexture(ItemRegistry.PROJECTILE_BARRIER_SCROLL,"scrolls/sealed_scroll");
+        simpleItemFromTexture(ItemRegistry.CONFUSION_SCROLL,  "scrolls/sealed_scroll");
 
-        simpleItemFromTexture(ItemRegistry.PROTECTION_OF_DEATH_TALISMAN, "necklace_1");
-        simpleItemFromTexture(ItemRegistry.HUNGER_REGENERATION_TALISMAN,"necklace_3");
-        simpleItemFromTexture(ItemRegistry.PROTECTION_OF_FREEZING_TALISMAN,"necklace_4");
-        simpleItemFromTexture(ItemRegistry.SOULBOUND_TALISMAN, "necklace_7");
+        simpleItemFromTexture(ItemRegistry.PROTECTION_OF_DEATH_TALISMAN, "necklaces/necklace_1");
+        simpleItemFromTexture(ItemRegistry.HUNGER_REGENERATION_TALISMAN,"necklaces/necklace_3");
+        simpleItemFromTexture(ItemRegistry.PROTECTION_OF_FREEZING_TALISMAN,"necklaces/necklace_4");
+        simpleItemFromTexture(ItemRegistry.SOULBOUND_TALISMAN, "necklaces/necklace_7");
 
         simplePotion(ItemRegistry.POTION_FLORA,"potion_overlay_2",true);
         simplePotion(ItemRegistry.POTION_FREEZE,"potion_overlay_3",true);
@@ -68,8 +68,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         String baseTexture = throwable ? "splash_potion" : "potion";
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated"))
-                    .texture("layer0", new ResourceLocation("minecraft", "item/" + baseTexture ))
-                    .texture("layer1", new ResourceLocation(ExampleMod.MODID,"item/" + textureName));
+                    .texture("layer0", mcLoc("item/" + baseTexture ))
+                    .texture("layer1", new ResourceLocation(ExampleMod.MODID,"item/potions/" + textureName));
     }
 
     private ItemModelBuilder simpleTextureForPredicate(String state, String texture){

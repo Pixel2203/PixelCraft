@@ -7,8 +7,8 @@ import net.minecraftforge.common.util.Lazy;
 @Getter
 public enum RuneType {
     GLUTTONY(MobEffectRegistry.GLUTTONY::get,30 * 20, 0),
-    CRYPTLIGHT(MobEffectRegistry.CRYPTLIGHT::get,60 * 20, 0);
-
+    CRYPTLIGHT(MobEffectRegistry.CRYPTLIGHT::get,60 * 20, 0),
+    ANIMALFRIEND(MobEffectRegistry.ANIMALFRIEND::get,60 * 20 * 2, 0);
     private final Lazy<MobEffect> effect;
     private final int duration;
     private final int strength;

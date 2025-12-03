@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "pixelcraft:item/necklace_1"
+    "layer0": "pixelcraft:item/necklaces/necklace_1"
   }
 }
