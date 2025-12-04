@@ -7,7 +7,6 @@ import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.api.recipe.ModRecipe;
 import com.example.examplemod.api.recipe.RecipeMatcher;
 import com.example.examplemod.api.recipe.RecipeOrigin;
-import com.example.examplemod.api.result.ResultTypes;
 import com.example.examplemod.api.ritual.rituals.ChangeTimeToDayRitual;
 import com.example.examplemod.api.ritual.rituals.ExtractLiveRitual;
 import com.example.examplemod.api.ritual.util.ModRitual;
@@ -33,7 +32,10 @@ import org.apache.commons.lang3.EnumUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
 
 public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBlockEntity {
 
