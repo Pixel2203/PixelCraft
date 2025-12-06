@@ -1,4 +1,4 @@
-package com.example.examplemod.api.ritual.util;
+package com.example.examplemod.api.goldenChalk.rituals.util;
 
 public enum RitualStates {
         FREE,

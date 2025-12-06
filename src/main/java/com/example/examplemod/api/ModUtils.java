@@ -56,6 +56,14 @@ public class ModUtils {
 
     }
 
+    public static void sendParticles(ServerLevel level, ParticleOptions particle, Vec3 defaultPos, float probability, int amount, double xSpread, double ySpread, double zSpread, double p4){
+
+        if(random.nextFloat() > (1-probability)){
+            level.sendParticles(particle,defaultPos.x(), defaultPos.y(), defaultPos.z(),amount,xSpread,ySpread,zSpread,p4);
+        }
+
+    }
+
 
     public interface ArmorSlots {
         int HELMET = 3;

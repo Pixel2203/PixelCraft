@@ -40,7 +40,6 @@ public class GoldenChalkBlock extends ChalkBlock implements EntityBlock {
         if(!checkForSmallCircle(level,blockPos)){
             return InteractionResult.FAIL;
         }
-        List<ItemEntity> found = getItemEntitesInRangeFromBlockPos(level,blockPos,5);
         BlockEntity blockEntity = level.getBlockEntity(blockPos);
         GoldenChalkBlockEntity entity = (GoldenChalkBlockEntity) blockEntity;
 

@@ -1,15 +1,15 @@
-package com.example.examplemod.api.ritual.rituals;
+package com.example.examplemod.api.goldenChalk.rituals;
 
-import com.example.examplemod.api.ritual.util.ModRitual;
+import com.example.examplemod.api.goldenChalk.rituals.util.ModRitual;
+import com.example.examplemod.api.goldenChalk.rituals.util.ModRituals;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Objects;
 import java.util.Random;
 
 public class ExtractLiveRitual extends ModRitual {
@@ -30,19 +30,16 @@ public class ExtractLiveRitual extends ModRitual {
             Blocks.ANDESITE,
             Blocks.COARSE_DIRT
             };
-    public ExtractLiveRitual(Level level, BlockPos blockPos, BlockState blockState, int ritualProgress) {
-        super(level, blockPos, blockState, ritualProgress);
+    public ExtractLiveRitual(int ritualProgress) {
+        super(ritualProgress);
         this.currentX = ritualProgress;
         this.currentY = ritualProgress/3;
         this.currentZ = ritualProgress;
     }
 
     @Override
-    public int tick() {
+    public int tick(ServerLevel level, BlockState blockState, BlockPos blockPos) {
         int changedBlocks = 0;
-        if(Objects.isNull(level) || Objects.isNull(blockPos) || Objects.isNull(blockState)){
-            return 0;
-        }
 
         if(isFinished()){
             return this.ritualProgress;
@@ -88,14 +85,20 @@ public class ExtractLiveRitual extends ModRitual {
         return ++this.ritualProgress;
     }
 
+    @Override
+    public void onFinish(ServerLevel level, BlockState blockState, BlockPos blockPos) {
+
+    }
+
+    @Override
+    public ModRituals getType() {
+        return ModRituals.EXTRACT_LIVE;
+    }
+
+
     private Block getRandomGrassBlockReplaceable(){
         Random random = new Random();
         int r = random.nextInt(GRASS_BLOCK_REPLACEABLES.length);
         return GRASS_BLOCK_REPLACEABLES[r];
-    }
-
-    @Override
-    public void finishRitual() {
-
     }
 }

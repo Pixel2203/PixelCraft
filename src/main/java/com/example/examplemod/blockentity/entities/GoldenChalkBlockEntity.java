@@ -7,11 +7,10 @@ import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.api.recipe.ModRecipe;
 import com.example.examplemod.api.recipe.RecipeMatcher;
 import com.example.examplemod.api.recipe.RecipeOrigin;
-import com.example.examplemod.api.ritual.rituals.ChangeTimeToDayRitual;
-import com.example.examplemod.api.ritual.rituals.ExtractLiveRitual;
-import com.example.examplemod.api.ritual.util.ModRitual;
-import com.example.examplemod.api.ritual.util.ModRituals;
-import com.example.examplemod.api.ritual.util.RitualStates;
+import com.example.examplemod.api.goldenChalk.rituals.RitualFactory;
+import com.example.examplemod.api.goldenChalk.rituals.util.ModRitual;
+import com.example.examplemod.api.goldenChalk.rituals.util.ModRituals;
+import com.example.examplemod.api.goldenChalk.rituals.util.RitualStates;
 import com.example.examplemod.block.blocks.GoldenChalkBlock;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
@@ -30,7 +29,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.EnumUtils;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,31 +36,16 @@ import java.util.Optional;
 import java.util.Random;
 
 public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBlockEntity {
-
-    // Current inventory of GoldenChalkBlockEntity
-    private final NonNullList<ItemStack> ingredients = NonNullList.create();
-    // Saves the current ritual state
-    private int currentRitualState;
-
-    // Determines whether the entity is even counting ticks or not
-    private boolean isProgressing;
-    // ticker variable the counts the amount of ticks
-    private int ticker;
-    // Amount of ticks until the tick() method is called
+    private int ticker = 0;
+    private int ritualProgress = 0;
     private final int tickerInterval = 20;
-
-    // Name by which the Ritual can be identified
-    private ModRituals ritual;
-    // Progress of the ritual (amount of ticks it already recived)
-    private int ritualProgress;
-    // Instance of the Ritual Class
-    private ModRitual ritualHandler;
-
+    private ModRitual ritualHandler = null;
+    private RitualStates currentRitualState = RitualStates.FREE;
+    private final NonNullList<ItemStack> ingredients = NonNullList.create();
 
 
     public GoldenChalkBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BlockEntityRegistry.GOLDEN_CHALK_BLOCK_ENTITY.get(), blockPos, blockState);
-        setChanged();
     }
 
     /**
@@ -74,13 +57,15 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         CompoundTag modCompound = nbt.getCompound(ExampleMod.MODID);
         CompoundTag itemsTag = modCompound.getCompound("items");
         ContainerHelper.loadAllItems(itemsTag, ingredients);
-        this.currentRitualState = modCompound.getInt(CustomNBTTags.RITUAL_STATE);
-        this.isProgressing = modCompound.getBoolean(CustomNBTTags.IS_PROGRESSING);
+        this.currentRitualState = RitualStates.valueOf(modCompound.getString(CustomNBTTags.RITUAL_STATE));
         this.ritualProgress = modCompound.getInt(CustomNBTTags.PROGRESS);
         this.ticker = modCompound.getInt(CustomNBTTags.TICKER);
 
         var ritualName = modCompound.getString(CustomNBTTags.RITUAL_NAME);
-        if(EnumUtils.isValidEnum(ModRituals.class, ritualName)) this.ritual = ModRituals.valueOf(ritualName);
+        if(EnumUtils.isValidEnum(ModRituals.class, ritualName)) {
+            ModRituals activeRitual = ModRituals.valueOf(ritualName);
+            this.ritualHandler = RitualFactory.build(activeRitual,this.ritualProgress);
+        }
 
     }
 
@@ -90,11 +75,16 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         CompoundTag modCompound = new CompoundTag();
         CompoundTag itemsTag = new CompoundTag();
         ContainerHelper.saveAllItems(itemsTag, ingredients);
-        modCompound.putInt(CustomNBTTags.RITUAL_STATE,this.currentRitualState);
-        modCompound.putBoolean(CustomNBTTags.IS_PROGRESSING,this.isProgressing);
+        if(Objects.nonNull(this.currentRitualState)) {
+            modCompound.putString(CustomNBTTags.RITUAL_STATE,this.currentRitualState.name());
+        }
+
         modCompound.putInt(CustomNBTTags.PROGRESS,this.ritualProgress);
         modCompound.putInt(CustomNBTTags.TICKER,this.ticker);
-        modCompound.putString(CustomNBTTags.RITUAL_NAME,Objects.isNull(this.ritual) ? "" : this.ritual.name());
+        if(Objects.nonNull(this.ritualHandler)) {
+            modCompound.putString(CustomNBTTags.RITUAL_NAME, this.ritualHandler.getType().name());
+        }
+
         modCompound.put("items", itemsTag);
         nbt.put(ExampleMod.MODID,modCompound);
 
@@ -102,12 +92,13 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     }
 
     public void clickRitualBlock() {
-        if(this.currentRitualState != RitualStates.FREE){
-            return;
-        }
+        if(isBusy())return;
+        this.initRitual();
+    }
+
+    private void initRitual() {
         this.currentRitualState = RitualStates.COLLECTING;
         this.ingredients.clear();
-        this.isProgressing = true;
         setChanged();
     }
 
@@ -116,66 +107,54 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             return;
         }
         level.playSound(null, getBlockPos(), SoundEvents.ITEM_BREAK, SoundSource.BLOCKS,0.25f,1f);
-        dropInventoryItems();
+        dropContent();
         resetToDefault();
 
-        setChanged();
     }
     @Override
     public void tick() {
-        if(!isProgressing){
+        if(!this.isBusy()){
             return;
         }
         ticker++;
-        setChanged();
 
-        if(ticker < tickerInterval){
-            return;
+        if(ticker >= tickerInterval){
+            switch (this.currentRitualState){
+                case COLLECTING -> onCollect();
+                case COLLECTED -> onCollected();
+                case ACTIVE -> onRitualTick();
+            }
+            ticker = 0;
+
+
+            // Spawns Particles
+            var spawnParticlePosition = getBlockPos().above();
+            Random random = new Random();
+            int amountOfParticles = random.nextInt(1,4);
+            ModUtils.sendParticles((ServerLevel) getLevel(), ParticleTypes.FLAME, spawnParticlePosition,1f, amountOfParticles,0.4f,0,0.4f,0);
+
         }
 
-        switch (this.currentRitualState){
-            case RitualStates.COLLECTING -> collectNextItem();
-            case RitualStates.COLLECTED -> handleCollectedBehaviour();
-            case RitualStates.ACTIVE -> activeRitualTick();
-        }
-        ticker = 0;
-
-
-        // Spawns Particles
-        var spawnParticlePosition = getBlockPos().above();
-        Random random = new Random();
-        int amountOfParticles = random.nextInt(1,4);
-        ModUtils.sendParticles((ServerLevel) getLevel(), ParticleTypes.FLAME, spawnParticlePosition,1f, amountOfParticles,0.4f,0,0.4f,0);
 
         setChanged();
     }
 
-    private void activeRitualTick() {
-        if(Objects.isNull(ritualHandler)){
-            this.ritualHandler = getRitualHandler(this.ritual);
-            if(Objects.isNull(ritualHandler)){
-                return;
-            }
-        }
-        this.ritualProgress = ritualHandler.tick();
-        setChanged();
+    private void onRitualTick() {
+        this.ritualProgress = ritualHandler.tick((ServerLevel) this.getLevel(), this.getBlockState(), this.getBlockPos());
         if(ritualHandler.isFinished()){
-            ritualHandler.finishRitual();
+            ritualHandler.onFinish((ServerLevel) this.getLevel(), this.getBlockState(), this.getBlockPos());
             resetToDefault();
         }
     }
     private void resetToDefault() {
-        this.ritual = null;
         this.currentRitualState = RitualStates.FREE;
-        this.isProgressing = false;
         this.ritualHandler = null;
         this.ritualProgress = 0;
         this.ingredients.clear();
         this.ticker = 0;
-        setChanged();
     }
 
-    private void handleCollectedBehaviour(){
+    private void onCollected(){
         Optional<ModRecipe<?>> recipeOptional = RecipeMatcher.findMatchingRecipe(RecipeOrigin.CHALK,this.ingredients);
         if(recipeOptional.isEmpty()){
             cancelRitual();
@@ -189,34 +168,13 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         }
     }
     private void performRitual(ModRituals ritual){
-        this.ritual = ritual;
         this.ritualProgress = 0;
         this.currentRitualState = RitualStates.ACTIVE;
-        this.ritualHandler = getRitualHandler(this.ritual);
-        setChanged();
+        this.ritualHandler = RitualFactory.build(ritual, this.ritualProgress);;
     }
 
-    // Helper Methods
-    @Nullable
-    private ModRitual getRitualHandler(ModRituals ritualIdentifier) {
-        ModRitual ritual;
-
-        if(Objects.isNull(ritualIdentifier)){
-            return null;
-        }
-        if(Objects.isNull(level)){
-            return null;
-        }
-        switch (ritualIdentifier){
-            case EXTRACT_LIVE -> ritual = new ExtractLiveRitual(level, getBlockPos(), getBlockState(),this.ritualProgress);
-            case CHANGE_TIME_TO_DAY -> ritual = new ChangeTimeToDayRitual(level, getBlockPos(),getBlockState(),this.ritualProgress);
-            default -> ritual = null;
-        }
-        return ritual;
-    }
-    private void dropInventoryItems(){
-        if(ingredients.isEmpty()) return;
-        Vec3 itemSpawnPosition = ModUtils.calcCenterOfBlock(getBlockPos().above());
+    private void dropContent(){
+        Vec3 itemSpawnPosition = getBlockPos().above().getCenter();
         ingredients.forEach(itemStack -> APIHelper.spawnItemEntity(level,itemSpawnPosition,itemStack,Vec3.ZERO));
         ingredients.clear();
     }
@@ -224,10 +182,9 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
             if(Objects.isNull(level) || level.isClientSide()){
                 return;
             }
-            BlockPos aboveBlock = this.getBlockPos().above();
-            Vec3 itemSpawnPosition = ModUtils.calcCenterOfBlock(aboveBlock);
+            Vec3 itemSpawnPosition = this.getBlockPos().above().getCenter();
             APIHelper.spawnItemEntity(level,itemSpawnPosition,recipe.getResult().get(),Vec3.ZERO);
-            ((ServerLevel) level).sendParticles(ParticleTypes.EXPLOSION, aboveBlock.getX() + 0.5f,aboveBlock.getY()+0.5f,aboveBlock.getZ() +0.5f,0,1,1,1,1);
+            ModUtils.sendParticles((ServerLevel)level, ParticleTypes.EXPLOSION, itemSpawnPosition, 1,1,1,1,1,1);
             level.playSound(null, getBlockPos(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.BLOCKS,0.25f,1f);
             resetToDefault();
     }
@@ -239,7 +196,6 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     private void addIngredientFromGround(ItemStack itemStack){
         ingredients.add(itemStack.copy());
         itemStack.shrink(1);
-        setChanged();
     }
 
 
@@ -247,7 +203,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
      * Searches for near ItemEntities and adds them to the GoldenChalkBlock Inventory
      * Only adds ingredients that has an ingredient Tag!
      */
-    private void collectNextItem() {
+    private void onCollect() {
         if(Objects.isNull(this.level)){
             return;
         }
@@ -267,6 +223,10 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         }
         addIngredientFromGround(chosenEntity.getItem());
         level.playSound(null, getBlockPos(), SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS,0.25f,1f);
+    }
+
+    private boolean isBusy() {
+        return this.currentRitualState != RitualStates.FREE;
     }
 
 

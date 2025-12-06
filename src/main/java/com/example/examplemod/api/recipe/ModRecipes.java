@@ -1,15 +1,12 @@
 package com.example.examplemod.api.recipe;
 
-import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.result.ResultTypes;
+import com.example.examplemod.api.goldenChalk.rituals.util.ModRituals;
 import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-
-import java.util.List;
 
 public class ModRecipes {
 
@@ -36,6 +33,8 @@ public class ModRecipes {
                 new ItemStack(Items.AMETHYST_SHARD));
 
 
+        ModRecipeRegistry.register(RecipeOrigin.CHALK, ResultTypes.RITUAL, () -> ModRituals.EXTRACT_LIVE, Vial.createVialWithType(VialType.SHIMMER_ESSENCE));
+
     }
 
     private static void simpleItemRecipe(RecipeOrigin origin, ItemStack result, ItemStack ... ingredients) {
@@ -45,4 +44,6 @@ public class ModRecipes {
     private static void simpleBowlRecipe(ItemStack herbIngredient, VialType result) {
         ModRecipeRegistry.register(RecipeOrigin.BOWL, ResultTypes.VIAL, () -> result, herbIngredient);
     }
+
+
 }
