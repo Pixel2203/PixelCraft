@@ -2,6 +2,7 @@ package com.example.examplemod.api.goldenChalk.rituals;
 
 import com.example.examplemod.api.goldenChalk.rituals.util.ModRitual;
 import com.example.examplemod.api.goldenChalk.rituals.util.ModRituals;
+import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,7 +14,7 @@ public class ChangeTimeToDayRitual extends ModRitual {
 
 
     @Override
-    public int tick(ServerLevel level, BlockState blockState, BlockPos blockPos) {
+    public int tick(ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity executingInstance) {
         if(level.isClientSide()){
             return 0;
         }
@@ -23,7 +24,7 @@ public class ChangeTimeToDayRitual extends ModRitual {
     }
 
     @Override
-    public void onFinish(ServerLevel level, BlockState blockState, BlockPos blockPos) {
+    public void onFinish(ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity executingInstance) {
 
     }
 

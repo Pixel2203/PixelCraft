@@ -32,8 +32,8 @@ public class ModRecipes {
                 new ItemStack(ItemRegistry.SOUL_FRAGMENT.get()),
                 new ItemStack(Items.AMETHYST_SHARD));
 
-
-        ModRecipeRegistry.register(RecipeOrigin.CHALK, ResultTypes.RITUAL, () -> ModRituals.EXTRACT_LIVE, Vial.createVialWithType(VialType.SHIMMER_ESSENCE));
+        simpleRitual(ModRituals.EXTRACT_LIVE, Vial.createVialWithType(VialType.SHIMMER_ESSENCE));
+        simpleRitual(ModRituals.UNDEAD_CLEANSE, new ItemStack(Items.GLOWSTONE_DUST));
 
     }
 
@@ -43,6 +43,10 @@ public class ModRecipes {
 
     private static void simpleBowlRecipe(ItemStack herbIngredient, VialType result) {
         ModRecipeRegistry.register(RecipeOrigin.BOWL, ResultTypes.VIAL, () -> result, herbIngredient);
+    }
+
+    private static void simpleRitual(ModRituals ritual, ItemStack ... ingredients) {
+        ModRecipeRegistry.register(RecipeOrigin.CHALK, ResultTypes.RITUAL, () -> ritual, ingredients);
     }
 
 

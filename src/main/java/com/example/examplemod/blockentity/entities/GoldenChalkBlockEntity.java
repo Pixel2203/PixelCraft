@@ -140,9 +140,9 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     }
 
     private void onRitualTick() {
-        this.ritualProgress = ritualHandler.tick((ServerLevel) this.getLevel(), this.getBlockState(), this.getBlockPos());
+        this.ritualProgress = ritualHandler.tick((ServerLevel) this.getLevel(), this.getBlockState(), this.getBlockPos(), this);
         if(ritualHandler.isFinished()){
-            ritualHandler.onFinish((ServerLevel) this.getLevel(), this.getBlockState(), this.getBlockPos());
+            ritualHandler.onFinish((ServerLevel) this.getLevel(), this.getBlockState(), this.getBlockPos(), this);
             resetToDefault();
         }
     }

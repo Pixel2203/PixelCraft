@@ -1,5 +1,6 @@
 package com.example.examplemod.api.goldenChalk.rituals.util;
 
+import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -12,9 +13,9 @@ public abstract class ModRitual {
     public ModRitual(int ritualProgress){
         this.ritualProgress = ritualProgress;
     }
-    public abstract int tick(ServerLevel level, BlockState blockState, BlockPos blockPos);
+    public abstract int tick(ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity executingInstance);
 
-    public abstract void onFinish(ServerLevel level, BlockState blockState, BlockPos blockPos);
+    public abstract void onFinish(ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity executingInstance);
 
     public abstract ModRituals getType();
 }
