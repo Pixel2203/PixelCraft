@@ -1,4 +1,4 @@
-package com.example.examplemod.capabilities;
+package com.example.examplemod.capabilities.soul_energy;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

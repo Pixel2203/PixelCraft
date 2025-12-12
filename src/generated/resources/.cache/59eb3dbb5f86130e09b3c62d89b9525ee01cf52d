@@ -1,11 +1,15 @@
-// 1.20.1	2025-12-03T16:57:11.041802	Loot Tables
+// 1.20.1	2025-12-11T05:03:39.934223	Loot Tables
+e7d35f798e0efc357e3dfec6a0156db8b6504cb7 data/pixelcraft/loot_tables/blocks/air_statue.json
 4ce9c2f9a9168bc434d035396c1e18ec0a3baa27 data/pixelcraft/loot_tables/blocks/cauldron_custom.json
 6580b86daf1d7d9b505a128e7f1f2fc3d78c6f65 data/pixelcraft/loot_tables/blocks/distillery_bowl.json
+f925958317784bb3997f47de8d781a89a6a4e2bf data/pixelcraft/loot_tables/blocks/earth_statue.json
+ae68d3eadea4ab7934e5cb5b985cb6bd9c243f41 data/pixelcraft/loot_tables/blocks/fire_statue.json
 e867ee75f8ded61ea4a7e841b6ae2cb318e10334 data/pixelcraft/loot_tables/blocks/fog_block.json
 a3cfa884b25836c931084b5eb606e5ec30d5a2ca data/pixelcraft/loot_tables/blocks/four_leaf_clover.json
 f95454600aead201c174dbdee1009756550f7dbc data/pixelcraft/loot_tables/blocks/glimmer_gras.json
 0d0cd18ca366124d8ce3e37965a1cb59285608c0 data/pixelcraft/loot_tables/blocks/golden_chalk.json
 07cc5399ef99c089f999a9894311f7509ce1f98f data/pixelcraft/loot_tables/blocks/invisible_light.json
+1c4422521b7775b8c1333fe1d10b0d0889f8b6c3 data/pixelcraft/loot_tables/blocks/light_statue.json
 466ed07822a0524b625e4f9cc05eca37a60552ed data/pixelcraft/loot_tables/blocks/limestone_ore.json
 654f8b0f1839768e3c0a8c4f5167a5a8fbf6ab30 data/pixelcraft/loot_tables/blocks/magic_sapling.json
 192f3094abd576e08b79738660fb86f23348cb10 data/pixelcraft/loot_tables/blocks/magic_wood.json
@@ -16,5 +20,6 @@ c50c379da29f6248358096ca4d2a8298c82c3698 data/pixelcraft/loot_tables/blocks/stat
 be2e5dbd9fd8f7c7c85a54e08460f2a34889785a data/pixelcraft/loot_tables/blocks/statue_powerful_stone_top.json
 fa873dc8c62c76b2b589ada0909ecb59d66261ae data/pixelcraft/loot_tables/blocks/statue_stone_base.json
 e4e42edd4a3328c655f3f856c1feb03e6d24a8f6 data/pixelcraft/loot_tables/blocks/statue_stone_top.json
+59faaa97179ec289fae43310e2c7cbe0114649fc data/pixelcraft/loot_tables/blocks/water_statue.json
 5d600ecc4085ae203c1f2aa5c3b544a95b2b6b87 data/pixelcraft/loot_tables/blocks/white_chalk.json
 06d38e40084cfad89f2cacd83476153087b21ebb data/pixelcraft/loot_tables/blocks/zircon_block.json

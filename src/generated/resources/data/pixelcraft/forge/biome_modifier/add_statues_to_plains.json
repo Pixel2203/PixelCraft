@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#forge:is_plains",
+  "features": [
+    "pixelcraft:statue_fire_placed",
+    "pixelcraft:statue_water_placed",
+    "pixelcraft:statue_earth_placed",
+    "pixelcraft:statue_air_placed",
+    "pixelcraft:statue_light_placed"
+  ],
+  "step": "vegetal_decoration"
+}

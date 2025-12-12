@@ -80,6 +80,7 @@ public class ExampleMod
         ModLootModifiers.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModTrunkPlacer.register(modEventBus);
+
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().register(ModEventHandler.class);

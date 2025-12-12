@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
@@ -21,6 +22,13 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 public class ModConfiguredFeatures {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> MAGICTREE_KEY = registerKey("magic_tree");
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FIRE_STATUE_CONFIGURED = registerKey("statue_fire_configured");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> WATER_STATUE_CONFIGURED = registerKey("statue_water_configured");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> EARTH_STATUE_CONFIGURED = registerKey("statue_earth_configured");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> AIR_STATUE_CONFIGURED = registerKey("statue_air_configured");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> LIGHT_STATUE_CONFIGURED = registerKey("statue_light_configured");
+
 
     private static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(ExampleMod.MODID, name));
@@ -37,6 +45,28 @@ public class ModConfiguredFeatures {
                     new BlobFoliagePlacer(ConstantInt.of(3), ConstantInt.of(3),2),
                     new TwoLayersFeatureSize(1,0,2)
                 ).build()
+        );
+
+        // --- STATUE CONFIGURED FEATURES ---
+        // each configured feature simply places a single block state (the statue)
+        register(context, FIRE_STATUE_CONFIGURED, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.FireStatueBlock.get().defaultBlockState()))
+        );
+
+        register(context, WATER_STATUE_CONFIGURED, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.WaterStatueBlock.get().defaultBlockState()))
+        );
+
+        register(context, EARTH_STATUE_CONFIGURED, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.EarthStatueBlock.get().defaultBlockState()))
+        );
+
+        register(context, AIR_STATUE_CONFIGURED, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.AirStatueBlock.get().defaultBlockState()))
+        );
+
+        register(context, LIGHT_STATUE_CONFIGURED, Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.LightStatueBlock.get().defaultBlockState()))
         );
     }
 

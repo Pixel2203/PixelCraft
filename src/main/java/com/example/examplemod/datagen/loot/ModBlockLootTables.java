@@ -41,6 +41,12 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(BlockRegistry.MagicSapling.get());
         this.dropNothing(BlockRegistry.MagicWood.get());
         this.dropSelf(BlockRegistry.MagicWoodCore.get());
+
+        this.dropNothing(BlockRegistry.FireStatueBlock.get());
+        this.dropNothing(BlockRegistry.WaterStatueBlock.get());
+        this.dropNothing(BlockRegistry.AirStatueBlock.get());
+        this.dropNothing(BlockRegistry.EarthStatueBlock.get());
+        this.dropNothing(BlockRegistry.LightStatueBlock.get());
     }
 
     @Override

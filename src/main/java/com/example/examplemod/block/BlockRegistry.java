@@ -1,6 +1,8 @@
 package com.example.examplemod.block;
 
+import com.example.examplemod.api.runes.Runes;
 import com.example.examplemod.block.blocks.*;
+import com.example.examplemod.block.blocks.RuneStatueBlock;
 import com.example.examplemod.block.blocks.statue_blocks.Basic.StatueBlockBase;
 import com.example.examplemod.block.blocks.statue_blocks.PF.StatueBlockPFBase;
 import com.example.examplemod.block.blocks.statue_blocks.PF.StatueBlockPFMiddle;
@@ -46,6 +48,13 @@ public class BlockRegistry {
     public static final RegistryObject<Block> MagicSapling = registerBlockWithItem("magic_sapling", () -> Factory.MagicSaplingBlock_BLK);
     public static final RegistryObject<Block> MagicWood = registerBlockWithItem("magic_wood", () -> Factory.MagicWoodBlock_BLK);
     public static final RegistryObject<Block> MagicWoodCore = registerBlockWithItem("magic_wood_core", () -> Factory.MagicWoodCoreBlock_BLK);
+
+    public static final RegistryObject<Block> FireStatueBlock = registerBlockWithItem("fire_statue", () -> Factory.FireStatue_BLK);
+    public static final RegistryObject<Block> WaterStatueBlock = registerBlockWithItem("water_statue", () -> Factory.WaterStatue_BLK);
+    public static final RegistryObject<Block> AirStatueBlock = registerBlockWithItem("air_statue", () -> Factory.AirStatue_BLK);
+    public static final RegistryObject<Block> EarthStatueBlock = registerBlockWithItem("earth_statue", () -> Factory.EarthStatue_BLK);
+    public static final RegistryObject<Block> LightStatueBlock = registerBlockWithItem("light_statue", () -> Factory.LightStatue_BLK);
+
     private static <T extends Block> RegistryObject<T> registerBlockWithItem(String name, Supplier<T> block){
         RegistryObject<T> toReturn = (RegistryObject<T>) registerBlock(name, block);
         ItemRegistry.ITEMS.register(name, () ->  new BlockItem(block.get(), new Item.Properties()));
@@ -85,5 +94,12 @@ public class BlockRegistry {
 
         public static final Block MagicWoodBlock_BLK = new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD));
         public static final Block MagicWoodCoreBlock_BLK = new Block(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD));
+
+        public static final Block FireStatue_BLK = new RuneStatueBlock(BlockBehaviour.Properties.copy(Blocks.STONE), Runes.FIRE);
+        public static final Block WaterStatue_BLK = new RuneStatueBlock(BlockBehaviour.Properties.copy(Blocks.STONE), Runes.WATER);
+        public static final Block AirStatue_BLK = new RuneStatueBlock(BlockBehaviour.Properties.copy(Blocks.STONE), Runes.AIR);
+        public static final Block EarthStatue_BLK = new RuneStatueBlock(BlockBehaviour.Properties.copy(Blocks.STONE), Runes.EARTH);
+        public static final Block LightStatue_BLK = new RuneStatueBlock(BlockBehaviour.Properties.copy(Blocks.STONE), Runes.LIGHT);
+
     }
 }
