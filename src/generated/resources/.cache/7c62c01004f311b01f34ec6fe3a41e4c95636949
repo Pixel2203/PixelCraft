@@ -1,4 +1,4 @@
-// 1.20.1	2025-12-03T17:22:27.032075	Block States: pixelcraft
+// 1.20.1	2025-12-23T11:11:38.570314	Block States: pixelcraft
 d815ca1f311051177552a1dd62ea6470d93fd7fe assets/pixelcraft/blockstates/distillery_bowl.json
 dc9eb27b9142545646c38844e312fdaedaa534f0 assets/pixelcraft/blockstates/fog_block.json
 2b6e483706b75a17d4754c910301a6370aef065b assets/pixelcraft/blockstates/four_leaf_clover.json
@@ -6,6 +6,7 @@ dbe78feba09073e60382d1c60448a1473ddec015 assets/pixelcraft/blockstates/glimmer_g
 464d8861c42c4ff4dc480df5adf5070a3b988941 assets/pixelcraft/blockstates/golden_chalk.json
 e937ba6bc971090739f1d91b17a8f8f67eeae597 assets/pixelcraft/blockstates/invisible_light.json
 4fe587512af0798872a69f95671b0b5b38a6f166 assets/pixelcraft/blockstates/limestone_ore.json
+e9134c8c81e3fc79ff475ff4a95b61791a868bd9 assets/pixelcraft/blockstates/magic_sapling.json
 ae83a87fc9664c827352ad5e88da5ecb603e8a29 assets/pixelcraft/blockstates/magic_wood.json
 46590bdabfac4e9ea902ac04fc2749ef096e5965 assets/pixelcraft/blockstates/magic_wood_core.json
 ff42f304b01da51563637dbb4ba987bb5b2aac4f assets/pixelcraft/blockstates/soul_flower.json
@@ -32,6 +33,7 @@ ff1a063ec245e430658cb5716681685196a0cc4d assets/pixelcraft/models/block/glimmer_
 6f1736fc535d8d10e1dab7e8e41a12557c0e47f1 assets/pixelcraft/models/block/golden_chalk.json
 db5ae1e0e246360befd67cc157b3b94905d67dcc assets/pixelcraft/models/block/invisible_light.json
 10cd3ea9070011d69b1ffcea5cd9411ae5cf930e assets/pixelcraft/models/block/limestone_ore.json
+359c0734414e1ab3d9d53a5dc9fd583318686961 assets/pixelcraft/models/block/magic_sapling.json
 ac481a31d2d8110bb7887a81d0bea19e05fd1572 assets/pixelcraft/models/block/magic_wood.json
 68c0d8fbc8aa83db5a972e019110169f07b70a2d assets/pixelcraft/models/block/magic_wood_core.json
 fcb7c0cc0cf8331b9451fb963d113da7b753a60b assets/pixelcraft/models/block/soul_flower_day.json
@@ -44,6 +46,7 @@ da8d31809b88cf4edc81b3b186bc2e86ae8a6105 assets/pixelcraft/models/block/white_ch
 a2d8b65d9a77017b9eb175cb5dd8ad59662d41ec assets/pixelcraft/models/item/cauldron_custom.json
 dbd33cffcae92c2c5009679f4326f702f2a8f3da assets/pixelcraft/models/item/four_leaf_clover.json
 3e40dd8d803e1b0c023600a989d057b71794e01c assets/pixelcraft/models/item/limestone_ore.json
+6401f0ebe9f08db7ddcd5ad85a9a1fbac9b2ccef assets/pixelcraft/models/item/magic_sapling.json
 11734777846667e2bb2434c69f4510858e8a8779 assets/pixelcraft/models/item/magic_wood.json
 15ff92bc38998f413adae3565f24e5903c0bb06e assets/pixelcraft/models/item/magic_wood_core.json
 afd2fbdf841eb234662147ecd1b6245bc30488d6 assets/pixelcraft/models/item/soul_flower.json

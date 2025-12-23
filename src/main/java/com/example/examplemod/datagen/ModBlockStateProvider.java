@@ -30,9 +30,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
     protected void registerStatesAndModels() {
         blockWithItem(BlockRegistry.ZirconBlock);
         blockWithItem(BlockRegistry.LimestoneBlock);
+
         simpleBlock(BlockRegistry.InvisibleLightBlock.get(), new ConfiguredModel(models().cubeAll(BlockRegistry.InvisibleLightBlock.getId().getPath(), modLoc("block/invisible_light")).renderType("minecraft:translucent")));
         this.simpleCrossBlockWithItem(BlockRegistry.LeafCloverBlock);
-
+        this.simpleCrossBlockWithItem(BlockRegistry.MagicSapling);
         this.registerSoulFlowerStates();
 
 
