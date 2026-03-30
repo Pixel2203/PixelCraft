@@ -34,9 +34,8 @@ public class DistilleryBowlMenu extends AbstractContainerMenu {
         addPlayerHotbar(inventory);
 
 
-        this.distilleryBowlBlockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            this.addSlot(new SlotItemHandler(handler, 0, 56, 17));
-        });
+        this.distilleryBowlBlockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler ->
+                this.addSlot(new SlotItemHandler(handler, 0, 80, 11)));
 
         addDataSlots(data);
     }

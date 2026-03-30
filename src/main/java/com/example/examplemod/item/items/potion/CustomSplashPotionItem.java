@@ -30,10 +30,11 @@ public abstract class CustomSplashPotionItem extends SplashPotionItem {
         if(level.isClientSide()){
             return InteractionResultHolder.pass(itemstack);
         }
-        if(Objects.isNull(getThrownPotion(level,player))){
+        ThrownPotion thrownPotion = getThrownPotion(level,player);
+        if(Objects.isNull(thrownPotion)){
             return InteractionResultHolder.fail(itemstack);
         }
-        ThrownPotion thrownPotion = getThrownPotion(level,player);
+
         thrownPotion.setItem(itemstack);
         thrownPotion.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
         level.addFreshEntity(thrownPotion);

@@ -1,28 +1,25 @@
 package com.example.examplemod.entity.entities;
 
-import com.example.examplemod.api.nbt.CustomNBTTags;
-import com.example.examplemod.api.scroll.ScrollSpell;
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.api.nbt.CustomNBTTags;
+import com.example.examplemod.api.scroll.ScrollRegistry;
+import com.example.examplemod.api.scroll.ScrollSpell;
 import com.example.examplemod.entity.entities.generalEntities.GeneralScrollEntity;
-import net.minecraft.core.BlockPos;
+import lombok.extern.slf4j.Slf4j;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 
+@Slf4j
 public class ScrollEntity extends GeneralScrollEntity {
     private ScrollSpell scrollSpell;
 
@@ -58,10 +55,17 @@ public class ScrollEntity extends GeneralScrollEntity {
         if(scrollData.isEmpty()){
             return;
         }
-        ScrollSpell spell = ScrollSpell.getSpellByCompoundData(scrollData);
-        if(Objects.isNull(spell)){
+        final String spellName = scrollData.getString(CustomNBTTags.SCROLL_NAME);
+
+        Supplier<ScrollSpell> spellSupplier = ScrollRegistry.get(spellName);
+        if(Objects.isNull(spellSupplier)){
+            log.error("Could not find ScrollSpell {} while instantiating ScrollEntity", scrollData);
             return;
         }
+
+        ScrollSpell spell = spellSupplier.get();
+        final int ticks = scrollData.getInt(CustomNBTTags.TICKER);
+        spell.setTicks(ticks);
         this.scrollSpell = spell;
         this.entityData.set(DATA_CURRENT_TICK,scrollData.getInt(CustomNBTTags.TICKER));
     }

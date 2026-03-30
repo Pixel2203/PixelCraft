@@ -1,4 +1,4 @@
-// 1.20.1	2025-12-03T11:18:48.534458	Item Models: pixelcraft
+// 1.20.1	2026-03-30T16:03:56.590385	Item Models: pixelcraft
 4cb827fecf058d4326004263b95bd25cf40543b7 assets/pixelcraft/models/item/blizzard_sword.json
 d509833af4e8c2f0a5811876d586319b20fb14bc assets/pixelcraft/models/item/confusion_scroll.json
 7f1bee8054698fdc2f038089b5fe9ece12f00b68 assets/pixelcraft/models/item/crystals/crystal_1.json
@@ -20,9 +20,11 @@ a639f0c08306b224d99fabc2d24c3cf72d1418b5 assets/pixelcraft/models/item/protectio
 1c41d90e3a8b4fc53d402db152bcb3b2f8ca9b6d assets/pixelcraft/models/item/rune_page.json
 7828b334868ad58bb53919d601f9fd8fe239bfc7 assets/pixelcraft/models/item/soul_fragment.json
 9987526c959854ccf6efdd7ccd2ffafbc63defce assets/pixelcraft/models/item/soulbound_talisman.json
+78e0a081d932bd97213e855bf7eb928aba8cf984 assets/pixelcraft/models/item/undead_protection_talisman.json
 0ae1655209f0434956a4d3521e1d7526999110df assets/pixelcraft/models/item/white_chalk.json
-d1446579e09b956153e9ff5a55c7f17d7d4cc37b assets/pixelcraft/models/item/wooden_rune.json
+7fed7eb036c2b211933073ebd91b7667dcafb991 assets/pixelcraft/models/item/wooden_rune.json
 0d1f86a7ebf865fe313c347c2b9113ea8dffeb28 assets/pixelcraft/models/item/wooden_rune_0.json
 aa0f8e33705b1671e3a798fba8bc8d7740de721d assets/pixelcraft/models/item/wooden_rune_1.json
 d556bcfa3f172bbd02fcd266fa44439268993482 assets/pixelcraft/models/item/wooden_rune_2.json
+db155d9f13a26110a3747156adcaa58867701dbd assets/pixelcraft/models/item/wooden_rune_3.json
 4c882138c8b3d89fba8ebc6da01eaa370d88f312 assets/pixelcraft/models/item/zircon.json

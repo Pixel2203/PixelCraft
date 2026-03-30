@@ -6,6 +6,7 @@ import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.item.items.potion.CustomThrownPotion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -46,7 +47,7 @@ public class ThrownFloraPotion extends CustomThrownPotion {
         int inflateY = potionBounds[1];
         int inflateZ = potionBounds[2];
         BlockPos blockHitPos = hitResult.getBlockPos();
-        Random probabilityGenerator = new Random();
+        RandomSource probabilityGenerator = level().getRandom();
         Level level = level();
         AABB boundingBox = new AABB(blockHitPos);
 
@@ -62,27 +63,6 @@ public class ThrownFloraPotion extends CustomThrownPotion {
                     var flowerToPlace = FLOWERS_TO_PLACE.get(flowerIndex).defaultBlockState();
                     level.setBlockAndUpdate(blockPos, flowerToPlace);
                 });
-        /*
-        for(int row = -boundRow; row <= boundRow; row++){
-               for(int column = -boundColumn; column <= boundColumn;column++){
-                   if(probabilityGenerator.nextInt(3) <2){
-                       continue;
-                   }
-                   BlockPos foundBlockPos = new BlockPos(
-                           (blockHitPos.getX() + row),
-                           blockHitPos.getY(),
-                           (blockHitPos.getZ() + column)
-                   );
-                   BlockState foundBlock = level.getBlockState(foundBlockPos);
-                   if(foundBlock.getBlock() == Blocks.GRASS_BLOCK){
-                       int flowerIndex = probabilityGenerator.nextInt(FLOWERS_TO_PLACE.size());
-                       level.setBlockAndUpdate(foundBlockPos.above(), FLOWERS_TO_PLACE.get(flowerIndex).defaultBlockState());
-
-                   }
-               }
-           }
-
-         */
         super.onHitBlock(hitResult);
     }
     private int[] getPotionBounds(){

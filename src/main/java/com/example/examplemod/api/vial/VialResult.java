@@ -2,8 +2,6 @@ package com.example.examplemod.api.vial;
 
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-
 public record VialResult(boolean vialSuccess, VialType extracted) {
 
     public static VialResult failed() {

@@ -41,7 +41,6 @@ public class ProtectionOfDeathTalisman extends TalismanItem implements EffectOve
         entity.setHealth(0.5f);
         event.setCanceled(true);
         APIHelper.breakCurioOfEntity(entity, ItemRegistry.PROTECTION_OF_DEATH_TALISMAN.get());
-        //TODO Do not remove all effects, only the Protection of Death Effect
         removeAllAppliedEffects(entity);
     }
 

@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.theillusivec4.curios.api.SlotContext;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 

@@ -14,26 +14,18 @@ import java.util.Objects;
 
 public abstract class TalismanItem extends Item implements ICurioItem {
 
-    public TalismanItem() {
+    protected TalismanItem() {
         super(new Item.Properties().stacksTo(1).defaultDurability(0));
     }
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         ICurioItem.super.onEquip(slotContext, prevStack, stack);
         Entity entity = slotContext.entity();
-        if(!(entity instanceof Player player)){
-            return;
-        }
-        if(prevStack.is(stack.getItem())){
-            return;
-        }
-        if(Objects.isNull(getEquipSound())){
-            return;
-        }
-        player.playSound(getEquipSound());
-        if(this instanceof EffectOverTime effectOverTime){
-            effectOverTime.effectsToApply().forEach(player::addEffect);
-        }
+        if(!(entity instanceof Player player)) return;
+        if(prevStack.is(stack.getItem())) return;
+        if(this instanceof EffectOverTime effectOverTime) effectOverTime.effectsToApply().forEach(player::addEffect);
+        if(Objects.nonNull(getEquipSound())) player.playSound(getEquipSound());
+
     }
 
     @Override

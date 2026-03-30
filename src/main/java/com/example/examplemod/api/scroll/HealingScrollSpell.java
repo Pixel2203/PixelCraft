@@ -8,9 +8,6 @@ import java.util.List;
 public class HealingScrollSpell extends ScrollSpell{
     private final int range = 5;
 
-    public HealingScrollSpell(int tickInterval, int ticks) {
-        super(tickInterval,ticks);
-    }
 
     @Override
     public void scheduledTick(LivingEntity scrollEntity) {
@@ -30,4 +27,9 @@ public class HealingScrollSpell extends ScrollSpell{
         return Scrolls.HEALING_SCROLL;
     }
 
+
+    @Override
+    public int getTickInterval() {
+        return 20;
+    }
 }

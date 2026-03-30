@@ -10,6 +10,7 @@
   "item.pixelcraft.projectile_barrier_scroll": "§dProtection of Projectiles",
   "item.pixelcraft.confusion_scroll": "§dScroll of Confusion",
   "item.pixelcraft.soul_crystal": "Soul Crystal",
+  "item.pixelcraft.magic_sapling": "Magic Sapling",
 
   "item.pixelcraft.vial": "Vial",
   "item.pixelcraft.vials.soul_dew": "Soul Dew",
@@ -18,6 +19,7 @@
   "item.pixelcraft.wooden_rune": "Wooden Rune",
   "item.pixelcraft.wooden_rune.cryptlight": "Light of the Crypt",
   "item.pixelcraft.wooden_rune.gluttony": "Devourer's Mark",
+  "item.pixelcraft.wooden_rune.haste": "Haste",
 
 
   "creativetab.example_tab": "Example Tab",
