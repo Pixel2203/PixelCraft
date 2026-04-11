@@ -1,6 +1,7 @@
 package com.example.examplemod.api;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.api.nbt.CustomNBTTags;
 import com.example.examplemod.tag.TagFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -19,6 +20,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class ModUtils {
     public static Vec3 calcCenterOfBlock(BlockPos blockPos){
@@ -127,8 +129,15 @@ public class ModUtils {
         CompoundTag compoundTag = itemStack.getOrCreateTag();
         if(!compoundTag.contains(ExampleMod.MODID)) return false;
         CompoundTag modTag = compoundTag.getCompound(ExampleMod.MODID);
-        String boundTo = modTag.getString("boundTo");
+        String boundTo = modTag.getString(CustomNBTTags.BOUND_TO);
         return !StringUtil.isNullOrEmpty(boundTo);
+    }
+
+    public static void bind(ItemStack itemStack, UUID id) {
+        CompoundTag compoundTag = itemStack.getOrCreateTag();
+        CompoundTag modTag = new CompoundTag();
+        modTag.putString(CustomNBTTags.BOUND_TO, id.toString());
+        compoundTag.put(ExampleMod.MODID, modTag);
     }
 
 }

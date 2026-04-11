@@ -33,6 +33,6 @@ public interface CustomNBTTags {
     String ALREADY_GENERATED = ExampleMod.MODID + "_already_generated";
 
     // Souldbound
-    String BOUND_TO = ExampleMod.MODID + "_bound_to";
+    String BOUND_TO ="bound_to";
 
 }
