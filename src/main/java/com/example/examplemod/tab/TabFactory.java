@@ -2,7 +2,6 @@ package com.example.examplemod.tab;
 
 import com.example.examplemod.api.runes.RuneType;
 import com.example.examplemod.api.vial.VialType;
-import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;
 import com.example.examplemod.item.items.WoodenRune;
@@ -16,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.RegistryObject;
 
 public class TabFactory {
-    public static final CreativeModeTab EXAMPLE_TAB =
+    public static final CreativeModeTab WITCHERY_TAB =
             CreativeModeTab.builder()
                     .icon(() -> new ItemStack(ItemRegistry.ZIRCON.get()))
                     .title(Component.translatable("creativetab.example_tab"))
@@ -45,4 +44,21 @@ public class TabFactory {
                         }
 
                     }).build();
+
+    public static final CreativeModeTab MAGICAL_TAB =
+            CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(ItemRegistry.HEALING_SCROLL.get()))
+                    .title(Component.translatable("creativetab.magical_tab"))
+                    .displayItems((parameters, output) -> {
+                        output.accept(ItemRegistry.CONFUSION_SCROLL.get());
+                        output.accept(ItemRegistry.HEALING_SCROLL.get());
+                        output.accept(ItemRegistry.PROJECTILE_BARRIER_SCROLL.get());
+
+
+                        output.accept(ItemRegistry.HUNGER_REGENERATION_TALISMAN.get());
+                        output.accept(ItemRegistry.PROTECTION_OF_DEATH_TALISMAN.get());
+                        output.accept(ItemRegistry.PROTECTION_OF_FREEZING_TALISMAN.get());
+                        output.accept(ItemRegistry.SOULBOUND_TALISMAN.get());
+                    })
+                    .build();
 }

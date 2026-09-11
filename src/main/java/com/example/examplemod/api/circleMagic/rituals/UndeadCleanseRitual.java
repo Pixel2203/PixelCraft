@@ -1,20 +1,14 @@
-package com.example.examplemod.api.goldenChalk.rituals;
+package com.example.examplemod.api.circleMagic.rituals;
 
-import com.example.examplemod.api.goldenChalk.rituals.util.ModRitual;
-import com.example.examplemod.api.goldenChalk.rituals.util.ModRituals;
 import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
-import com.example.examplemod.entity.EntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.Tags;
 
 public class UndeadCleanseRitual extends ModRitual {
     public UndeadCleanseRitual(int ritualProgress) {

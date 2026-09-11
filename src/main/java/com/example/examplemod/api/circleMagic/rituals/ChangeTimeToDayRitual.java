@@ -1,7 +1,5 @@
-package com.example.examplemod.api.goldenChalk.rituals;
+package com.example.examplemod.api.circleMagic.rituals;
 
-import com.example.examplemod.api.goldenChalk.rituals.util.ModRitual;
-import com.example.examplemod.api.goldenChalk.rituals.util.ModRituals;
 import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

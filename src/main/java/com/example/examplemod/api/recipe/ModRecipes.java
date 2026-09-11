@@ -1,7 +1,7 @@
 package com.example.examplemod.api.recipe;
 
 import com.example.examplemod.api.result.ResultTypes;
-import com.example.examplemod.api.goldenChalk.rituals.util.ModRituals;
+import com.example.examplemod.api.circleMagic.rituals.ModRituals;
 import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;

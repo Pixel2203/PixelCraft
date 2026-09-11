@@ -1,4 +1,4 @@
-package com.example.examplemod.api.goldenChalk.rituals.util;
+package com.example.examplemod.api.circleMagic.rituals;
 
 public enum ModRituals {
     EXTRACT_LIVE,

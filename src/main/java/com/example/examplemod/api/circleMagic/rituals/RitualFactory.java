@@ -1,9 +1,6 @@
-package com.example.examplemod.api.goldenChalk.rituals;
+package com.example.examplemod.api.circleMagic.rituals;
 
-import com.example.examplemod.api.goldenChalk.rituals.util.ModRitual;
-import com.example.examplemod.api.goldenChalk.rituals.util.ModRituals;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class RitualFactory {
 

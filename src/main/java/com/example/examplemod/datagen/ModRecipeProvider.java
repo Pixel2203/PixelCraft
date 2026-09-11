@@ -1,6 +1,5 @@
 package com.example.examplemod.datagen;
 
-import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;

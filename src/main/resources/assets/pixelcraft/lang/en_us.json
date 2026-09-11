@@ -11,6 +11,7 @@
   "item.pixelcraft.confusion_scroll": "§dScroll of Confusion",
   "item.pixelcraft.soul_crystal": "Soul Crystal",
   "item.pixelcraft.magic_sapling": "Magic Sapling",
+  "item.pixelcraft.glimmer_grass_seed": "Glimmer Grass",
 
   "item.pixelcraft.vial": "Vial",
   "item.pixelcraft.vials.soul_dew": "Soul Dew",
@@ -22,7 +23,8 @@
   "item.pixelcraft.wooden_rune.haste": "Haste",
 
 
-  "creativetab.example_tab": "Example Tab",
+  "creativetab.example_tab": "Witchery",
+  "creativetab.magical_tab": "Magic",
 
   "block.pixelcraft.example_block": "Example Block",
   "block.pixelcraft.zircon_block": "Block of Zircon",

@@ -1,6 +1,5 @@
 package com.example.examplemod.tab;
 
-import com.example.examplemod.tab.TabFactory;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -15,8 +14,12 @@ public class TabRegistry {
     private static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    private static final RegistryObject<CreativeModeTab> ExampleTab =
-            CREATIVE_MODE_TABS.register("example_tab", () -> TabFactory.EXAMPLE_TAB);
+    private static final RegistryObject<CreativeModeTab> WitcheryTab =
+            CREATIVE_MODE_TABS.register("example_tab", () -> TabFactory.WITCHERY_TAB);
+
+
+    private static final RegistryObject<CreativeModeTab> MagicalTab =
+            CREATIVE_MODE_TABS.register("magical_tab", () -> TabFactory.MAGICAL_TAB);
 
 
     public static void registerTabs(IEventBus eventBus){

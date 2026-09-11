@@ -43,7 +43,9 @@ import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = ExampleMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class EventHandler {
-    private static final Logger log = LoggerFactory.getLogger(EventHandler.class);
+    private EventHandler() {
+        /* This utility class should not be instantiated */
+    }
 
     @SubscribeEvent
     public static void onEntityDamageEvent(LivingHurtEvent event){
@@ -75,8 +77,8 @@ public class EventHandler {
     @SubscribeEvent
     public static void onEntityDeath(LivingDeathEvent event){
         Entity entity = event.getEntity();
-        if(event.getEntity().level().isClientSide()) return;
-        if(event.getEntity().getType() == EntityRegistry.SOUL_ENTITY.get()) return;
+        if(entity.level().isClientSide()) return;
+        if(entity.getType() == EntityRegistry.SOUL_ENTITY.get()) return;
         Random random = new Random();
         ServerLevel level = (ServerLevel) entity.level();
         Vec3 entityDeathPosition = entity.position();
@@ -147,14 +149,12 @@ public class EventHandler {
         LivingEntity target = event.getNewTarget();
         LivingEntity attacker = event.getEntity();
 
-        if (!(attacker.getType() == EntityType.ZOMBIE || attacker.getType() == EntityType.SKELETON)) return; // Nur Untote
         if (!(target instanceof Player player)) return;
+        if (!player.hasEffect(MobEffectRegistry.CRYPTLIGHT.get())) return;
+        if (!(attacker.getType() == EntityType.ZOMBIE || attacker.getType() == EntityType.SKELETON)) return; // Nur Untote
 
-        // Prüfen, ob Ziel den Effekt hat
-        if (player.hasEffect(MobEffectRegistry.CRYPTLIGHT.get())) {
-            // Ziel darf nicht angegriffen werden
-            event.setCanceled(true);
-        }
+        event.setCanceled(true);
+
     }
 
 
