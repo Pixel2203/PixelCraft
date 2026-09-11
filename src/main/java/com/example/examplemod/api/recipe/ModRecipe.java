@@ -13,17 +13,9 @@ import java.util.List;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
-@AllArgsConstructor
 @Getter
-public class ModRecipe<T> {
-    private final RecipeOrigin origin;
-    private final ResultTypes resultType;
+public abstract class ModRecipe {
     private final List<ItemStack> ingredients;
-    private final Lazy<T> result;
-    private Function<List<ItemStack>, ItemStack> crafterFunction;
 
-    @Nullable
-    public ItemStack getCrafterResult(List<ItemStack> ing) {
-        return crafterFunction.apply(ing);
-    }
+    public abstract RecipeOrigin getOrigin();
 }

@@ -6,11 +6,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 
-public abstract class ModRitual {
+public abstract class Ritual {
     protected int ritualProgress;
     @Getter
-    protected boolean isFinished;
-    public ModRitual(int ritualProgress){
+    private boolean isFinished;
+    public Ritual(int ritualProgress){
         this.ritualProgress = ritualProgress;
     }
     public abstract int tick(ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity executingInstance);
@@ -18,4 +18,6 @@ public abstract class ModRitual {
     public abstract void onFinish(ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity executingInstance);
 
     public abstract ModRituals getType();
+
+    protected void finish() { this.isFinished = true; }
 }

@@ -17,6 +17,7 @@ import java.util.Objects;
 @Slf4j
 public abstract class MagicCircleProcessor {
 
+
     /**
      *
      * @param level ServerLevel of the Server

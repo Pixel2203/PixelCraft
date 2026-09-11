@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class RitualFactory {
 
-    public static ModRitual build(@NotNull ModRituals ritualIdentifier, int ritualProgress) {
+    public static Ritual build(@NotNull ModRituals ritualIdentifier, int ritualProgress) {
 
         return switch (ritualIdentifier){
             case EXTRACT_LIVE -> new ExtractLiveRitual(ritualProgress);

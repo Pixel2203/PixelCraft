@@ -15,7 +15,7 @@ public class RitualPipelineHandler {
        processorRegistry.put(RitualState.EVALUATING, ProcessorRegistry.CIRCLE_EVALUATE_RECIPE_PROCESSOR);
        processorRegistry.put(RitualState.SPAWN_ITEM, ProcessorRegistry.CIRCLE_SPAWN_ITEM_PROCESSOR);
        processorRegistry.put(RitualState.RITUAL_SETUP, ProcessorRegistry.CIRCLE_SETUP_RITUAL_PROCESSOR);
-       processorRegistry.put(RitualState.RITUAL_TICKING, ProcessorRegistry.CIRCLE_RITUAL_TICK_PROCESSOR);
+       processorRegistry.put(RitualState.RITUAL_PROCESSING, ProcessorRegistry.CIRCLE_RITUAL_TICK_PROCESSOR);
    }
 
    public @NotNull MagicCircleProcessor getProcessor(RitualState ritualState) { return processorRegistry.get(ritualState); }

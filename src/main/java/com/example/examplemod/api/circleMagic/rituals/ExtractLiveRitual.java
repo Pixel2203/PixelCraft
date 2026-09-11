@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
 
-public class ExtractLiveRitual extends ModRitual {
+public class ExtractLiveRitual extends Ritual {
 
     private final int rangeX = 10;
     private final int rangeY = 2;
@@ -79,7 +79,7 @@ public class ExtractLiveRitual extends ModRitual {
             level.playSound(null, blockPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,0.25f,1f);
         }
         if(this.currentX >= this.rangeX && this.currentZ >= this.rangeZ && this.currentY >= rangeY){
-            this.isFinished = true;
+            finish();
         }
         return ++this.ritualProgress;
     }

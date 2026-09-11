@@ -11,23 +11,25 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Optional;
 
 @Slf4j
-public class RitualExecutionProcessor extends MagicCircleProcessor{
+public class RitualExecutionProcessor extends MagicCircleProcessor {
     @Override
     public RitualState process(CircleContext context, ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity blockEntity) {
         log.debug("RitualExecutionProcessor | process | Ritual tick");
-        return Optional.ofNullable(context.getRitualHandler()).map(ritual -> {
-                    context.setRitualProgress(context.getRitualHandler().tick(level, blockState, blockPos, blockEntity));
+        var ritualHandlerOpt = Optional.ofNullable(context.getRitualHandler());
 
-                    if(context.getRitualHandler().isFinished()){
-                        log.debug("RitualExecutionProcessor | process | Ritual Finished, resetting to default");
-                        context.getRitualHandler().onFinish(level, blockState, blockPos, blockEntity);
-                        return resetToDefault(blockEntity, context);
-                    }
+        if(ritualHandlerOpt.isEmpty()) {
+            log.error("RitualExecutionProcessor | process | Unable to find RitualHandler");
+            return cancelRitual(level, blockPos,blockEntity, context);
+        }
 
-                    return RitualState.RITUAL_TICKING;
-                }).orElseGet(() -> {
-                    log.error("RitualExecutionProcessor | process | Unable to find RitualHandler");
-                    return cancelRitual(level, blockPos,blockEntity, context);
-                });
+        context.setRitualProgress(context.getRitualHandler().tick(level, blockState, blockPos, blockEntity));
+
+        if(context.getRitualHandler().isFinished()){
+            log.debug("RitualExecutionProcessor | process | Ritual Finished, resetting to default");
+            context.getRitualHandler().onFinish(level, blockState, blockPos, blockEntity);
+            return resetToDefault(blockEntity, context);
+        }
+
+        return RitualState.RITUAL_PROCESSING;
     }
 }

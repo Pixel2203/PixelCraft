@@ -49,7 +49,6 @@ public class ItemRegistry {
     public static final RegistryObject<Item> GLIMMER_LEAF = ITEMS.register("glimmer_leaf", () -> new Item(new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> RUNE_PAGE = ITEMS.register("rune_page", RunePage::new);
     public static final RegistryObject<Item> WOODEN_RUNE = ITEMS.register("wooden_rune", WoodenRune::new);
-    public static final RegistryO
     public static void registerItems(IEventBus eventBus){
         ITEMS.register(eventBus);
     }

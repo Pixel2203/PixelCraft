@@ -1,50 +1,22 @@
 package com.example.examplemod.api.recipe;
 
-import com.example.examplemod.api.result.ResultTypes;
-import com.google.common.collect.ImmutableList;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.Lazy;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 
+@Slf4j
 public class ModRecipeRegistry {
 
-    private static final Map<RecipeOrigin, List<ModRecipe<?>>> RECIPES = new EnumMap<>(RecipeOrigin.class);
+    private static final List<ModRecipe> RECIPES = new ArrayList<>();
 
-    public static <T> ModRecipe<T> register(
-            RecipeOrigin origin,
-            ResultTypes type,
-            Lazy<T> result,
-            ItemStack... ingredients
-    ) {
+    public static void register(ModRecipe recipe) {
+        log.info("ModRecipeRegistry | register | Registering recipe");
+        RECIPES.add(recipe);
 
-        var recipe = new ModRecipe<>(origin, type, List.of(ingredients),result);
-
-        RECIPES.computeIfAbsent(origin, o -> new ArrayList<>())
-                .add(recipe);
-
-        return recipe;
     }
 
-    public static <T> ModRecipe<T> registerCustom(
-            RecipeOrigin origin,
-            ResultTypes type,
-            Function<List<ItemStack>, ItemStack> crafterFunction,
-            ItemStack... ingredients
-    ) {
-        var recipe = new ModRecipe<T>(origin, type, List.of(ingredients), null, crafterFunction);
-
-        RECIPES.computeIfAbsent(origin, o -> new ArrayList<>())
-                .add(recipe);
-
-        return recipe;
-    }
-
-    public static List<ModRecipe<?>> getRecipes(RecipeOrigin origin) {
-        return RECIPES.getOrDefault(origin, List.of());
+    public static List<ModRecipe> getRecipes(RecipeOrigin origin) {
+        return RECIPES.stream().filter(recipe -> recipe.getOrigin() == origin).toList();
     }
 }

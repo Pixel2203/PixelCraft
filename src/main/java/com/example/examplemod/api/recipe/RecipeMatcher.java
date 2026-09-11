@@ -1,15 +1,17 @@
 package com.example.examplemod.api.recipe;
 
 import com.example.examplemod.item.ItemRegistry;
+import lombok.extern.slf4j.Slf4j;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 public class RecipeMatcher {
 
-    public static Optional<ModRecipe<?>> findMatchingRecipe(RecipeOrigin origin, List<ItemStack> provided) {
+    public static Optional<ModRecipe> findMatchingRecipe(RecipeOrigin origin, List<ItemStack> provided) {
 
         var recipes = ModRecipeRegistry.getRecipes(origin);
         outer:
@@ -31,5 +33,16 @@ public class RecipeMatcher {
         }
         return Optional.empty();
 
+    }
+
+    public static Optional<RitualRecipe> matchRitualRecipe(List<ItemStack> ingredients) {
+        var recipeOpt = findMatchingRecipe(RecipeOrigin.CHALK, ingredients);
+        if(recipeOpt.isEmpty()) return Optional.empty();
+
+        if(!(recipeOpt.get() instanceof RitualRecipe recipe)) {
+            log.error("RecipeMatcher | matchRitualRecipe | Found Ritual type did not match CHALK");
+            return Optional.empty();
+        }
+        return Optional.of(recipe);
     }
 }

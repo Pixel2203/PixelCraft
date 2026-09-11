@@ -10,14 +10,14 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
-public class UndeadCleanseRitual extends ModRitual {
+public class UndeadCleanseRitual extends Ritual {
     public UndeadCleanseRitual(int ritualProgress) {
         super(ritualProgress);
     }
 
     @Override
     public int tick(ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity executingInstance) {
-        isFinished = true;
+        finish();
         return this.ritualProgress;
     }
 

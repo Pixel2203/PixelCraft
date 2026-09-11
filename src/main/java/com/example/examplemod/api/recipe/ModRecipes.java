@@ -8,15 +8,17 @@ import com.example.examplemod.item.items.Vial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
+import java.util.List;
+
 public class ModRecipes {
 
     public static void register() {
 
-        simpleItemRecipe(RecipeOrigin.KETTLE,
+        simpleKettleRecipe(RecipeOrigin.KETTLE,
                 new ItemStack(Items.DIAMOND),
                 new ItemStack(Items.BLAZE_ROD));
 
-        simpleItemRecipe(RecipeOrigin.KETTLE,
+        simpleKettleRecipe(RecipeOrigin.KETTLE,
                 new ItemStack(ItemRegistry.GOLDEN_CHALK.get()),
                 Vial.createVialWithType(VialType.SOUL_DEW),
                 new ItemStack(ItemRegistry.WHITE_CHALK.get()));
@@ -37,16 +39,19 @@ public class ModRecipes {
 
     }
 
-    private static void simpleItemRecipe(RecipeOrigin origin, ItemStack result, ItemStack ... ingredients) {
-        ModRecipeRegistry.register(origin, ResultTypes.ITEM, () -> result, ingredients);
+    private static void simpleKettleRecipe(RecipeOrigin origin, ItemStack result, ItemStack ... ingredients) {
+        ModRecipe recipe = new KettleRecipe()
+        ModRecipeRegistry.register( result, ingredients);
     }
 
     private static void simpleBowlRecipe(ItemStack herbIngredient, VialType result) {
+        ModRecipe recipe = new BowlRecipe(in)
         ModRecipeRegistry.register(RecipeOrigin.BOWL, ResultTypes.VIAL, () -> result, herbIngredient);
     }
 
     private static void simpleRitual(ModRituals ritual, ItemStack ... ingredients) {
-        ModRecipeRegistry.register(RecipeOrigin.CHALK, ResultTypes.RITUAL, () -> ritual, ingredients);
+        RitualRecipe recipe = new RitualRecipe(List.of(ingredients), ritual);
+        ModRecipeRegistry.register(recipe);
     }
 
 

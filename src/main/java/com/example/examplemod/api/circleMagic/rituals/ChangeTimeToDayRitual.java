@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class ChangeTimeToDayRitual extends ModRitual {
+public class ChangeTimeToDayRitual extends Ritual {
     public ChangeTimeToDayRitual(int ritualProgress) {
         super(ritualProgress);
     }
@@ -13,17 +13,13 @@ public class ChangeTimeToDayRitual extends ModRitual {
 
     @Override
     public int tick(ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity executingInstance) {
-        if(level.isClientSide()){
-            return 0;
-        }
-        level.setDayTime(12);
-        isFinished = true;
-        return this.ritualProgress;
+        finish();
+        return ritualProgress;
     }
 
     @Override
     public void onFinish(ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity executingInstance) {
-
+        level.setDayTime(12);
     }
 
     @Override
