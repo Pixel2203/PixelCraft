@@ -4,6 +4,7 @@ import com.example.examplemod.api.ModUtils;
 import com.example.examplemod.api.recipe.ModRecipe;
 import com.example.examplemod.api.recipe.RecipeMatcher;
 import com.example.examplemod.api.recipe.RecipeOrigin;
+import com.example.examplemod.api.recipe.kettle.KettleRecipe;
 import com.example.examplemod.api.result.ResultTypes;
 import com.example.examplemod.block.blocks.KettleBlock;
 import com.example.examplemod.blockentity.entities.KettleBlockEntity;
@@ -42,17 +43,17 @@ public class KettleInteractionLogic extends BlockEntityLogic<KettleBlockEntity> 
      */
     public InteractionResult onBottle(ServerPlayer player){
 
-        Optional<ModRecipe<?>> searchResult = blockEntity.getRecipe();
+        Optional<KettleRecipe> searchResult = blockEntity.getRecipe();
         if(searchResult.isEmpty()) return InteractionResult.FAIL;
-        ModRecipe<?> foundRecipe = searchResult.get();
-        if(foundRecipe.getResultType() != ResultTypes.POTION){return InteractionResult.FAIL;}
-        return bottleContent(player, (ModRecipe<ItemStack>) foundRecipe);
+        KettleRecipe foundRecipe = searchResult.get();
+        if(foundRecipe.getResultType() != ResultTypes.POTION){ return InteractionResult.FAIL; }
+        return bottleContent(player, foundRecipe);
     }
 
 
     private void handleIngredientFallOnKettle(ItemStack itemStack) {
         acceptIngredient(itemStack);
-        Optional<ModRecipe<?>> recipeOptional = RecipeMatcher.findMatchingRecipe(RecipeOrigin.KETTLE, blockEntity.getKettleContent());
+        Optional<KettleRecipe> recipeOptional = RecipeMatcher.matchKettleRecipe(blockEntity.getKettleContent());
         if(recipeOptional.isEmpty()) return;
         blockEntity.startBrewing();
     }
@@ -76,11 +77,11 @@ public class KettleInteractionLogic extends BlockEntityLogic<KettleBlockEntity> 
 
     }
 
-    private InteractionResult bottleContent(ServerPlayer player, @NotNull ModRecipe<ItemStack> foundRecipe) {
+    private InteractionResult bottleContent(ServerPlayer player, @NotNull KettleRecipe foundRecipe) {
 
         ItemStack emptyBottleItemStack = player.getItemInHand(InteractionHand.MAIN_HAND);
         emptyBottleItemStack.shrink(1);
-        player.addItem(foundRecipe.getResult().get().copy());
+        player.addItem(foundRecipe.getResult(this.blockEntity.getKettleContent()).copy());
 
         BlockState blockState = blockEntity.getBlockState();
         BlockPos blockPos = blockEntity.getBlockPos();

@@ -1,6 +1,7 @@
 package com.example.examplemod;
 
-import com.example.examplemod.api.recipe.ModRecipes;
+import com.example.examplemod.api.recipe.BowlRecipeRegistry;
+import com.example.examplemod.api.recipe.ModRecipeRegistry;
 import com.example.examplemod.block.BlockRegistry;
 import com.example.examplemod.block.blocks.DistilleryBowl;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
@@ -22,11 +23,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -97,7 +96,8 @@ public class ExampleMod
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         NetworkMessages.registerChannel();
-        ModRecipes.register();
+        ModRecipeRegistry.register();
+        BowlRecipeRegistry.register();
     }
 
     // Add the example block item to the building blocks tab

@@ -1,9 +1,8 @@
 package com.example.examplemod.api.distilleryBowl;
 
 import com.example.examplemod.api.kettle.BlockEntityLogic;
-import com.example.examplemod.api.recipe.ModRecipe;
+import com.example.examplemod.api.recipe.BowlRecipe;
 import com.example.examplemod.api.recipe.RecipeMatcher;
-import com.example.examplemod.api.recipe.RecipeOrigin;
 import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
 import com.example.examplemod.tag.TagFactory;
@@ -12,8 +11,6 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.Lazy;
-
-import java.util.List;
 
 public class BowlCrafting extends BlockEntityLogic<DistilleryBowlBlockEntity> {
     private final int INPUT_SLOT = 0;
@@ -30,11 +27,10 @@ public class BowlCrafting extends BlockEntityLogic<DistilleryBowlBlockEntity> {
     }
 
     public void craft() {
-        if(!hasRecipe()) return;
         increaseCraftingProgress();
 
         if(hasProgressFinished()){
-            craftItem();
+            finishBrewing();
             resetProgress();
         }
     }
@@ -44,14 +40,14 @@ public class BowlCrafting extends BlockEntityLogic<DistilleryBowlBlockEntity> {
     }
 
     @SneakyThrows
-    private void craftItem() {
+    private void finishBrewing() {
         ItemStack herb = blockEntity.getItemHandler().extractItem(INPUT_SLOT, 1, false);
-        var foundBowlRecipe = RecipeMatcher.findMatchingRecipe(RecipeOrigin.BOWL, List.of(herb));
+        var foundBowlRecipe = RecipeMatcher.matchBowlRecipe(blockEntity.getContent(), herb);
         if(foundBowlRecipe.isEmpty()) {
             throw new Exception("Bowl Recipe could not be found! Invalid Item: " + herb.getDisplayName());
         }
-        ModRecipe<?> recipe = foundBowlRecipe.get();
-        Lazy<?> vialTypeLazy = recipe.getResult();
+        BowlRecipe recipe = foundBowlRecipe.get();
+        Lazy<?> vialTypeLazy = recipe.out();
         if(vialTypeLazy.get() instanceof VialType vialType) {
             this.blockEntity.setContent(vialType);
         }else {

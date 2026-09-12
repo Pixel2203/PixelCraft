@@ -9,13 +9,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.Lazy;
 
 import javax.annotation.Nullable;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
 @Getter
 public abstract class ModRecipe {
-    private final List<ItemStack> ingredients;
+    private final LinkedList<ItemStack> ingredients;
 
     public abstract RecipeOrigin getOrigin();
 }

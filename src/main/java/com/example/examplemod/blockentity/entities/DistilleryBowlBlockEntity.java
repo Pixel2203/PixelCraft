@@ -2,6 +2,7 @@ package com.example.examplemod.blockentity.entities;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.distilleryBowl.BowlCrafting;
+import com.example.examplemod.api.distilleryBowl.BowlFluids;
 import com.example.examplemod.api.distilleryBowl.BowlInteraction;
 import com.example.examplemod.api.distilleryBowl.BowlInteractionLogic;
 import com.example.examplemod.api.vial.IVialable;
@@ -48,7 +49,7 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
 
     @Getter
     @Nullable
-    private VialType content;
+    private BowlFluids content;
 
     private final BowlCrafting craftingLogic;
     private final BowlInteractionLogic interactionLogic;

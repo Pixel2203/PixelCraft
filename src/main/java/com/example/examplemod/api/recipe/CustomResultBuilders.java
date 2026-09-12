@@ -11,15 +11,6 @@ import java.util.function.Function;
 
 public interface CustomResultBuilders {
     Function<List<ItemStack>, ItemStack> SOUL_LIGHT_BUILDER = (itemStacks -> {
-        ItemStack soulFragment = itemStacks.get(itemStacks.size() - 2);
-        boolean isBound = ModUtils.isBound(soulFragment);
-        if(!isBound) return null;
 
-        CompoundTag modTag = soulFragment.getOrCreateTag().getCompound(ExampleMod.MODID);
-        ItemStack result = new ItemStack(ItemRegistry.ZIRCON.get());
-        CompoundTag tag = result.getOrCreateTag();
-        tag.put(ExampleMod.MODID, modTag);
-        result.setTag(tag);
-        return result;
     });
 }

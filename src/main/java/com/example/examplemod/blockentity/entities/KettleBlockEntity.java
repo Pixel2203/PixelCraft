@@ -11,6 +11,7 @@ import com.example.examplemod.api.recipe.ModRecipe;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.recipe.RecipeMatcher;
 import com.example.examplemod.api.recipe.RecipeOrigin;
+import com.example.examplemod.api.recipe.kettle.KettleRecipe;
 import com.example.examplemod.block.blocks.KettleBlock;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
@@ -164,10 +165,10 @@ public class KettleBlockEntity extends BlockEntity implements ITickableBlockEnti
     public KettleBlock getKettleBlock() {
         return (KettleBlock) this.getBlockState().getBlock();
     }
-    public Optional<ModRecipe<?>> getRecipe() {
+    public Optional<KettleRecipe> getRecipe() {
         boolean hasIngredients = !this.getKettleContent().isEmpty();
         if(!hasIngredients) return Optional.empty();
-        return RecipeMatcher.findMatchingRecipe(RecipeOrigin.KETTLE,this.getKettleContent());
+        return RecipeMatcher.matchKettleRecipe(this.getKettleContent());
     }
 
 
