@@ -1,10 +1,9 @@
 package com.example.examplemod.api.recipe;
 
-import com.example.examplemod.api.circleMagic.rituals.ModRituals;
+import com.example.examplemod.api.circleMagic.ModRituals;
+import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.recipe.kettle.ChargedSoulLightCrystalKettleRecipe;
 import com.example.examplemod.api.recipe.kettle.SimpleItemKettleRecipe;
-import com.example.examplemod.api.result.ResultTypes;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +32,13 @@ public class ModRecipeRegistry {
 
         simpleKettleRecipe(
                 new ItemStack(ItemRegistry.GOLDEN_CHALK.get()),
-                Vial.createVialWithType(VialType.SOUL_DEW),
+                Vial.createVialWithType(ModFluids.SOUL_DEW),
                 new ItemStack(ItemRegistry.WHITE_CHALK.get()));
 
         ModRecipeRegistry.register(new ChargedSoulLightCrystalKettleRecipe());
-        simpleRitual(ModRituals.EXTRACT_LIVE, Vial.createVialWithType(VialType.SHIMMER_ESSENCE));
+        simpleRitual(ModRituals.EXTRACT_LIVE, Vial.createVialWithType(ModFluids.SHIMMER_ESSENCE));
         simpleRitual(ModRituals.UNDEAD_CLEANSE, new ItemStack(Items.GLOWSTONE_DUST));
+        simpleRitual(ModRituals.TEST_RITUAL_TO_GET_HERB, new ItemStack(Items.GRASS));
     }
 
 
@@ -54,7 +54,8 @@ public class ModRecipeRegistry {
 
 
     private static void simpleRitual(ModRituals ritual, ItemStack ... ingredients) {
-        RitualRecipe recipe = new RitualRecipe(List.of(ingredients), ritual);
+        LinkedList<ItemStack> stacks = new LinkedList<>(List.of(ingredients));
+        RitualRecipe recipe = new RitualRecipe(stacks, ritual);
         ModRecipeRegistry.register(recipe);
     }
 }

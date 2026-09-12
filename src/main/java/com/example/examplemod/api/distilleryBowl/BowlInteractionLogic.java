@@ -3,7 +3,6 @@ package com.example.examplemod.api.distilleryBowl;
 import com.example.examplemod.api.kettle.BlockEntityLogic;
 import com.example.examplemod.api.vial.IVialable;
 import com.example.examplemod.api.vial.VialResult;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.block.blocks.DistilleryBowl;
 import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
 import com.example.examplemod.item.ItemRegistry;
@@ -47,7 +46,7 @@ public class BowlInteractionLogic extends BlockEntityLogic<DistilleryBowlBlockEn
         }).orElse(VialResult.failed());
     }
 
-    private Optional<VialType> getVialResult() {
+    private Optional<ModFluids> getVialResult() {
         return Optional.ofNullable(blockEntity.getContent());
     }
 
@@ -57,7 +56,7 @@ public class BowlInteractionLogic extends BlockEntityLogic<DistilleryBowlBlockEn
             potionStack.shrink(1);
         }
         fill(getServerLevel(), blockEntity.getBlockState(), blockEntity.getBlockPos());
-        blockEntity.setContent(VialType.WATER);
+        blockEntity.setContent(ModFluids.WATER);
         return InteractionResult.SUCCESS;
     }
 

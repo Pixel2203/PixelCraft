@@ -1,8 +1,6 @@
 package com.example.examplemod.api.circleMagic;
 
-import com.example.examplemod.api.circleMagic.rituals.Ritual;
-import com.example.examplemod.api.circleMagic.rituals.RitualState;
-import com.example.examplemod.api.recipe.ModRecipe;
+import com.example.examplemod.api.recipe.RitualRecipe;
 import lombok.Builder;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
@@ -10,9 +8,9 @@ import org.jetbrains.annotations.Nullable;
 
 @Data
 @Builder
-public class CircleContext {
+public class RitualContext {
     @NotNull private RitualState ritualState;
-    @Nullable private ModRecipe<?> recipe;
+    @Nullable private RitualRecipe recipe;
     @Nullable private Ritual ritualHandler;
 
     private int ritualProgress = 0;

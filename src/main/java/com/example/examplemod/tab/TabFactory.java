@@ -1,7 +1,7 @@
 package com.example.examplemod.tab;
 
+import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.runes.RuneType;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;
 import com.example.examplemod.item.items.WoodenRune;
@@ -35,8 +35,8 @@ public class TabFactory {
                         output.accept(HungerRegenerationSplashPotionItem.create(3,1,300,2));
                         output.accept(FreezingSplashPotionItem.createFreezePotion(1,200,0));
 
-                        for(VialType vialType : VialType.values()) {
-                            output.accept(Vial.createVialWithType(vialType));
+                        for(ModFluids fluid : ModFluids.values()) {
+                            output.accept(Vial.createVialWithType(fluid));
                         }
 
                         for(RuneType runeType : RuneType.values()) {

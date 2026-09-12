@@ -1,8 +1,7 @@
 package com.example.examplemod.api.recipe;
 
-import com.example.examplemod.api.distilleryBowl.BowlFluids;
+import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.item.ItemRegistry;
-import lombok.Getter;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
@@ -13,9 +12,9 @@ public class BowlRecipeRegistry {
 
     public static void register() {
         register(BowlRecipe.builder()
-                        .baseFluid(BowlFluids.WATER)
+                        .baseFluid(ModFluids.WATER)
                         .in(new ItemStack(ItemRegistry.GLIMMER_LEAF.get()))
-                        .out(BowlFluids.SHIMMER_ESSENCE)
+                        .out(ModFluids.SHIMMER_ESSENCE)
                         .build());
     }
 

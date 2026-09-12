@@ -1,9 +1,9 @@
 package com.example.examplemod.block.blocks;
 
 import com.example.examplemod.api.distilleryBowl.BowlInteraction;
+import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.vial.IVialable;
 import com.example.examplemod.api.vial.VialResult;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
@@ -41,7 +41,7 @@ public class DistilleryBowl extends Block implements EntityBlock, IVialable {
                 return distilleryBowlBlockEntity.getColor();
             }
         }
-        return VialType.WATER.getHexColor();
+        return ModFluids.WATER.getHexColor();
     };
 
     public DistilleryBowl() {

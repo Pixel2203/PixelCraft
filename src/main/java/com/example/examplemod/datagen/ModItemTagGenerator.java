@@ -26,7 +26,8 @@ public class ModItemTagGenerator extends ItemTagsProvider {
                 .add(ItemRegistry.VIAL.get())
                 .add(ItemRegistry.WHITE_CHALK.get())
                 .add(ItemRegistry.SOUL_FRAGMENT.get())
-                .add(Items.AMETHYST_SHARD);
+                .add(Items.AMETHYST_SHARD)
+                .add(Items.GRASS);
 
         this.tag(TagFactory.KETTLE_ALLOWED_FLUID_ITEMS)
                 .add(Items.WATER_BUCKET)

@@ -2,8 +2,8 @@ package com.example.examplemod.api.recipe.kettle;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.ModUtils;
+import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.result.ResultTypes;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.item.items.Vial;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +17,7 @@ import java.util.List;
 public class ChargedSoulLightCrystalKettleRecipe extends KettleRecipe {
     private static LinkedList<ItemStack> createIngredients() {
         LinkedList<ItemStack> ingredients = new LinkedList<>();
-        ingredients.offer(Vial.createVialWithType(VialType.SHIMMER_ESSENCE));
+        ingredients.offer(Vial.createVialWithType(ModFluids.SHIMMER_ESSENCE));
         ingredients.offer(new ItemStack(ItemRegistry.SOUL_FRAGMENT.get()));
         ingredients.offer(new ItemStack(Items.AMETHYST_SHARD));
         return ingredients;

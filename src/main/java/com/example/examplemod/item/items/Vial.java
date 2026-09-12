@@ -1,9 +1,9 @@
 package com.example.examplemod.item.items;
 
 import com.example.examplemod.ExampleMod;
+import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.vial.IVialable;
 import com.example.examplemod.api.vial.VialResult;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.sound.SoundRegistry;
 import com.example.examplemod.tag.TagFactory;
@@ -21,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.Locale;
 import java.util.Optional;
 
 @Slf4j
@@ -90,7 +89,7 @@ public class Vial extends Item {
     }
 
 
-    private void saveVialTypeNbt(ItemStack vial, VialType vialType) {
+    private void saveVialTypeNbt(ItemStack vial, ModFluids vialType) {
         CompoundTag nbt = vial.getOrCreateTag();
         CompoundTag vialTag = new CompoundTag();
         vialTag.putString("type", vialType.name());
@@ -116,7 +115,7 @@ public class Vial extends Item {
         return 1;
     }
 
-    public static ItemStack createVialWithType(VialType type) {
+    public static ItemStack createVialWithType(ModFluids type) {
         ItemStack vial = new ItemStack(ItemRegistry.VIAL.get());
         CompoundTag vialTag = vial.getOrCreateTag();
         CompoundTag modCompound = new CompoundTag();

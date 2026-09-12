@@ -3,15 +3,17 @@ package com.example.examplemod.api.distilleryBowl;
 import com.example.examplemod.api.kettle.BlockEntityLogic;
 import com.example.examplemod.api.recipe.BowlRecipe;
 import com.example.examplemod.api.recipe.RecipeMatcher;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
 import com.example.examplemod.tag.TagFactory;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.Lazy;
 
+import java.util.Objects;
+
+@Slf4j
 public class BowlCrafting extends BlockEntityLogic<DistilleryBowlBlockEntity> {
     private final int INPUT_SLOT = 0;
     @Getter
@@ -41,18 +43,20 @@ public class BowlCrafting extends BlockEntityLogic<DistilleryBowlBlockEntity> {
 
     @SneakyThrows
     private void finishBrewing() {
+
+        if(Objects.isNull(blockEntity.getContent())) {
+            log.error("BowlCrafting | finishBrewing | content is not supposed to be null");
+            return;
+        }
+
         ItemStack herb = blockEntity.getItemHandler().extractItem(INPUT_SLOT, 1, false);
         var foundBowlRecipe = RecipeMatcher.matchBowlRecipe(blockEntity.getContent(), herb);
         if(foundBowlRecipe.isEmpty()) {
-            throw new Exception("Bowl Recipe could not be found! Invalid Item: " + herb.getDisplayName());
+            log.debug("No valid BowlRecipe could be found, turning into {}" , ModFluids.WEIRD_STEW.name());
+            this.blockEntity.setContent(ModFluids.WEIRD_STEW);
         }
         BowlRecipe recipe = foundBowlRecipe.get();
-        Lazy<?> vialTypeLazy = recipe.out();
-        if(vialTypeLazy.get() instanceof VialType vialType) {
-            this.blockEntity.setContent(vialType);
-        }else {
-            throw new Exception("Bowl result was not of type VialType, got:" + vialTypeLazy.get().toString());
-        }
+        this.blockEntity.setContent(recipe.out());
     }
 
     private boolean hasProgressFinished() {
@@ -66,6 +70,6 @@ public class BowlCrafting extends BlockEntityLogic<DistilleryBowlBlockEntity> {
 
     public boolean hasRecipe() {
         boolean hasCraftingItem = blockEntity.getItemHandler().getStackInSlot(INPUT_SLOT).is(TagFactory.BOWL_INGREDIENT);
-        return hasCraftingItem && blockEntity.isWater();
+        return hasCraftingItem && Objects.nonNull(blockEntity.getContent());
     }
 }

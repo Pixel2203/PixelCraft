@@ -1,7 +1,7 @@
 package com.example.examplemod.api.circleMagic.processors;
 
-import com.example.examplemod.api.circleMagic.CircleContext;
-import com.example.examplemod.api.circleMagic.rituals.RitualState;
+import com.example.examplemod.api.circleMagic.RitualContext;
+import com.example.examplemod.api.circleMagic.RitualState;
 import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
 import lombok.extern.slf4j.Slf4j;
 import net.minecraft.core.BlockPos;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Slf4j
 public class RitualExecutionProcessor extends MagicCircleProcessor {
     @Override
-    public RitualState process(CircleContext context, ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity blockEntity) {
+    public RitualState process(RitualContext context, ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity blockEntity) {
         log.debug("RitualExecutionProcessor | process | Ritual tick");
         var ritualHandlerOpt = Optional.ofNullable(context.getRitualHandler());
 

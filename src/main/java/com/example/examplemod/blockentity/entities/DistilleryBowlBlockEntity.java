@@ -2,12 +2,11 @@ package com.example.examplemod.blockentity.entities;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.distilleryBowl.BowlCrafting;
-import com.example.examplemod.api.distilleryBowl.BowlFluids;
+import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.distilleryBowl.BowlInteraction;
 import com.example.examplemod.api.distilleryBowl.BowlInteractionLogic;
 import com.example.examplemod.api.vial.IVialable;
 import com.example.examplemod.api.vial.VialResult;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.menus.DistilleryBowlMenu;
@@ -49,7 +48,7 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
 
     @Getter
     @Nullable
-    private BowlFluids content;
+    private ModFluids content;
 
     private final BowlCrafting craftingLogic;
     private final BowlInteractionLogic interactionLogic;
@@ -122,7 +121,6 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
             craftingLogic.craft();
             setChanged();
         }
-
     }
 
 
@@ -160,11 +158,11 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
     }
 
     public boolean isWater() {
-        return this.getContent() == VialType.WATER;
+        return this.getContent() == ModFluids.WATER;
     }
 
 
-    public void setContent(@Nullable VialType content) {
+    public void setContent(@Nullable ModFluids content) {
         this.content = content;
         level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
     }
@@ -201,7 +199,7 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
             itemHandler.deserializeNBT(modCompound.getCompound("inventory"));
         }
         if(modCompound.contains("content")) {
-            this.content = VialType.valueOf(Objects.requireNonNull(modCompound.getString("content")));
+            this.content = ModFluids.valueOf(Objects.requireNonNull(modCompound.getString("content")));
         }
         super.load(p_155245_);
 
@@ -217,7 +215,7 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
     @Override
     public void handleUpdateTag(CompoundTag tag) {
         this.content = tag.getString("content").isBlank() ?
-                null : VialType.valueOf(tag.getString("content"));
+                null : ModFluids.valueOf(tag.getString("content"));
     }
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {

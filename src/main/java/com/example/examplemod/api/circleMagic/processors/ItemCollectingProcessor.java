@@ -1,8 +1,8 @@
 package com.example.examplemod.api.circleMagic.processors;
 
 import com.example.examplemod.api.ModUtils;
-import com.example.examplemod.api.circleMagic.CircleContext;
-import com.example.examplemod.api.circleMagic.rituals.RitualState;
+import com.example.examplemod.api.circleMagic.RitualContext;
+import com.example.examplemod.api.circleMagic.RitualState;
 import com.example.examplemod.block.blocks.GoldenChalkBlock;
 import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.List;
 @Slf4j
 public class ItemCollectingProcessor extends MagicCircleProcessor {
     @Override
-    public RitualState process(CircleContext context,
+    public RitualState process(RitualContext context,
                                ServerLevel level,
                                BlockState blockState,
                                BlockPos blockPos,
@@ -54,7 +54,7 @@ public class ItemCollectingProcessor extends MagicCircleProcessor {
      * @param itemStack The ItemStack which will be added to the inventory
      */
     private void addIngredientFromGround(GoldenChalkBlockEntity blockEntity, ItemStack itemStack){
-        blockEntity.getIngredients().add(itemStack.copy());
-        itemStack.shrink(1);
+        ItemStack itemStackToAdd = itemStack.split(1);
+        blockEntity.getIngredients().add(itemStackToAdd);
     }
 }

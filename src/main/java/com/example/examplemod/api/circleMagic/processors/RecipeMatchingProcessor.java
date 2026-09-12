@@ -1,8 +1,8 @@
 package com.example.examplemod.api.circleMagic.processors;
 
-import com.example.examplemod.api.circleMagic.CircleContext;
-import com.example.examplemod.api.circleMagic.rituals.RitualFactory;
-import com.example.examplemod.api.circleMagic.rituals.RitualState;
+import com.example.examplemod.api.circleMagic.RitualContext;
+import com.example.examplemod.api.circleMagic.RitualFactory;
+import com.example.examplemod.api.circleMagic.RitualState;
 import com.example.examplemod.api.recipe.RecipeMatcher;
 import com.example.examplemod.api.recipe.RitualRecipe;
 import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @Slf4j
 public class RecipeMatchingProcessor extends MagicCircleProcessor{
     @Override
-    public RitualState process(CircleContext context, ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity blockEntity) {
+    public RitualState process(RitualContext context, ServerLevel level, BlockState blockState, BlockPos blockPos, GoldenChalkBlockEntity blockEntity) {
         log.debug("RecipeMatchingProcessor | process | Evaluating Recipe...");
         Optional<RitualRecipe> recipeOptional = RecipeMatcher.matchRitualRecipe(blockEntity.getIngredients());
         if(recipeOptional.isEmpty()){

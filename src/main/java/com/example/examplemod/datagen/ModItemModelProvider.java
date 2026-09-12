@@ -2,7 +2,6 @@ package com.example.examplemod.datagen;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.runes.RuneType;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.item.ItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -12,9 +11,6 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
-import oshi.util.tuples.Pair;
-
-import java.util.Locale;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {

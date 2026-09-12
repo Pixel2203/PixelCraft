@@ -1,5 +1,7 @@
 package com.example.examplemod.api.circleMagic.rituals;
 
+import com.example.examplemod.api.circleMagic.ModRituals;
+import com.example.examplemod.api.circleMagic.Ritual;
 import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

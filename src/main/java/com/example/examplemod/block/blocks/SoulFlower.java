@@ -1,8 +1,8 @@
 package com.example.examplemod.block.blocks;
 
+import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.vial.IVialable;
 import com.example.examplemod.api.vial.VialResult;
-import com.example.examplemod.api.vial.VialType;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.entities.SoulFlowerBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
@@ -142,7 +142,7 @@ public class SoulFlower extends BushBlock implements EntityBlock, IVialable {
         int dewCount = blockState.getValue(DEW_COUNT);
         if(dewCount == 0) return VialResult.failed();
         level.setBlockAndUpdate(blockPos, blockState.setValue(DEW_COUNT, --dewCount));;
-        return VialResult.success(VialType.SOUL_DEW);
+        return VialResult.success(ModFluids.SOUL_DEW);
     }
 
     public void collectSoulFragment(ServerLevel level, BlockState blockState, BlockPos pos) {

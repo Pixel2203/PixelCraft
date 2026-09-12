@@ -1,4 +1,4 @@
-package com.example.examplemod.api.circleMagic.rituals;
+package com.example.examplemod.api.circleMagic;
 
 import com.example.examplemod.blockentity.entities.GoldenChalkBlockEntity;
 import lombok.Getter;

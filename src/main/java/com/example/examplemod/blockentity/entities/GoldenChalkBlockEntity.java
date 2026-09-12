@@ -2,13 +2,13 @@ package com.example.examplemod.blockentity.entities;
 
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.ModUtils;
+import com.example.examplemod.api.circleMagic.RitualContext;
 import com.example.examplemod.api.circleMagic.processors.RitualPipelineHandler;
 import com.example.examplemod.api.circleMagic.processors.MagicCircleProcessor;
-import com.example.examplemod.api.circleMagic.CircleContext;
 import com.example.examplemod.api.nbt.CustomNBTTags;
-import com.example.examplemod.api.circleMagic.rituals.RitualFactory;
-import com.example.examplemod.api.circleMagic.rituals.ModRituals;
-import com.example.examplemod.api.circleMagic.rituals.RitualState;
+import com.example.examplemod.api.circleMagic.RitualFactory;
+import com.example.examplemod.api.circleMagic.ModRituals;
+import com.example.examplemod.api.circleMagic.RitualState;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import lombok.Getter;
@@ -32,7 +32,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
     @Setter
     private int ticker = 0;
     private final int tickerInterval = 20;
-    @NotNull private CircleContext context;
+    @NotNull private RitualContext context;
 
     @Getter
     private final NonNullList<ItemStack> ingredients = NonNullList.create();
@@ -41,7 +41,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
 
     public GoldenChalkBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BlockEntityRegistry.GOLDEN_CHALK_BLOCK_ENTITY.get(), blockPos, blockState);
-        this.context = CircleContext.builder().
+        this.context = RitualContext.builder().
                 ritualState(RitualState.FREE)
                 .build();
     }
@@ -83,13 +83,17 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
         }
     }
 
-    private CircleContext loadRitualContext(@NotNull CompoundTag modCompound) {
+    private RitualContext loadRitualContext(@NotNull CompoundTag modCompound) {
         CompoundTag ritualContextTag = modCompound.getCompound("ritualContext");
         var ritualName = ritualContextTag.getString(CustomNBTTags.RITUAL_NAME);
         int ritualProgress = ritualContextTag.getInt(CustomNBTTags.PROGRESS);
 
-        RitualState ritualState = RitualState.valueOf(ritualContextTag.getString(CustomNBTTags.RITUAL_STATE));
-        var context = CircleContext.builder()
+        RitualState ritualState = RitualState.FREE;
+        String ritualStateData = ritualContextTag.getString(CustomNBTTags.RITUAL_STATE);
+        if(!ritualStateData.isBlank()) {
+            ritualState = RitualState.valueOf(ritualStateData);
+        }
+        var context = RitualContext.builder()
                 .ritualProgress(ritualProgress)
                 .ritualState(ritualState);
 
@@ -132,7 +136,7 @@ public class GoldenChalkBlockEntity extends BlockEntity implements ITickableBloc
 
     }
 
-    private void triggerRitualProcessor(CircleContext context) {
+    private void triggerRitualProcessor(RitualContext context) {
         MagicCircleProcessor processor = circlePipelineHandler.getProcessor(context.getRitualState());
         RitualState result = processor.process(context,(ServerLevel) getLevel(), getBlockState(), getBlockPos(), this);
         context.setRitualState(result);
