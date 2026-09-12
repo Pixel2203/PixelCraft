@@ -6,7 +6,6 @@ import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.distilleryBowl.BowlInteraction;
 import com.example.examplemod.api.distilleryBowl.BowlInteractionLogic;
 import com.example.examplemod.api.vial.IVialable;
-import com.example.examplemod.api.vial.VialResult;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
 import com.example.examplemod.menus.DistilleryBowlMenu;
@@ -153,7 +152,7 @@ public class DistilleryBowlBlockEntity extends BlockEntity implements ITickableB
     }
 
     @Override
-    public VialResult tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
+    public ModFluids tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
         return this.interactionLogic.tap(level, blockState, blockPos);
     }
 

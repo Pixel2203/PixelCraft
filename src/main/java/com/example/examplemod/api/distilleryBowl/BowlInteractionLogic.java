@@ -2,7 +2,6 @@ package com.example.examplemod.api.distilleryBowl;
 
 import com.example.examplemod.api.kettle.BlockEntityLogic;
 import com.example.examplemod.api.vial.IVialable;
-import com.example.examplemod.api.vial.VialResult;
 import com.example.examplemod.block.blocks.DistilleryBowl;
 import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
 import com.example.examplemod.item.ItemRegistry;
@@ -37,13 +36,13 @@ public class BowlInteractionLogic extends BlockEntityLogic<DistilleryBowlBlockEn
     }
 
     @Override
-    public VialResult tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
-        if(!blockEntity.hasContent()) return VialResult.failed();
+    public ModFluids tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
+        if(!blockEntity.hasContent()) return null;
         return getVialResult().map(vialType -> {
             empty(level, blockState, blockPos);
             blockEntity.setContent(null);
-            return VialResult.success(vialType);
-        }).orElse(VialResult.failed());
+            return vialType;
+        }).orElse(null);
     }
 
     private Optional<ModFluids> getVialResult() {

@@ -3,7 +3,6 @@ package com.example.examplemod.item.items;
 import com.example.examplemod.ExampleMod;
 import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.vial.IVialable;
-import com.example.examplemod.api.vial.VialResult;
 import com.example.examplemod.item.ItemRegistry;
 import com.example.examplemod.sound.SoundRegistry;
 import com.example.examplemod.tag.TagFactory;
@@ -21,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -67,12 +67,11 @@ public class Vial extends Item {
                     blockState.getBlock().getName(), TagFactory.VIALABLE_BLOCKS);
             return InteractionResult.FAIL;
         }
-        VialResult tapResult = vialable.tap(level, blockState, blockPos);
-
-        if(!tapResult.vialSuccess()) return InteractionResult.FAIL;
+        ModFluids tapResult = vialable.tap(level, blockState, blockPos);
+        if(Objects.isNull(tapResult)) return InteractionResult.FAIL;
 
         ItemStack filledVial = new ItemStack(this);
-        this.saveVialTypeNbt(filledVial, tapResult.extracted());
+        this.saveVialTypeNbt(filledVial, tapResult);
 
         player.addItem(filledVial);
         itemInHand.shrink(1);

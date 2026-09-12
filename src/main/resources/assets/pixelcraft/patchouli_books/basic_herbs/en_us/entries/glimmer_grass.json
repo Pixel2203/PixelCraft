@@ -1,0 +1,13 @@
+{
+  "name": "Glimmer Gras",
+  "icon": "minecraft:writable_book",
+  "category": "pixelcraft:test_category",
+  "pages": [
+    {
+      "type": "patchouli:image",
+      "images": ["pixelcraft:textures/block/glimmer_gras_2.png"],
+      "title": "Glimmer Gras",
+      "text": "You can see this gras looks very shiny :3"
+    }
+  ]
+}

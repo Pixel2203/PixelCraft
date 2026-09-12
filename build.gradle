@@ -125,6 +125,10 @@ repositories {
         name = "Illusive Soulworks maven"
         url = "https://maven.theillusivec4.top/"
     }
+    maven {
+        name = "BlameJared Maven"
+        url = "https://maven.blamejared.com"
+    }
     // If you have mod jar dependencies in ./libs, you can declare them as a repository like so.
     // See https://docs.gradle.org/current/userguide/declaring_repositories.html#sub:flat_dir_resolver
     // flatDir {
@@ -162,6 +166,7 @@ dependencies {
 
     // Lombok nur zur Kompilierzeit für die Klassen (z.B. @Getter)
     compileOnly 'org.projectlombok:lombok:1.18.30'
+    implementation fg.deobf("vazkii.patchouli:Patchouli:1.20.1-85-FORGE")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

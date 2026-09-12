@@ -3,7 +3,6 @@ package com.example.examplemod.block.blocks;
 import com.example.examplemod.api.distilleryBowl.BowlInteraction;
 import com.example.examplemod.api.distilleryBowl.ModFluids;
 import com.example.examplemod.api.vial.IVialable;
-import com.example.examplemod.api.vial.VialResult;
 import com.example.examplemod.blockentity.BlockEntityRegistry;
 import com.example.examplemod.blockentity.entities.DistilleryBowlBlockEntity;
 import com.example.examplemod.blockentity.util.ITickableBlockEntity;
@@ -97,10 +96,10 @@ public class DistilleryBowl extends Block implements EntityBlock, IVialable {
     }
 
     @Override
-    public VialResult tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
+    public ModFluids tap(ServerLevel level, BlockState blockState, BlockPos blockPos) {
         if(level.getBlockEntity(blockPos) instanceof IVialable blockEntity) {
             return blockEntity.tap(level, blockState, blockPos);
         }
-        return VialResult.failed();
+        return null;
     }
 }
